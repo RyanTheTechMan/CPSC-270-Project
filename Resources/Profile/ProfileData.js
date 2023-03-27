@@ -5,7 +5,7 @@ const ProfileData = {
     email: "jdoe@mail.roanoke.edu",
     phone: "123-456-7890",
     id: "123456789",
-    profileImage: 'https://fakeface.rest/thumb/view?gender=male&minimum_age=18&maximum_age=30',
+    profileImage: 'https://fakeface.rest/thumb/view?gender=male&minimum_age=18&maximum_age=40',
     fullName: function() {return this.firstName + " " + this.middleName + " " + this.lastName;},
     displayName: function() {return this.firstName + " " + this.lastName;},
     mailboxNumber: "1234",
