@@ -7,7 +7,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Map from './Pages/Map';
 import DemoPage from './Pages/DemoPage';
 import CustomTab from "./CustomTab";
-import RectListDemo from "./Pages/RectListDemo"
+import SafetyPage from "./Pages/Safety"
 
 const Tab = createBottomTabNavigator();
 function NavBar() {
@@ -50,7 +50,7 @@ function NavBar() {
       <Tab.Screen name="Map" component={Map} />
       <Tab.Screen name="Schedule" component={DemoPage} />
       <Tab.Screen name="Directory" component={DemoPage} />
-      <Tab.Screen name="Safety" component={RectListDemo} />
+      <Tab.Screen name="Safety" component={SafetyPage} />
     </Tab.Navigator>
   );
 }
