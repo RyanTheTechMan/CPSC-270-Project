@@ -1,5 +1,6 @@
 import styles from "../Shared/styles";
 import {Image, Pressable, View, Text} from "react-native";
+import ProfileData from "./ProfileData";
 
 const profileButtonSize = 75;
 
@@ -29,13 +30,14 @@ styles.profileButtonImage = {
   height: profileButtonSize,
   borderRadius: 50,
 }
+
 function ProfileButton() {
   return (
     <View style={styles.profileButton}>
       <Pressable onPress={() => console.log("would have gone to profile")}>
         <Image
           style={styles.profileButtonImage}
-          source={require('./image.jpeg')}
+          source={{uri: ProfileData.profileImage}}
         />
       </Pressable>
     </View>
