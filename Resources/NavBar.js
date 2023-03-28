@@ -1,12 +1,12 @@
 import React from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import CustomTab from "./CustomTab";
+import sharedStyles from "./Shared/styles"
 
 // Import pages to be used in the bottom tab navigator
 import Map from './Pages/Map';
 import DemoPage from './Pages/DemoPage';
-import CustomTab from "./CustomTab";
 import SafetyPage from "./Pages/Safety"
 
 const Tab = createBottomTabNavigator();
@@ -14,6 +14,9 @@ function NavBar() {
   return (
     <Tab.Navigator
       screenOptions={({route}) => ({
+        headerStyle: {
+          backgroundColor: sharedStyles.header.backgroundColor,
+        },
         tabBarButton: (props) => { // Offset the middle tab buttons to make room for the profile icon
           if (route.name === 'Directory') {
             return <CustomTab {...props} style={{marginLeft: 40}} />;
@@ -43,8 +46,8 @@ function NavBar() {
 
           return <Ionicons name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: 'tomato',
-        tabBarInactiveTintColor: 'gray',
+        tabBarActiveTintColor: sharedStyles.unselected.color,
+        tabBarInactiveTintColor: sharedStyles.selected.color,
       })}
     >
       <Tab.Screen name="Map" component={Map} />
