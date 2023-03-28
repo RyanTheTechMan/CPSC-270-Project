@@ -1,6 +1,10 @@
 import styles from "../Shared/styles";
 import {Image, Pressable, View, Text} from "react-native";
 import ProfileData from "./ProfileData";
+import ImageLoader from "../Shared/Loading/ImageLoader";
+
+import LoadingSvg from '../Shared/Loading/rings.svg';
+import FailedLoadingProfileSvg from '../Shared/Loading/failed_loading_profile.svg';
 
 const profileButtonSize = 75;
 
@@ -35,9 +39,12 @@ function ProfileButton() {
   return (
     <View style={styles.profileButton}>
       <Pressable onPress={() => console.log("would have gone to profile")}>
-        <Image
+        <ImageLoader
+          source={'https://images.unsplash.com/photo-1526666923127-b2970f64b422'}
+          // loadingSource={'https://cdn.onlinewebfonts.com/svg/download_527746.svg'}
+          loadingSource={<LoadingSvg />}
+          errorSource={<FailedLoadingProfileSvg />}
           style={styles.profileButtonImage}
-          source={{uri: ProfileData.profileImage}}
         />
       </Pressable>
     </View>
