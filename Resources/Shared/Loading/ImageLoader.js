@@ -1,56 +1,71 @@
-import React, { useState } from 'react';
-import { View, Image } from 'react-native';
-import { SvgUri } from 'react-native-svg';
+import React, {useState, useEffect} from 'react';
+import {Image, StyleSheet} from 'react-native';
+import {SvgUri, SvgXml} from 'react-native-svg';
 
-function ImageLoader({ source, loadingSource, errorSource, ...props }) {
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(false);
+const isSvgSource = (src) => {
+  if (typeof src === 'string') {
+    return src.toLowerCase().endsWith('.svg');
+  }
 
-  const handleLoad = () => {
-    console.log('Loaded image: ', source);
-    setIsLoading(false);
-  };
+  if (typeof src === 'number') {
+    const asset = Image.resolveAssetSource(src);
+    return asset && asset.uri && asset.uri.toLowerCase().endsWith('.svg');
+  }
 
-  const handleError = () => {
-    console.log('Error loading image: ', source)
-    setError(true);
-    setIsLoading(false);
-  };
+  return false;
+};
 
-  const isSvg = (imgSrc) => {
-    return imgSrc && imgSrc.uri && imgSrc.uri.endsWith('.svg');
-  };
+const ImageLoader = ({source, loadingSource, errorSource, style, ...props}) => {
+  const [currentSource, setCurrentSource] = useState(loadingSource);
+  const [remoteSvg, setRemoteSvg] = useState(null);
 
-  const renderImage = (imgSrc) => {
-    if (isSvg(imgSrc)) {
-      console.log("Loading SVG: ", imgSrc);
-      return <SvgUri {...props} uri={imgSrc.uri} />;
+  useEffect(() => {
+    const fetchRemoteSvg = async (uri) => {
+      try {
+        const response = await fetch(uri);
+        const svgContent = await response.text();
+        setRemoteSvg(svgContent);
+      } catch (error) {
+        console.error('Error fetching remote SVG:', error);
+        setRemoteSvg(null);
+      }
+    };
+
+    if (isSvgSource(source) && typeof source === 'string') {
+      fetchRemoteSvg(source);
     } else {
-      console.log("Loading Image: ", imgSrc);
-      return <Image {...props} source={imgSrc} />;
+      setRemoteSvg(null);
     }
-  };
+  }, [source]);
 
-  return (
-    <View>
-      {isLoading && renderImage(loadingSource)}
-      {!isLoading && !error && (
-        <Image
-          {...props}
-          source={source}
-          onLoad={handleLoad}
-          onError={handleError}
-        />
-      )}
-      {error && renderImage(errorSource)}
-    </View>
-    // <Image
-    //   {...props}
-    //   source={source}
-    //   onLoad={handleLoad}
-    //   onError={handleError}
-    // />
+  useEffect(() => {
+    if (source) {
+      const uri = isSvgSource(source) ? source : typeof source === 'number' ? Image.resolveAssetSource(source).uri : source;
+      Image.prefetch(uri)
+        .then(() => setCurrentSource(source))
+        .catch(() => setCurrentSource(errorSource));
+    }
+  }, [source, errorSource]);
+
+  const ImageComponent = isSvgSource(currentSource) ? SvgXml : Image;
+
+  return isSvgSource(currentSource) && remoteSvg === null ? (
+    <SvgUri uri={loadingSource} style={[styles.image, style]} {...props} />
+  ) : remoteSvg !== null ? (
+    <SvgXml xml={remoteSvg} style={[styles.image, style]} {...props} />
+  ) : (
+    <ImageComponent
+      source={typeof currentSource === 'string' ? {uri: currentSource} : currentSource}
+      style={[styles.image, style]}
+      {...props}
+    />
   );
-}
+};
+
+const styles = StyleSheet.create({
+  image: {
+    resizeMode: 'contain',
+  },
+});
 
 export default ImageLoader;

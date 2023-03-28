@@ -37,9 +37,10 @@ function ProfileButton() {
     <View style={styles.profileButton}>
       <Pressable onPress={() => console.log("would have gone to profile")}>
         <ImageLoader
-          source={{uri: require('./image.jpeg')}}
-          loadingSource={require('../Shared/Loading/rings.svg')}
-          errorSource={require('../Shared/Loading/failed_loading_profile.svg')}
+          source={'https://images.unsplash.com/photo-1526666923127-b2970f64b422'}
+          loadingSource={'https://cdn.onlinewebfonts.com/svg/download_527746.svg'}
+          // loadingSource={require('../Shared/Loading/failed_loading_profile.svg')}
+          errorSource={'https://media.istockphoto.com/id/1420881183/vector/no-image-available-illustration-isolated-placeholder.jpg?s=612x612&w=0&k=20&c=uJkcaL6mEZpLHIlX9klz8CclzmrTHNAHUNdyLNvphAA='}
           style={styles.profileButtonImage}
         />
       </Pressable>
