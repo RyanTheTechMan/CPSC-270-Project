@@ -1,42 +1,13 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {Image, StyleSheet} from 'react-native';
-import {SvgUri, SvgXml} from 'react-native-svg';
+import {SvgUri} from 'react-native-svg';
 
 const isSvgSource = (src) => {
-  if (typeof src === 'string') {
-    return src.toLowerCase().endsWith('.svg');
-  }
-
-  if (typeof src === 'number') {
-    const asset = Image.resolveAssetSource(src);
-    return asset && asset.uri && asset.uri.toLowerCase().endsWith('.svg');
-  }
-
-  return false;
+  return typeof src === 'string' && src.toLowerCase().endsWith('.svg');
 };
 
-const ImageLoader = ({source, loadingSource, errorSource, style, ...props}) => {
+const ImageLoader = ({ source, loadingSource, errorSource, style, ...props }) => {
   const [currentSource, setCurrentSource] = useState(loadingSource);
-  const [remoteSvg, setRemoteSvg] = useState(null);
-
-  useEffect(() => {
-    const fetchRemoteSvg = async (uri) => {
-      try {
-        const response = await fetch(uri);
-        const svgContent = await response.text();
-        setRemoteSvg(svgContent);
-      } catch (error) {
-        console.error('Error fetching remote SVG:', error);
-        setRemoteSvg(null);
-      }
-    };
-
-    if (isSvgSource(source) && typeof source === 'string') {
-      fetchRemoteSvg(source);
-    } else {
-      setRemoteSvg(null);
-    }
-  }, [source]);
 
   useEffect(() => {
     if (source) {
@@ -47,19 +18,24 @@ const ImageLoader = ({source, loadingSource, errorSource, style, ...props}) => {
     }
   }, [source, errorSource]);
 
-  const ImageComponent = isSvgSource(currentSource) ? SvgXml : Image;
+  const renderImage = () => {
+    if (typeof currentSource === 'string') {
+      if (isSvgSource(currentSource)) {
+        return <SvgUri uri={currentSource} style={[styles.image, style]} {...props} />;
+      } else {
+        return <Image source={{ uri: currentSource }} style={[styles.image, style]} {...props} />;
+      }
+    } else if (React.isValidElement(currentSource)) {
+      return React.cloneElement(currentSource, {
+        ...props,
+        style: [styles.image, style],
+      });
+    } else {
+      return <Image source={currentSource} style={[styles.image, style]} {...props} />;
+    }
+  };
 
-  return isSvgSource(currentSource) && remoteSvg === null ? (
-    <SvgUri uri={loadingSource} style={[styles.image, style]} {...props} />
-  ) : remoteSvg !== null ? (
-    <SvgXml xml={remoteSvg} style={[styles.image, style]} {...props} />
-  ) : (
-    <ImageComponent
-      source={typeof currentSource === 'string' ? {uri: currentSource} : currentSource}
-      style={[styles.image, style]}
-      {...props}
-    />
-  );
+  return renderImage();
 };
 
 const styles = StyleSheet.create({
