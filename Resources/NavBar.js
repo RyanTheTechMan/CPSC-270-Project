@@ -7,7 +7,8 @@ import sharedStyles from "./Shared/styles"
 // Import pages to be used in the bottom tab navigator
 import Map from './Pages/Map';
 import DemoPage from './Pages/DemoPage';
-import SafetyPage from "./Pages/Safety"
+import SafetyPage from "./Pages/Safety";
+import {DiningPage, commonsMenu} from "./Menus";
 
 const Tab = createBottomTabNavigator();
 function NavBar() {
@@ -20,7 +21,7 @@ function NavBar() {
         tabBarButton: (props) => { // Offset the middle tab buttons to make room for the profile icon
           if (route.name === 'Directory') {
             return <CustomTab {...props} style={{marginLeft: 40}} />;
-          } else if (route.name === 'Schedule') {
+          } else if (route.name === 'Dining') {
             return <CustomTab {...props} style={{marginRight: 40}} />;
           } else {
             return <CustomTab {...props} />;
@@ -36,7 +37,7 @@ function NavBar() {
             case 'Directory':
               iconName = focused ? 'list' : 'list-outline';
               break;
-            case 'Schedule':
+            case 'Dining':
               iconName = focused ? 'calendar' : 'calendar-outline';
               break;
             case 'Safety':
@@ -51,7 +52,7 @@ function NavBar() {
       })}
     >
       <Tab.Screen name="Map" component={Map} />
-      <Tab.Screen name="Schedule" component={DemoPage} />
+      <Tab.Screen name="Dining" component={DiningPage} initialParams={{data: commonsMenu}}/>
       <Tab.Screen name="Directory" component={DemoPage} />
       <Tab.Screen name="Safety" component={SafetyPage} />
     </Tab.Navigator>
