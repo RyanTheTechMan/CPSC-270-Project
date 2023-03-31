@@ -8,7 +8,7 @@ import sharedStyles from "./Shared/styles"
 import Map from './Pages/Map';
 import DemoPage from './Pages/DemoPage';
 import SafetyPage from "./Pages/Safety";
-import {DiningPage, commonsMenu, cavernMenu} from "./Menus";
+import {DiningPage, DiningStack, commonsMenu, cavernMenu, freshensMenu} from "./Menus";
 
 const Tab = createBottomTabNavigator();
 function NavBar() {
@@ -52,7 +52,7 @@ function NavBar() {
       })}
     >
       <Tab.Screen name="Map" component={Map} />
-      <Tab.Screen name="Dining" component={DiningPage} initialParams={{data: cavernMenu}}/>
+      <Tab.Screen name="Dining" component={DiningStack}/>
       <Tab.Screen name="Directory" component={DemoPage} />
       <Tab.Screen name="Safety" component={SafetyPage} />
     </Tab.Navigator>
