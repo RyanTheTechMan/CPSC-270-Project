@@ -47,7 +47,7 @@ export const freshensMenu = [
   }, {
     day: 'Friday',
     meals: [{ meal: "Breakfast", mealItems: ["Breakfast Burrito", "Fruit and Yogurt", "Chicken and Waffles"] }, { meal: "Lunch", mealItems: ["Chicken Salad", "Banana", "Apple", "Smoothies"] }, { meal: "Dinner", mealItems: ["Chicken Pizza", "Home Fries", "Cucumber Slices"] }]
-  }, 
+  },
 ]
 
 export const cavernMenu = [
@@ -75,24 +75,28 @@ export const cavernMenu = [
 
 const Stack = createStackNavigator();
 
-//NEED TO PASS PROPS (which menu to display)
+
 export function DiningStack() {
+  console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
   return (
-    <Stack.Navigator initialRouteName="Commons">
-      <Stack.Screen name="Commons" component={DiningPage}  />
-      <Stack.Screen name="Freshens" component={DiningPage} />
-      <Stack.Screen name="Cavern" component={DiningPage} />
+    <Stack.Navigator initialRouteName="Cavern">
+      <Stack.Screen name="Commons" component={DiningPage} initialParams={{ menuData: { commonsMenu } }} />
+      <Stack.Screen name="Freshens" component={DiningPage} initialParams={{ menuData: { freshensMenu } }} />
+      <Stack.Screen name="Cavern" component={DiningPage} initialParams={{ menuData: { cavernMenu } }} />
     </Stack.Navigator>
   );
 }
 
 
-export function DiningPage({ data}) {
-  console.log(data);
+
+function DiningPage({ route }) {
+  const { menuData } = route.params;
+ // console.log(menuData);
+ // console.log(commonsMenu);
   return (
     <View style={styles.page}>
       <FlatList
-        data={data}
+        data={menuData[Object.keys(menuData)[0]]}
         renderItem={({ item }) =>
           <View>
             <Text style={styles.day}> {item.day}</Text>
