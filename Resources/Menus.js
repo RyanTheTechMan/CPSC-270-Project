@@ -81,7 +81,7 @@ const Stack = createStackNavigator();
 export function DiningStack() {
   console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
   return (
-    <Stack.Navigator initialRouteName="Cavern">
+    <Stack.Navigator initialRouteName="Commons">
       <Stack.Screen name="Commons" component={DiningPage} initialParams={{ menuData: { commonsMenu } }} />
       <Stack.Screen name="Freshens" component={DiningPage} initialParams={{ menuData: { freshensMenu } }} />
       <Stack.Screen name="Cavern" component={DiningPage} initialParams={{ menuData: { cavernMenu } }} />
@@ -89,25 +89,26 @@ export function DiningStack() {
   );
 }
 
-function DiningPage({ route }) {
+function DiningPage({ navigation, route  }) {
   const { menuData } = route.params;
   // console.log(menuData);
   // console.log(commonsMenu);
 
   return (
     <View style={styles.page}>
+
       <View style={styles.diningButtons}>
-        <Pressable style={styles.button}>
+        <Pressable style={styles.button} onPress={() => navigation.navigate('Cavern')}>
           <Text>Cavern</Text>
         </Pressable>
-        <Pressable style={styles.button}>
+        <Pressable style={styles.button} onPress={() => navigation.navigate('Commons')}>
           <Text>Commons</Text>
         </Pressable>
-        <Pressable style={styles.button}>
+        <Pressable style={styles.button} onPress={() => navigation.navigate('Freshens')}>
           <Text>Freshens</Text>
         </Pressable>
-
       </View>
+
       <FlatList
         data={menuData[Object.keys(menuData)[0]]}
         renderItem={({ item }) =>
