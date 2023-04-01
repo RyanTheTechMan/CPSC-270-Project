@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SectionList, FlatList, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, SectionList, FlatList, ScrollView, Button } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 export const commonsMenu = [
@@ -76,6 +76,8 @@ export const cavernMenu = [
 const Stack = createStackNavigator();
 
 
+
+
 export function DiningStack() {
   console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
   return (
@@ -87,14 +89,18 @@ export function DiningStack() {
   );
 }
 
-
-
 function DiningPage({ route }) {
   const { menuData } = route.params;
- // console.log(menuData);
- // console.log(commonsMenu);
+  // console.log(menuData);
+  // console.log(commonsMenu);
+
   return (
     <View style={styles.page}>
+      <View style={styles.diningButtons}>
+        <Button title="Cavern" style={styles.button} />
+        <Button title="Commons" style={styles.button} />
+        <Button title="Freshens" style={styles.button} />
+      </View>
       <FlatList
         data={menuData[Object.keys(menuData)[0]]}
         renderItem={({ item }) =>
@@ -138,6 +144,12 @@ export const styles = StyleSheet.create({
     fontSize: 20,
     marginTop: 20,
     alignItems: 'center',
-
-  }
+  },
+  diningButtons: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  button: {
+    backgroundColor: 'red',
+  },
 });
