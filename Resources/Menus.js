@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SectionList, FlatList, ScrollView, Button } from 'react-native';
+import { StyleSheet, Text, View, SectionList, FlatList, ScrollView, Button, Pressable } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 export const commonsMenu = [
@@ -97,9 +97,16 @@ function DiningPage({ route }) {
   return (
     <View style={styles.page}>
       <View style={styles.diningButtons}>
-        <Button title="Cavern" style={styles.button} />
-        <Button title="Commons" style={styles.button} />
-        <Button title="Freshens" style={styles.button} />
+        <Pressable style={styles.button}>
+          <Text>Cavern</Text>
+        </Pressable>
+        <Pressable style={styles.button}>
+          <Text>Commons</Text>
+        </Pressable>
+        <Pressable style={styles.button}>
+          <Text>Freshens</Text>
+        </Pressable>
+
       </View>
       <FlatList
         data={menuData[Object.keys(menuData)[0]]}
@@ -147,9 +154,14 @@ export const styles = StyleSheet.create({
   },
   diningButtons: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-evenly',
+    borderWidth: 2,
+    borderColor: 'rebeccapurple',
+    width: '100%',
   },
   button: {
     backgroundColor: 'red',
-  },
+    borderWidth: 2,
+    borderColor: 'green',
+  }
 });
