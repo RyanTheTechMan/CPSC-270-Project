@@ -53,7 +53,7 @@ function NavBar() {
     >
       <Tab.Screen name="Map" component={Map} />
       <Tab.Screen name="Dining" component={DiningStack}/>
-      <Tab.Screen name="Directory" component={DemoPage} />
+      <Tab.Screen name="Directory" component={DirectoryPage} />
       <Tab.Screen name="Safety" component={SafetyPage} />
     </Tab.Navigator>
   );
