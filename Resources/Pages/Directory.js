@@ -3,13 +3,13 @@ import { StyleSheet, View, Text } from 'react-native';
 import DirectoryList from '../DirectoryList';
 import sharedStyles, {neutral_color} from "../Shared/styles";
 
-const DemoDirectory = () => {
+const DirectoryPage = () => {
   const data = [
-    { id: 1, title: 'Rectangle 1' },
-    { id: 2, title: 'Rectangle 2' },
-    { id: 3, title: 'Rectangle 3' },
-    { id: 4, title: 'Rectangle 4' },
-    { id: 5, title: 'Rectangle 5' },
+    { id: 1, title: 'Dining Options' },
+    { id: 2, title: 'Mail Services' },
+    { id: 3, title: 'Academic Information' },
+    { id: 4, title: 'Financial Information' },
+    { id: 5, title: '. . .' },
   ];
 
   const handlePress = (id) => {
@@ -38,4 +38,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DemoDirectory;
+export default DirectoryPage;

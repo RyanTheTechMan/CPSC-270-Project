@@ -8,6 +8,7 @@ import sharedStyles from "./Shared/styles"
 import Map from './Pages/Map';
 import DemoPage from './Pages/DemoPage';
 import SafetyPage from "./Pages/Safety"
+import DirectoryPage from "./Pages/Directory"
 
 const Tab = createBottomTabNavigator();
 function NavBar() {
@@ -52,7 +53,7 @@ function NavBar() {
     >
       <Tab.Screen name="Map" component={Map} />
       <Tab.Screen name="Schedule" component={DemoPage} />
-      <Tab.Screen name="Directory" component={DemoPage} />
+      <Tab.Screen name="Directory" component={DirectoryPage} />
       <Tab.Screen name="Safety" component={SafetyPage} />
     </Tab.Navigator>
   );
