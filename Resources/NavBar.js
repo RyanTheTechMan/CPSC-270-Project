@@ -9,6 +9,7 @@ import Map from './Pages/Map';
 import DemoPage from './Pages/DemoPage';
 import SafetyPage from "./Pages/Safety";
 import MailPage from "./Pages/Mail";
+import DirectoryPage from './Pages/Directory';
 import {DiningPage, DiningStack, commonsMenu, cavernMenu, freshensMenu} from "./Menus";
 
 const Tab = createBottomTabNavigator();
