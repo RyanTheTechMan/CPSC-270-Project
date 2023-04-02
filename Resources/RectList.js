@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, LayoutAnimation } from 'react-native';
+import sharedStyles, {header_color} from "./Shared/styles";
 
 const RectList = ({ data }) => {
   const [selectedId, setSelectedId] = useState(null);
@@ -40,7 +41,7 @@ const styles = StyleSheet.create({
   },
   item: {
     borderRadius: 8,
-    backgroundColor: '#ccc',
+    backgroundColor: header_color,
     marginBottom: 8,
     overflow: 'hidden',
   },
@@ -54,9 +55,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 8,
+    color: "#ccc"
   },
   itemDescription: {
     fontSize: 16,
+    color: "#ccc"
   },
 });
 

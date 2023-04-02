@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity, View, Text } from 'react-native';
+import sharedStyles, {header_color} from "./Shared/styles";
 
 const DirectoryList = ({ data, onPress }) => {
   return (
@@ -32,7 +33,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
     marginBottom: 10,
-    backgroundColor: '#e0e0e0',
+    backgroundColor: header_color,
   },
   iconSquare: {
     width: 50,
@@ -44,7 +45,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#ccc',
   },
 });
 
