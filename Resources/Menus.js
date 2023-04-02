@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SectionList, FlatList, ScrollView, Button, Pressable } from 'react-native';
+import { StyleSheet, Text, View, SectionList, FlatList, Pressable } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 export const commonsMenu = [
@@ -89,7 +89,7 @@ export function DiningStack() {
   );
 }
 
-function DiningPage({ navigation, route  }) {
+function DiningPage({ navigation, route }) {
   const { menuData } = route.params;
   // console.log(menuData);
   // console.log(commonsMenu);
@@ -110,6 +110,8 @@ function DiningPage({ navigation, route  }) {
       </View>
 
       <FlatList
+        contentContainerStyle={styles.menuSchedule}
+        showsVerticalScrollIndicator={false}
         data={menuData[Object.keys(menuData)[0]]}
         renderItem={({ item }) =>
           <View>
@@ -142,6 +144,10 @@ export const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     fontColor: 'black',
+
+  },
+  menuSchedule: {
+ 
   },
   day: {
     fontSize: 40,
@@ -157,12 +163,9 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     borderWidth: 2,
-    borderColor: 'rebeccapurple',
     width: '100%',
   },
   button: {
-    backgroundColor: 'red',
-    borderWidth: 2,
-    borderColor: 'green',
+
   }
 });
