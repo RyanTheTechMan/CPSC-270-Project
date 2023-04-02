@@ -8,6 +8,7 @@ import sharedStyles from "./Shared/styles"
 import Map from './Pages/Map';
 import DemoPage from './Pages/DemoPage';
 import SafetyPage from "./Pages/Safety";
+import MailPage from "./Pages/Mail";
 import {DiningPage, DiningStack, commonsMenu, cavernMenu, freshensMenu} from "./Menus";
 
 const Tab = createBottomTabNavigator();
@@ -31,7 +32,7 @@ function NavBar() {
           let iconName;
 
           switch (route.name) {
-            case 'Map':
+            case 'Mail':
               iconName = focused ? 'map' : 'map-outline';
               break;
             case 'Directory':
@@ -51,7 +52,7 @@ function NavBar() {
         tabBarInactiveTintColor: sharedStyles.selected.color,
       })}
     >
-      <Tab.Screen name="Map" component={Map} />
+      <Tab.Screen name="Mail" component={MailPage} />
       <Tab.Screen name="Dining" component={DiningStack}/>
       <Tab.Screen name="Directory" component={DemoPage} />
       <Tab.Screen name="Safety" component={SafetyPage} />
