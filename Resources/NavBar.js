@@ -7,7 +7,7 @@ import sharedStyles from "./Shared/styles"
 // Import pages to be used in the bottom tab navigator
 import Map from './Pages/Map';
 import DemoPage from './Pages/DemoPage';
-import SafetyPage from "./Pages/Safety"
+import SafetyPage from "./Pages/AcademicInformation";
 
 const Tab = createBottomTabNavigator();
 function NavBar() {
