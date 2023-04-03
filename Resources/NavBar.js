@@ -21,7 +21,6 @@ const EmptyComponent = () => <View />;
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
-
 function HomeButton({ navigation }) {
   return (
     <Ionicons
@@ -84,7 +83,7 @@ function NavBar() {
                 tabBarActiveTintColor: sharedStyles.unselected.color,
                 tabBarInactiveTintColor: sharedStyles.selected.color,
                 tabBarStyle: {
-                  backgroundColor: 'rgb(255,255,255)',
+                  backgroundColor: 'rgba(255,255,255,1)',
                   position: 'absolute', // Make the tab bar stick to the bottom of the screen, content can be displayed behind it
                   borderTopLeftRadius: 40, // Curve the top left corner of the tab bar
                   borderTopRightRadius: 40, // Curve the top right corner of the tab bar
