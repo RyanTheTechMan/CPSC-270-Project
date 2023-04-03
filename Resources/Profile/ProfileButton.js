@@ -1,55 +1,65 @@
-import styles from "../Shared/styles";
-import {Pressable, View, Text} from "react-native";
+import React from 'react';
+import { Pressable, View, Text, Dimensions, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Avatar } from 'react-native-elements';
 
-import profileData from "./ProfileData";
+import profileData from './ProfileData';
+import sharedStyles from '../Shared/styles';
 
 const profileButtonSize = 75;
 
-styles.profileButton = {
-  position: 'absolute',
-  alignSelf: 'center',
-  bottom: 30,
-  zIndex: 2,
-};
+const { width, height } = Dimensions.get('window');
 
-styles.avatarContainer = {
-  width: profileButtonSize,
-  height: profileButtonSize,
-  borderRadius: 100,
-  backgroundColor: 'white',
-  justifyContent: 'center',
-  alignItems: 'center',
-  shadowColor: '#000',
-  shadowOffset: {
-    width: 0,
-    height: 5,
+const styles = {
+  ...sharedStyles,
+  profileButton: {
+    alignSelf: 'center',
+    zIndex: 2,
+    width: profileButtonSize,
+    height: profileButtonSize,
+    bottom: 30,
   },
-  shadowOpacity: 0.3,
-  shadowRadius: 4,
-  elevation: 5,
-};
+  avatarContainer: {
+    backgroundColor: 'rgba(0,0,0,1)',
 
-styles.text = {
-  fontSize: 10,
-  color: 'gray',
-  marginTop: 5,
-//   center horizontally
-  alignSelf: 'center'
+    // iOS
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.4,
+    shadowRadius: 3,
+
+    // Android
+    elevation: 20,
+  },
+  text: {
+    fontSize: 10,
+    color: sharedStyles.selected.color,
+    marginTop: 5,
+    alignSelf: 'center',
+  },
 };
 
 function ProfileButton(props) {
-  const navigation= useNavigation();
+  const navigation = useNavigation();
 
   return (
-    <View style={styles.profileButton}>
-      <Pressable onPress={() => navigation.navigate('ProfileOverlay')}>
-        <View style={styles.avatarContainer}>
-          <Avatar rounded size={profileButtonSize} source={{uri: profileData.profileImage}} />
-        </View>
-      </Pressable>
-      <Text style={styles.text}>Profile</Text>
+    <View
+      style={{
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      <View style={styles.profileButton}>
+        <Pressable onPress={() => navigation.navigate('ProfileOverlay')}>
+          <Avatar
+            rounded
+            containerStyle={styles.avatarContainer}
+            size={profileButtonSize}
+            source={{ uri: profileData.profileImage }}
+          />
+        </Pressable>
+        <Text style={styles.text}>Profile</Text>
+      </View>
     </View>
   );
 }
