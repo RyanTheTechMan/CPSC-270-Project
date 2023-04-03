@@ -11,11 +11,7 @@ function AcademicInformationPage()
 			{ProfileData.terms.map((item) => (
 				<View>
 					<Divider subHeader={item.title} />
-					<FlatList 
-						data={item.grades} 
-						renderItem={({gradeItem}) => <RectList data={gradeItem}></RectList>}
-						keyExtractor={item => item.id}	
-					/>
+					<RectList data={item.grades}></RectList>
 				</View>
 			))}
 
