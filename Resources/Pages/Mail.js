@@ -1,5 +1,5 @@
 import { setStatusBarHidden } from "expo-status-bar";
-import { StyleSheet, Text, View, } from "react-native";
+import { Pressable, StyleSheet, Text, View, } from "react-native";
 import React, { useState } from 'react';
 
 
@@ -39,10 +39,22 @@ const studentInfoGroup = [
 ];
 
 
+export function MailBoxCode({ currentStudent, hideMailCode }) {
+
+    if (!hideMailCode) {
+        return (
+            <Text style={styles.combination}>{"Box Combination: " + currentStudent.collegeAddress.campusBoxCode}</Text>
+        )
+    }
+
+
+}
+
 export default function MailPage() {
 
     const [selectedId, setSelectedId] = useState('0813342');
     const [currentStudent, setCurrentStudent] = useState(studentInfoGroup[0]);
+    const [hideMailCode, setHideMailCode] = useState(false);
 
     for (student in studentInfoGroup) {
         if (student.studentId === selectedId) {
@@ -52,11 +64,18 @@ export default function MailPage() {
     }
 
     return (
-        <View style={styles.view}>
-            <Text>Campus Address:</Text>
-            <Text>{currentStudent.studentName.firstName}</Text>
-            <Text></Text>
-            <Text></Text>
+        <View style={styles.mailPage}>
+            <View style={styles.address}>
+                <Text style={styles.addressHeader}>Campus Address:</Text>
+                <Text style={styles.addressText}>{currentStudent.studentName.firstName + " " + currentStudent.studentName.lastName}</Text>
+                <Text style={styles.addressText}>{currentStudent.collegeAddress.street}</Text>
+                <Text style={styles.addressText}>{"Campus Box: " + currentStudent.collegeAddress.campusBox}</Text>
+                <Text style={styles.addressText}>{currentStudent.collegeAddress.city + ", " + currentStudent.collegeAddress.state + " " + currentStudent.collegeAddress.zipCode}</Text>
+            </View>
+            <MailBoxCode currentStudent={currentStudent} hideMailCode={hideMailCode} />
+            <Pressable style={styles.combinationButton} onPress={() => setHideMailCode(!hideMailCode)}>
+                <Text style={styles.combinationButtonText}>Display Combination</Text>
+            </Pressable>
         </View>
     );
 
@@ -69,11 +88,38 @@ export const styles = StyleSheet.create({
         borderWidth: 2,
         textAlign: 'center',
     },
-    view: {
+    address: {
         justifyContent: 'center',
+        height: '50%',
+        alignItems: 'left',
+    },
+    mailPage: {
         height: '100%',
+        alignItems: 'center',
+    },
+    addressHeader: {
+        fontSize: 40,
+    },
+    addressText: {
+        fontSize: 30,
 
-    }
+    },
+    combinationButton: {
+        fontSize: 30,
+        margin: 10,
+        color: 'white',
+        backgroundColor: 'gray',
+        borderRadius: 10,
 
+    },
+    combinationButtonText: {
+        fontSize: 30,
+        margin: 10,
+        color: 'white',
 
+    },
+    combination: {
+        fontSize: 30,
+        margin: 10,
+    },
 });
