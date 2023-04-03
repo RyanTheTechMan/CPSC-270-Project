@@ -20,6 +20,19 @@ const EmptyComponent = () => <View />;
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
+
+function HomeButton({ navigation }) {
+  return (
+    <Ionicons
+      name="home"
+      size={24}
+      color="#000"
+      onPress={() => navigation.navigate('Home')}
+      style={{ marginLeft: 10 }}
+    />
+  );
+}
+
 function NavBar() {
   return (
     <Stack.Navigator>
@@ -28,7 +41,7 @@ function NavBar() {
           <View style={{ flex: 1 }}>
             <ProfileButton />
             <Tab.Navigator
-              screenOptions={({ route }) => ({
+              screenOptions={({ route, navigation}) => ({
                 headerStyle: {
                   backgroundColor: sharedStyles.header.backgroundColor,
                 },
@@ -64,16 +77,24 @@ function NavBar() {
 
                   return <Ionicons name={iconName} size={size} color={color} />;
                 },
+                headerLeft: () => {
+                  if (route.name !== 'Home') {
+                    return <HomeButton navigation={navigation} />;
+                  }
+                },
                 tabBarActiveTintColor: sharedStyles.unselected.color,
                 tabBarInactiveTintColor: sharedStyles.selected.color,
               })}
             >
+              <Tab.Screen name="Home" component={DemoPage} options={{tabBarButton: () => null}} />
+
               <Tab.Screen name="Map" component={Map} />
-              <Tab.Screen name="Schedule" component={DemoPage} />
+              <Tab.Screen name="Schedule" component={DiningStack} />
+
               <Tab.Screen name="Profile" component={EmptyComponent} options={{ tabBarButton: () => null }} />
+
               <Tab.Screen name="Mail" component={MailPage} />
               <Tab.Screen name="Safety" component={SafetyPage} />
-              {/*<Tab.Screen name="Directory" component={DirectoryPage} />*/}
             </Tab.Navigator>
           </View>
         )}
