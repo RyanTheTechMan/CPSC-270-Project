@@ -13,7 +13,7 @@ import DemoPage from './Pages/DemoPage';
 import SafetyPage from "./Pages/Safety";
 import MailPage from "./Pages/Mail";
 import DirectoryPage from './Pages/Directory';
-import {DiningPage, DiningStack, commonsMenu, cavernMenu, freshensMenu} from "./Menus";
+import {DiningStack} from "./Menus";
 import ProfileOverlay from "./Pages/Profile";
 
 const EmptyComponent = () => <View />;
