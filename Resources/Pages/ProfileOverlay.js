@@ -16,7 +16,6 @@ function ProfileOverlay() {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Avatar source={{ uri: imageUrl }} rounded size="large" />
         <View style={styles.userInfo}>
           <Text style={styles.name}>{name}</Text>
           <View style={styles.lockbox}>
@@ -54,7 +53,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   userInfo: {
-    marginLeft: 16,
+    marginLeft: 150,
   },
   name: {
     fontSize: 18,
@@ -72,7 +71,7 @@ const styles = StyleSheet.create({
   separator: {
     backgroundColor: '#ccc',
     height: 1,
-    marginTop: 16,
+    marginTop: 100,
     marginBottom: 16,
   },
   stats: {

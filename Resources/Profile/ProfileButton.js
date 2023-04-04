@@ -15,7 +15,8 @@ import {PanGestureHandler, TapGestureHandler} from "react-native-gesture-handler
 import {useHeaderHeight} from "@react-navigation/elements";
 
 const profileButtonSize = 75;
-const profileButtonBottomOffset = 30;
+const profileButtonBottomOffset = 20;
+const maxY = 0.675; // Amount of screen height that the button can move up
 
 const { width, height } = Dimensions.get('window');
 
@@ -46,32 +47,42 @@ const styles = {
     alignSelf: 'center',
   },
   overlay: {
+    height: height*2,
+    // backgroundColor: 'blue',
+  },
+  background: {
     position: 'absolute',
-    // backgroundColor: 'red',
-    bottom: -profileButtonBottomOffset,
+    top: 0,
     width: width,
-    height: height*0.85,
   }
 };
 
-function RenderOverlay({openOverlay, setOpenOverlay}) {
-  const animatedStyle = useAnimatedStyle(() => {
+function clamp(value, lowerBound, upperBound) {
+  'worklet';
+  return Math.min(Math.max(value, lowerBound), upperBound);
+}
+
+function RenderOverlay({buttonY, totalHeight}) {
+  const overlayAnimatedStyle = useAnimatedStyle(() => {
     return {
-      transform: [{translateY: verticalPosition.value}],
+      transform: [{translateY: buttonY.value*totalHeight-profileButtonSize}],
+      opacity: buttonY.value/maxY
     };
   });
 
-  if (openOverlay) {
-    verticalPosition.value = withSpring(-100, {damping: 10, stiffness: 100});
-  } else {
-    verticalPosition.value = withSpring(height*0.85, {damping: 10, stiffness: 100});
-  }
+  const backgroundAnimatedStyle = useAnimatedStyle(() => {
+    return {
+      backgroundColor: 'rgba(0,0,0,' + buttonY.value + ')',
+    };
+  });
 
   return (
-    <>
-    <Animated.View style={[styles.overlay, animatedStyle]}/>
-      <ProfileOverlay />
-    </>
+    <View style={styles.background}>
+      <Animated.View style={[styles.background, backgroundAnimatedStyle]} />
+      <Animated.View style={[styles.overlay, overlayAnimatedStyle]}>
+        <ProfileOverlay />
+      </Animated.View>
+    </View>
   );
 }
 
@@ -80,13 +91,14 @@ function ProfileButton({navigation}) {
 
   const overlayOpen = useSharedValue(false);
   const buttonY = useSharedValue(0);
-  const maxY = 0.675;
 
   const eventHandler = useAnimatedGestureHandler({
     onStart: (event, ctx) => {
+      ctx.moved = false
     },
     onActive: (event, ctx) => {
       buttonY.value = (event.translationY + (ctx.y || 0))/totalHeight;
+      ctx.moved = true;
     },
     onEnd: (event, ctx) => {
       if (!overlayOpen.value && buttonY.value > 0.06) {
@@ -103,12 +115,14 @@ function ProfileButton({navigation}) {
         ctx.y = maxY*totalHeight;
       }
     },
+    onFinish: (event, ctx) => {
+      if (!ctx.moved && !overlayOpen.value) {
+        buttonY.value = withSpring(maxY, {damping: 10, stiffness: 40, restDisplacementThreshold: 0.01, restSpeedThreshold: 0.01});
+        overlayOpen.value = true;
+        ctx.y = maxY*totalHeight;
+      }
+    }
   })
-
-  function clamp(value, lowerBound, upperBound) {
-    'worklet';
-    return Math.min(Math.max(value, lowerBound), upperBound);
-  }
 
   const animatedStyle = useAnimatedStyle(() => {
     let clampedPercentage = clamp(buttonY.value, 0, maxY);
@@ -135,7 +149,7 @@ function ProfileButton({navigation}) {
         </Animated.View>
       </PanGestureHandler>
       <Text style={styles.text}>Profile</Text>
-      {/*<RenderOverlay openOverlay={overlayOpen} setOpenOverlay={setOverlayOpen} />*/}
+      <RenderOverlay buttonY={buttonY} totalHeight={totalHeight} />
     </View>
   );
 }
