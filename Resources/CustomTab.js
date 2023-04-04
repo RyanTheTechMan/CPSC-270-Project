@@ -3,9 +3,11 @@ import {TouchableOpacity, View, StyleSheet} from 'react-native';
 
 const CustomTab = ({children, onPress, style}) => {
   return (
-    <TouchableOpacity onPress={onPress} style={[styles.tab, style]}>
-      {children}
-    </TouchableOpacity>
+    <View style={{zIndex: -1, flex:1}}>
+      <TouchableOpacity onPress={onPress} style={[styles.tab, style]}>
+        {children}
+      </TouchableOpacity>
+    </View>
   );
 };
 

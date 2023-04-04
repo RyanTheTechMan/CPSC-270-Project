@@ -1,9 +1,11 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import {View, Text, StyleSheet, Dimensions} from 'react-native';
 import { Avatar } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import ProfileData from "../Profile/ProfileData";
+
+const { width, height } = Dimensions.get('window');
 
 function ProfileOverlay() {
   const name = ProfileData.fullName();
@@ -16,7 +18,6 @@ function ProfileOverlay() {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Avatar source={{ uri: imageUrl }} rounded size="large" />
         <View style={styles.userInfo}>
           <Text style={styles.name}>{name}</Text>
           <View style={styles.lockbox}>
@@ -47,14 +48,15 @@ function ProfileOverlay() {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
-    borderRadius: 10,
+    borderRadius: 50,
     padding: 16,
+    height: height,
   },
   header: {
     flexDirection: 'row',
   },
   userInfo: {
-    marginLeft: 16,
+    marginLeft: 150,
   },
   name: {
     fontSize: 18,
@@ -72,7 +74,7 @@ const styles = StyleSheet.create({
   separator: {
     backgroundColor: '#ccc',
     height: 1,
-    marginTop: 16,
+    marginTop: 100,
     marginBottom: 16,
   },
   stats: {

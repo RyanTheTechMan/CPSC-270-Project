@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useLayoutEffect, useRef} from 'react';
 import { View } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -13,8 +13,8 @@ import DemoPage from './Pages/DemoPage';
 import SafetyPage from "./Pages/Safety";
 import MailPage from "./Pages/Mail";
 import DirectoryPage from './Pages/Directory';
-import {DiningPage, DiningStack, commonsMenu, cavernMenu, freshensMenu} from "./Menus";
-import ProfileOverlay from "./Pages/Profile";
+import {DiningStack} from "./Menus";
+import ProfileOverlay from "./Pages/ProfileOverlay";
 
 const EmptyComponent = () => <View />;
 
@@ -32,14 +32,12 @@ function HomeButton({ navigation }) {
     />
   );
 }
-
 function NavBar() {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Root" options={{ headerShown: false }}>
         {() => (
           <View style={{ flex: 1 }}>
-            <ProfileButton />
             <Tab.Navigator
               screenOptions={({ route, navigation}) => ({
                 headerStyle: {
@@ -47,12 +45,12 @@ function NavBar() {
                 },
                 tabBarButton: (props) => {
                   switch (route.name) {
-                    case 'Mail':
-                      return <CustomTab {...props} style={{ marginLeft: 40 }} />;
-                    case 'Schedule':
-                      return <CustomTab {...props} style={{ marginRight: 40 }} />;
-                    // case 'Profile':
-                    //   return <View />
+                    // case 'Mail':
+                    //   return <CustomTab {...props} style={{ marginLeft: 40 }} />;
+                    // case 'Schedule':
+                    //   return <CustomTab {...props} style={{ marginRight: 40 }} />;
+                    case 'Profile':
+                      return <ProfileButton navigation={navigation} {...props} />;
                     default:
                       return <CustomTab {...props} />;
                   }
@@ -75,7 +73,7 @@ function NavBar() {
                       break;
                   }
 
-                  return <Ionicons name={iconName} size={size} color={color} />;
+                  return <Ionicons name={iconName} size={size} color={color}/>;
                 },
                 headerLeft: () => {
                   if (route.name !== 'Home') {
@@ -84,6 +82,20 @@ function NavBar() {
                 },
                 tabBarActiveTintColor: sharedStyles.unselected.color,
                 tabBarInactiveTintColor: sharedStyles.selected.color,
+                tabBarStyle: {
+                  backgroundColor: 'rgba(255,255,255,1)',
+                  position: 'absolute', // Make the tab bar stick to the bottom of the screen, content can be displayed behind it
+                  borderTopLeftRadius: 40, // Curve the top left corner of the tab bar
+                  borderTopRightRadius: 40, // Curve the top right corner of the tab bar
+
+                  // IOS
+                  shadowOffset: {width: 0, height: -2},
+                  shadowOpacity: 0.15,
+                  shadowRadius: 3,
+
+                  // Android
+                  elevation: 5,
+                },
               })}
             >
               <Tab.Screen name="Home" component={DemoPage} options={{tabBarButton: () => null}} />
@@ -91,7 +103,7 @@ function NavBar() {
               <Tab.Screen name="Map" component={Map} />
               <Tab.Screen name="Schedule" component={DiningStack} />
 
-              <Tab.Screen name="Profile" component={EmptyComponent} options={{ tabBarButton: () => null }} />
+              <Tab.Screen name="Profile" component={EmptyComponent} />
 
               <Tab.Screen name="Mail" component={MailPage} />
               <Tab.Screen name="Safety" component={SafetyPage} />
@@ -99,7 +111,6 @@ function NavBar() {
           </View>
         )}
       </Stack.Screen>
-      <Stack.Screen name={'ProfileOverlay'} component={ProfileOverlay} />
     </Stack.Navigator>
   );
 }
