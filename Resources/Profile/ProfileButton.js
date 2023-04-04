@@ -15,7 +15,7 @@ import {PanGestureHandler, TapGestureHandler} from "react-native-gesture-handler
 import {useHeaderHeight} from "@react-navigation/elements";
 
 const profileButtonSize = 75;
-const profileButtonBottomOffset = 20;
+const profileButtonBottomOffset = 18;
 const maxY = 0.675; // Amount of screen height that the button can move up
 
 const { width, height } = Dimensions.get('window');
@@ -24,7 +24,7 @@ const styles = {
   ...sharedStyles,
   profileButton: {
     alignSelf: 'center',
-    zIndex: 2,
+    zIndex: 1,
     width: profileButtonSize,
     height: profileButtonSize,
     bottom: profileButtonBottomOffset,
@@ -35,7 +35,7 @@ const styles = {
     // iOS
     shadowOffset: { width: 0, height: 10 },
     shadowOpacity: 0.4,
-    shadowRadius: 6,
+    shadowRadius: 10,
 
     // Android
     elevation: 7,
@@ -43,17 +43,27 @@ const styles = {
   text: {
     fontSize: 10,
     color: sharedStyles.selected.color,
-    marginTop: 5,
     alignSelf: 'center',
+    transform: [{translateY: -18}],
   },
   overlay: {
-    height: height*2,
+    // height: height*2,
     // backgroundColor: 'blue',
+    pointerEvents: 'none',
+  },
+  backgroundFullScreen: {
+    position: 'absolute',
+    top: 0,
+    width: width,
+    backgroundColor: 'black',
+    pointerEvents: 'none',
   },
   background: {
     position: 'absolute',
     top: 0,
     width: width,
+    transform: [{translateY: -height}],
+    pointerEvents: 'none',
   }
 };
 
@@ -65,20 +75,21 @@ function clamp(value, lowerBound, upperBound) {
 function RenderOverlay({buttonY, totalHeight}) {
   const overlayAnimatedStyle = useAnimatedStyle(() => {
     return {
-      transform: [{translateY: buttonY.value*totalHeight-profileButtonSize}],
+      transform: [{translateY: clamp(buttonY.value, 0, maxY)*totalHeight-totalHeight - profileButtonSize - profileButtonBottomOffset/2}],
       opacity: buttonY.value/maxY
     };
   });
 
   const backgroundAnimatedStyle = useAnimatedStyle(() => {
     return {
-      backgroundColor: 'rgba(0,0,0,' + buttonY.value + ')',
+      opacity: buttonY.value/maxY,
+      pointerEvents: buttonY.value > 0 ? 'auto' : 'none',
     };
   });
 
   return (
     <View style={styles.background}>
-      <Animated.View style={[styles.background, backgroundAnimatedStyle]} />
+      <Animated.View style={[styles.backgroundFullScreen, backgroundAnimatedStyle]} />
       <Animated.View style={[styles.overlay, overlayAnimatedStyle]}>
         <ProfileOverlay />
       </Animated.View>

@@ -1,9 +1,11 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import {View, Text, StyleSheet, Dimensions} from 'react-native';
 import { Avatar } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import ProfileData from "../Profile/ProfileData";
+
+const { width, height } = Dimensions.get('window');
 
 function ProfileOverlay() {
   const name = ProfileData.fullName();
@@ -46,8 +48,9 @@ function ProfileOverlay() {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
-    borderRadius: 10,
+    borderRadius: 50,
     padding: 16,
+    height: height,
   },
   header: {
     flexDirection: 'row',
