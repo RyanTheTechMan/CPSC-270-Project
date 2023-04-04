@@ -73,7 +73,7 @@ function NavBar() {
                       break;
                   }
 
-                  return <Ionicons name={iconName} size={size} color={color} />;
+                  return <Ionicons name={iconName} size={size} color={color}/>;
                 },
                 headerLeft: () => {
                   if (route.name !== 'Home') {
@@ -111,7 +111,6 @@ function NavBar() {
           </View>
         )}
       </Stack.Screen>
-      <Stack.Screen name={'ProfileOverlay'} component={ProfileOverlay} />
     </Stack.Navigator>
   );
 }
