@@ -49,21 +49,21 @@ const styles = {
   overlay: {
     // height: height*2,
     // backgroundColor: 'blue',
-    pointerEvents: 'none',
+    pointerEvents: 'box-none',
   },
   backgroundFullScreen: {
     position: 'absolute',
     top: 0,
     width: width,
     backgroundColor: 'black',
-    pointerEvents: 'none',
+    pointerEvents: 'box-none',
   },
   background: {
     position: 'absolute',
     top: 0,
     width: width,
     transform: [{translateY: -height}],
-    pointerEvents: 'none',
+    pointerEvents: 'box-none',
     backgroundColor: 'rgba(0,0,0,0.7)',
   }
 };
@@ -103,7 +103,7 @@ function RenderOverlay({buttonY, totalHeight}) {
   const backgroundAnimatedStyle = useAnimatedStyle(() => {
     return {
       opacity: buttonY.value/maxY,
-      pointerEvents: buttonY.value > 0 ? 'auto' : 'none',
+      pointerEvents: buttonY.value > 0 ? 'box-none' : 'none',
     };
   });
 
@@ -178,7 +178,7 @@ function ProfileButton({navigation}) {
     let color = easeInOut(clampedPercentage/maxY, 0, 0.5, 1);
     return {
       backgroundColor: `rgba(0,0,0,${color})`,
-      pointerEvents: clampedPercentage > 0.1 ? 'auto' : 'none',
+      pointerEvents: clampedPercentage > 0.1 ? 'box-none' : 'none',
     };
   });
 
