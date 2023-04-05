@@ -10,6 +10,7 @@ const ProfileData = {
     displayName: function() {return this.firstName + " " + this.lastName;},
     mailboxNumber: "1234",
     mailboxUnlockCode: "12-34-56",
+    packageArrivedDate: new Date("2023-04-20 12:00:01"), // if not empty/null then a package has arrived
     onCampus: true,
     dormRoomLocation: "Trexler 123",
     hasParkingPermit: true,

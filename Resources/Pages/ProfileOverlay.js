@@ -1,7 +1,9 @@
 import React from 'react';
-import {View, Text, StyleSheet, Dimensions, Platform} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import {View, Text, StyleSheet, Dimensions, Platform, Image, Pressable} from 'react-native';
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import FeatherIcon from 'react-native-vector-icons/Feather';
 import {BlurView} from 'expo-blur'; // After dropping expo, switch to react-native-blur. A slight refactor will be required.
+import { format } from "date-fns";
 
 import ProfileData from "../Profile/ProfileData";
 
@@ -10,7 +12,7 @@ const { width, height } = Dimensions.get('window');
 function ProfileInfo({icon, text}) {
   return (
     <View style={styles.shortInfoContainer}>
-      <Icon name={icon} size={16} color="#333" />
+      <FontAwesomeIcon name={icon} size={16} color="#333" />
       <Text style={styles.shortInfoDisplay}>{text}</Text>
     </View>
   );
@@ -21,14 +23,12 @@ function StatBar({ title, value, max, displayMax = true, prefix = '', suffix = '
   if (max === undefined) max = value;
 
   let hue;
-  if (colorRange.low === colorRange.med && colorRange.med === colorRange.high) { // if color range was not specified
+  if (colorRange.low === colorRange.med && colorRange.med === colorRange.high) // if color range was not specified
     hue = 120 * (value / max);
-  }
-  else if (value < colorRange.med) {
+  else if (value < colorRange.med)
     hue = 60 + 60 * ((value - colorRange.low) / (colorRange.med - colorRange.low));
-  } else {
+  else
     hue = 60 - 60 * ((value - colorRange.med) / (colorRange.high - colorRange.med));
-  }
   hue = Math.min(Math.max(hue, 0), 120);
 
   const barColor = `hsl(${hue}, 100%, 35%)`;
@@ -68,6 +68,9 @@ function ProfileOverlay() {
   const dormRoomLocation = ProfileData.dormRoomLocation;
   const mailboxNumber = ProfileData.mailboxNumber;
   const mailboxUnlockCode = ProfileData.mailboxUnlockCode;
+  const packageArrivedDate = ProfileData.packageArrivedDate;
+
+  const [packageArrived, setPackageArrived] = React.useState(packageArrivedDate !== undefined && packageArrivedDate !== null);
 
   return (
     // The following view allows you to add a rounded border to the blurview. This is a workaround for the fact that the blurview doesn't support borderRadius.
@@ -87,6 +90,19 @@ function ProfileOverlay() {
         </View>
         {/*Below separator is not perfect for onCampus vs not*/}
         <View style={{...styles.separator, marginTop: onCampus ? 40 : 115}} />
+        {onCampus && packageArrived && (
+          <View style={styles.packageContainer} pointerEvents={"auto"}>
+            <FeatherIcon name="package" size={75} color="#000" style={styles.packageIcon} />
+            <Text style={styles.packageText}>A package has arrived!</Text>
+            <Text style={styles.packageDateArrived}>{format(packageArrivedDate, "MMMM d, yyyy")}</Text>
+            <Pressable style={styles.packageClearButton} onPress={() => {
+              ProfileData.packageArrivedDate = undefined;
+              setPackageArrived(false);
+            }}>
+              <Text style={styles.packageClearButtonText}>Dismiss</Text>
+            </Pressable>
+          </View>
+        )}
         <View style={styles.stats}>
           <StatBar title="Money" value={money} displayMax={false} prefix={'$'} colorRange={{low: 50, med: 60, high: 100}}/>
           <StatBar title="Print Allotment" value={printBalance} max={printAllowance} prefix={'$'}/>
@@ -161,6 +177,46 @@ const styles = StyleSheet.create({
   statBarValue: {
     fontSize: 15,
     paddingTop: 5,
+  },
+  packageContainer: {
+    marginTop: 30,
+    backgroundColor: '#B8BFD8',
+    borderRadius: 20,
+  },
+  packageText: {
+    fontSize: 20,
+    fontWeight: '500',
+    alignSelf: 'center',
+    left: '10%',
+    paddingVertical: 30,
+  },
+  packageDateArrived: {
+    fontSize: 15,
+    paddingBottom: 10,
+    paddingLeft: 10,
+    color: '#262626',
+  },
+  packageIcon: {
+    position: 'absolute',
+    top: 10,
+    left: 10,
+  },
+  packageClearButton: {
+    position: 'absolute',
+    backgroundColor: '#475884',
+    right: 0,
+    bottom: 0,
+    borderBottomRightRadius: 20,
+    borderTopLeftRadius: 20,
+    alignSelf: 'center',
+    paddingHorizontal: 25,
+    paddingVertical: 10,
+    marginTop: 10,
+  },
+  packageClearButtonText: {
+    fontSize: 15,
+    color: '#fff',
+    fontWeight: '500',
   }
 });
 
