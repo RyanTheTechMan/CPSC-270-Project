@@ -1,6 +1,9 @@
+//THIS IS USING AN OUTDATED COMPONENT
+
+/*
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import RectList from '../RectList.js';
+import RectList from '../OutOfDate/RectList.js';
 import sharedStyles, {neutral_color} from "../Shared/styles";
 
 const data = [
@@ -25,3 +28,4 @@ const styles = StyleSheet.create({
     backgroundColor: neutral_color
   },
 });
+*/
