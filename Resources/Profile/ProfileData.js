@@ -14,11 +14,11 @@ const ProfileData = {
     dormRoomLocation: "Trexler 123",
     hasParkingPermit: true,
     hasMealPlan: true,
-    mealPlan: "20",
-    mealPlanBalance: "16",
-    moneyBalance: "16.03",
-    printAllowance: "50",
-    printBalance: "48.52",
+    mealPlan: 20,
+    mealPlanBalance: 6,
+    moneyBalance: 16.03,
+    printAllowance: 50,
+    printBalance: 48.52,
 }
 
 export default ProfileData;
