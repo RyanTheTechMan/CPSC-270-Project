@@ -2,7 +2,7 @@ import {StyleSheet, Text, View} from "react-native";
 
 import sharedStyles from "../Shared/styles";
 
-function Map() {
+function Map({navigation}) {
   const styles = StyleSheet.create({
     text: {
       ...sharedStyles.text,

@@ -56,7 +56,6 @@ const SafetyList = () => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 32,
     backgroundColor: neutral_color,
     flexGrow: 1,
     paddingVertical: 16,
