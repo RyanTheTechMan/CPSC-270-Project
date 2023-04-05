@@ -1,9 +1,17 @@
 import React from 'react';
-import {View, Text, StyleSheet, Dimensions, Platform, Image, Pressable} from 'react-native';
+import {Dimensions, Platform, Pressable, StyleSheet, Text, View} from 'react-native';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import {BlurView} from 'expo-blur'; // After dropping expo, switch to react-native-blur. A slight refactor will be required.
-import { format } from "date-fns";
+import {format} from "date-fns";
+import Animated, {
+  Easing,
+  runOnJS,
+  useAnimatedReaction,
+  useAnimatedStyle,
+  useSharedValue, withDelay,
+  withTiming,
+} from 'react-native-reanimated';
 
 import ProfileData from "../Profile/ProfileData";
 
@@ -72,6 +80,19 @@ function ProfileOverlay() {
 
   const [packageArrived, setPackageArrived] = React.useState(packageArrivedDate !== undefined && packageArrivedDate !== null);
 
+  const packageDismiss = useSharedValue(0);
+
+  const animatedPackageDismiss = useAnimatedStyle(() => {
+    return {
+      transform: [
+        {
+          translateX: withTiming(packageDismiss.value * width, {duration: 1500}),
+        }
+      ],
+      marginTop: withDelay(1500, withTiming(packageDismiss.value * -125, {duration: 1000, easing: Easing.out(Easing.exp)})),
+    };
+  });
+
   return (
     // The following view allows you to add a rounded border to the blurview. This is a workaround for the fact that the blurview doesn't support borderRadius.
     <View style={{overflow: 'hidden', borderRadius: 50, ...Platform.select({android: {backgroundColor: 'white'}})}}>
@@ -91,17 +112,16 @@ function ProfileOverlay() {
         {/*Below separator is not perfect for onCampus vs not*/}
         <View style={{...styles.separator, marginTop: onCampus ? 40 : 115}} />
         {onCampus && packageArrived && (
-          <View style={styles.packageContainer} pointerEvents={"auto"}>
+          <Animated.View style={[styles.packageContainer, animatedPackageDismiss]}>
             <FeatherIcon name="package" size={75} color="#000" style={styles.packageIcon} />
             <Text style={styles.packageText}>A package has arrived!</Text>
             <Text style={styles.packageDateArrived}>{format(packageArrivedDate, "MMMM d, yyyy")}</Text>
             <Pressable style={styles.packageClearButton} onPress={() => {
-              ProfileData.packageArrivedDate = undefined;
-              setPackageArrived(false);
+              packageDismiss.value = 1;
             }}>
               <Text style={styles.packageClearButtonText}>Dismiss</Text>
             </Pressable>
-          </View>
+          </Animated.View>
         )}
         <View style={styles.stats}>
           <StatBar title="Money" value={money} displayMax={false} prefix={'$'} colorRange={{low: 50, med: 60, high: 100}}/>
