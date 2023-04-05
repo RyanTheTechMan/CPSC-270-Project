@@ -7,7 +7,7 @@ import sharedStyles from "./Shared/styles"
 // Import pages to be used in the bottom tab navigator
 import Map from './Pages/Map';
 import DemoPage from './Pages/DemoPage';
-import SafetyPage from "./Pages/Safety"
+import SafetyList from "./Pages/SafetyInfo"
 import DirectoryPage from "./Pages/Directory"
 
 const Tab = createBottomTabNavigator();
@@ -54,7 +54,7 @@ function NavBar() {
       <Tab.Screen name="Map" component={Map} />
       <Tab.Screen name="Schedule" component={DemoPage} />
       <Tab.Screen name="Directory" component={DirectoryPage} />
-      <Tab.Screen name="Safety" component={SafetyPage} />
+      <Tab.Screen name="Safety" component={SafetyList} />
     </Tab.Navigator>
   );
 }
