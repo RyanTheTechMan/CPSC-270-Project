@@ -1,4 +1,5 @@
 import {StyleSheet, Text, View} from "react-native";
+import MapView from "react-native-maps";
 
 import sharedStyles from "../Shared/styles";
 
@@ -12,11 +13,26 @@ function Map({navigation}) {
     container: {
       ...sharedStyles.container,
     },
+    map: {
+      width: '100%',
+      height: '100%',
+    }
   });
 
   return (
     <View style={styles.container} >
-      <Text style={styles.text}>WIP</Text>
+      <MapView
+        style={styles.map}
+        initialRegion={{
+          latitude: 37.297,
+          longitude: -80.056,
+          latitudeDelta: 0.01,
+          longitudeDelta: 0.01,
+        }}
+        showsCompass={true}
+        showsUserLocation={true}
+        // userInterfaceStyle={"dark"}
+      />
     </View>
   );
 }
