@@ -7,7 +7,9 @@ import CustomTab from './CustomTab';
 import sharedStyles from './Shared/styles';
 import ProfileButton from './Profile/ProfileButton';
 
+
 // Import pages to be used in the bottom tab navigator
+import AcademicInformationPage from './Pages/AcademicInformation'
 import Map from './Pages/Map';
 import DemoPage from './Pages/DemoPage';
 import SafetyList from "./Pages/SafetyInfo";
@@ -61,7 +63,7 @@ function NavBar() {
                     case 'Map':
                       iconName = focused ? 'map' : 'map-outline';
                       break;
-                    case 'Mail':
+                    case 'Temp':
                       iconName = focused ? 'list' : 'list-outline';
                       break;
                     case 'Schedule':
@@ -100,16 +102,19 @@ function NavBar() {
               <Tab.Screen name="Home" component={LandingPage} options={{tabBarButton: () => null}} />
 
               <Tab.Screen name="Map" component={Map} />
-              <Tab.Screen name="Schedule" component={DiningStack} />
+              <Tab.Screen name="Schedule" component={EmptyComponent} />
 
               <Tab.Screen name="Profile" component={EmptyComponent} />
 
-              <Tab.Screen name="Mail" component={MailPage} />
+              <Tab.Screen name="Temp" component={EmptyComponent} />
               <Tab.Screen name="Safety" component={SafetyList} />
             </Tab.Navigator>
           </View>
         )}
       </Stack.Screen>
+      <Stack.Screen name="Mail" component={MailPage}/>
+      <Stack.Screen name="Dining" component={DiningStack}/>
+      <Stack.Screen name="Academics" component={AcademicInformationPage}/>
     </Stack.Navigator>
   );
 }

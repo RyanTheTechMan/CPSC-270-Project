@@ -1,7 +1,7 @@
 import React from "react";
 import {SafeAreaView, ScrollView, FlatList, View, Text} from "react-native";
 import ProfileData from '../Profile/ProfileData.js';
-import { Divider } from '@rneui/themed';
+//import { Divider } from '@rneui/themed';
 import { RoundedRect, RoundedRectList } from "../RoundedRect.js";
 
 function AcademicInformationPage()
