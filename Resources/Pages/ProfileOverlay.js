@@ -86,10 +86,10 @@ function ProfileOverlay() {
     return {
       transform: [
         {
-          translateX: withTiming(packageDismiss.value * width, {duration: 1500}),
+          translateX: withTiming(packageDismiss.value * width, {duration: 800}),
         }
       ],
-      marginTop: withDelay(1500, withTiming(packageDismiss.value * -125, {duration: 1000, easing: Easing.out(Easing.exp)})),
+      marginTop: withDelay(800, withTiming(packageDismiss.value * -125, {duration: 800, easing: Easing.out(Easing.exp)})),
     };
   });
 
