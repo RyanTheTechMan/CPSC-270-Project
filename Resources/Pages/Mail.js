@@ -99,9 +99,13 @@ export const styles = StyleSheet.create({
     },
     addressHeader: {
         fontSize: 40,
+        fontWeight: 'bold',
+        color: '#4a4a4a',
     },
     addressText: {
         fontSize: 30,
+        fontWeight: '600',
+        color: '#313131',
 
     },
     combinationButton: {
@@ -116,10 +120,13 @@ export const styles = StyleSheet.create({
         fontSize: 30,
         margin: 10,
         color: 'white',
+        fontWeight: '600',
 
     },
     combination: {
         fontSize: 30,
         margin: 10,
+        fontWeight: '600',
+        color: '#313131',
     },
 });

@@ -1,6 +1,6 @@
-import {StyleSheet, Text, View, SectionList, FlatList, Pressable, TouchableOpacity, ScrollView} from 'react-native';
+import { StyleSheet, Text, View, SectionList, FlatList, Pressable, TouchableOpacity, ScrollView, } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
-import {useState} from "react";
+import { useState } from "react";
 
 export const commonsMenu = [
   {
@@ -84,6 +84,15 @@ export function DiningStack() {
   );
 }
 
+/*const ItemSeparatorView = () => {
+  return (
+    //Item Separator
+    <View
+      style={{ height: 0.5, width: '100%', backgroundColor: 'black', zIndex: 10000 }}
+    />
+  );
+};*/
+
 function DiningPage({ navigation, route }) {
   const menus = {
     Commons: commonsMenu,
@@ -118,12 +127,20 @@ function DiningPage({ navigation, route }) {
   );
 
   const renderMenu = (menuData) => (
+
     <FlatList
+      ItemSeparatorComponent={
+        (() => (
+          <View
+            style={[styles.separator]}
+          />
+        ))
+      }
       contentContainerStyle={styles.menuSchedule}
       showsVerticalScrollIndicator={false}
       data={menuData}
       keyExtractor={(item) => item.day}
-      renderItem={({ item }) => (
+      renderItem={({ item, separators }) => (
         <>
           {item.day && <Text style={styles.day}>{item.day}</Text>}
           {item.meals.map((meal) => (
@@ -154,8 +171,8 @@ function DiningPage({ navigation, route }) {
 const styles = StyleSheet.create({
   page: {
     flex: 1,
-    alignItems: 'center',
     backgroundColor: '#f4f4f4',
+    width: '100%',
   },
   menuSchedule: {
     paddingHorizontal: 10,
@@ -166,13 +183,20 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     fontWeight: 'bold',
     color: '#4a4a4a',
+    width: '100%',
+    alignItems: 'flex-start',
+    borderWidth: 2,
   },
   meal: {
+    flex: 1,
     fontSize: 24,
     marginTop: 15,
     marginBottom: 10,
     fontWeight: '600',
     color: '#313131',
+    borderWidth: 2,
+    width: '50%',
+    alignItems: 'center',
   },
   item: {
     fontSize: 18,
@@ -197,7 +221,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 1,
     borderColor: '#dcdcdc',
-    paddingHorizontal: 20,
+    paddingHorizontal: 10,
     paddingVertical: 10,
   },
   selectedButton: {
@@ -216,5 +240,10 @@ const styles = StyleSheet.create({
   },
   selectedButtonText: {
     color: '#ffffff',
+  },
+  separator: {
+    color: 'black',
+    width: '100%',
+    height: 0.5,
   },
 });
