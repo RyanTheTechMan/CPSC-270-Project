@@ -3,7 +3,7 @@ import { StyleSheet, View, Text } from 'react-native';
 import DirectoryList from '../DirectoryList';
 import sharedStyles, {neutral_color} from "../Shared/styles";
 
-const DirectoryPage = () => {
+const LandingPage = () => {
   const data = [
     { id: 1, title: 'Dining Options' },
     { id: 2, title: 'Mail Services' },
@@ -38,4 +38,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DirectoryPage;
+export default LandingPage;

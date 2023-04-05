@@ -1,3 +1,8 @@
+// THIS IS AN OUTDATED COMPONENT
+// FOR A MORE UP-TO-DATE COMPONENT PLEASE VISIT [ RoundedRect.js ]
+
+
+/*
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, LayoutAnimation } from 'react-native';
 import sharedStyles, {header_color} from "./Shared/styles";
@@ -64,3 +69,4 @@ const styles = StyleSheet.create({
 });
 
 export default RectList;
+*/

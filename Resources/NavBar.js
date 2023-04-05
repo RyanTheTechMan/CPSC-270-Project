@@ -10,11 +10,10 @@ import ProfileButton from './Profile/ProfileButton';
 // Import pages to be used in the bottom tab navigator
 import Map from './Pages/Map';
 import DemoPage from './Pages/DemoPage';
-import SafetyPage from "./Pages/Safety";
+import SafetyList from "./Pages/SafetyInfo";
 import MailPage from "./Pages/Mail";
-import DirectoryPage from './Pages/Directory';
+import LandingPage from './Pages/Landing';
 import {DiningStack} from "./Menus";
-import ProfileOverlay from "./Pages/ProfileOverlay";
 
 const EmptyComponent = () => <View />;
 
@@ -98,7 +97,7 @@ function NavBar() {
                 },
               })}
             >
-              <Tab.Screen name="Home" component={DemoPage} options={{tabBarButton: () => null}} />
+              <Tab.Screen name="Home" component={LandingPage} options={{tabBarButton: () => null}} />
 
               <Tab.Screen name="Map" component={Map} />
               <Tab.Screen name="Schedule" component={DiningStack} />
@@ -106,7 +105,7 @@ function NavBar() {
               <Tab.Screen name="Profile" component={EmptyComponent} />
 
               <Tab.Screen name="Mail" component={MailPage} />
-              <Tab.Screen name="Safety" component={SafetyPage} />
+              <Tab.Screen name="Safety" component={SafetyList} />
             </Tab.Navigator>
           </View>
         )}

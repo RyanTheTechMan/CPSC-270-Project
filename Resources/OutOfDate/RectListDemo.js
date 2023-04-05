@@ -1,3 +1,8 @@
+
+//  THIS DEMO IS USING AN OUTDATED COMPONENT
+//  PLEASE LOOK AT [ RoundedRectDemo.js ]
+
+/*
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import RectList from '../RectList.js';
@@ -22,3 +27,4 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
 });
+*/
