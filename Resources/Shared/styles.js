@@ -18,7 +18,8 @@ const sharedStyles = StyleSheet.create({
   },
   header: {
     backgroundColor: header_color,
-    color: neutral_color
+    color: neutral_color,
+    tintColor: '#fff',
   },
   selected: {
     color: secondary_color

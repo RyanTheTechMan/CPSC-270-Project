@@ -14,9 +14,11 @@ const LandingPage = ({navigation}) => {
   ];
 
   const handlePress = (id) => {
-    console.log(`Pressed rectangle with ID ${id}`);
-    if (data[id].pageName != undefined)
+    if (data[id].pageName !== undefined) {
+      console.log('Navigating to ' + data[id].pageName)
       navigation.navigate(data[id].pageName);
+    } else
+      console.log('No page for "' + data[id].title + '"');
   };
 
   return (

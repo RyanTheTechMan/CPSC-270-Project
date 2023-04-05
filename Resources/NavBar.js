@@ -27,15 +27,23 @@ function HomeButton({ navigation }) {
     <Ionicons
       name="home"
       size={24}
-      color="#000"
+      color="#fff"
       onPress={() => navigation.navigate('Home')}
-      style={{ marginLeft: 10 }}
+      style={{ marginLeft: 15 }}
     />
   );
 }
 function NavBar() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+    screenOptions={{
+      headerStyle: {
+        backgroundColor: sharedStyles.header.backgroundColor,
+      },
+      headerBackTitleVisible: false,
+      headerTintColor: sharedStyles.header.tintColor,
+    }}
+    >
       <Stack.Screen name="Root" options={{ headerShown: false }}>
         {() => (
           <View style={{ flex: 1 }}>
@@ -44,6 +52,7 @@ function NavBar() {
                 headerStyle: {
                   backgroundColor: sharedStyles.header.backgroundColor,
                 },
+                headerTintColor: sharedStyles.header.tintColor,
                 tabBarButton: (props) => {
                   switch (route.name) {
                     // case 'Mail':
