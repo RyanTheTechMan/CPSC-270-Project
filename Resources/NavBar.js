@@ -16,6 +16,7 @@ import SafetyList from "./Pages/SafetyInfo";
 import MailPage from "./Pages/Mail";
 import LandingPage from './Pages/Landing';
 import {DiningStack} from "./Menus";
+import MapMarker from "./Pages/MapMarker";
 
 const EmptyComponent = () => <View />;
 
@@ -121,6 +122,7 @@ function NavBar() {
           </View>
         )}
       </Stack.Screen>
+      <Stack.Screen name="MapMarker" component={MapMarker}/>
       <Stack.Screen name="Mail" component={MailPage}/>
       <Stack.Screen name="Dining" component={DiningStack}/>
       <Stack.Screen name="Academics" component={AcademicInformationPage}/>
