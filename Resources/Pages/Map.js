@@ -3,7 +3,11 @@ import MapView, {MapMarker} from "react-native-maps";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import sharedStyles, {header_color} from "../Shared/styles";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import {DOMParser} from "@xmldom/xmldom";
+import RenderHTML from 'react-native-render-html';
+
+const MAP_KML_URL = "https://www.google.com/maps/d/kml?mid=1lA47_0BtU22mSzSdaSGpmo0w5Ew&forcekml=1"; // Roanoke College Google Map
 
 function MarkerContent({name, type}) {
   return (
@@ -18,11 +22,81 @@ function MarkerContent({name, type}) {
   );
 }
 
+function LoadMapData(onMarkersLoaded) {
+  let markers = [];
+
+  useEffect(() => {
+    const fetchKml = async () => {
+      const response = await fetch(MAP_KML_URL);
+      const kmlData = await response.text();
+
+      const parser = new DOMParser();
+      const kmlXML = parser.parseFromString(kmlData, "text/xml");
+
+      const folders = Array.from(kmlXML.getElementsByTagName("Folder"));
+      if (folders.length === 0) return null;
+
+      Array.from(folders).forEach((folder) => {
+        const folderName = folder.getElementsByTagName("name")[0].textContent;
+        Array.from(folder.getElementsByTagName("Placemark")).forEach((placemark) => {
+          const nameElement = placemark.getElementsByTagName("name")[0];
+          const coordinatesElement = placemark.getElementsByTagName("coordinates")[0];
+          const infoElement = placemark.getElementsByTagName("description")[0];
+
+          if (!nameElement || !coordinatesElement) {
+            console.log("Invalid marker!!");
+          }
+          else {
+            const name = nameElement.textContent;
+            const coordinates = coordinatesElement.textContent.split(",");
+
+            let description = undefined;
+            let imgSrc = undefined;
+
+            if (infoElement) {
+              const info = infoElement.textContent;
+
+              // Extract the image source
+              const imgMatch = info.match(/<img[^>]*src="([^"]*)"/);
+              imgSrc = imgMatch && imgMatch[1] || null;
+
+              // Remove the <img> element from the info string
+              const cleanedInfo = info.replace(/<img[^>]*>/, '');
+
+              // Use the RenderHTML component to render the cleaned HTML string
+              const renderedHTML = <RenderHTML contentWidth={1} source={{ html: cleanedInfo }} />;
+
+              // Extract the text content from the rendered HTML
+              description = renderedHTML.props.source.html.replace(/<[^>]+>/g, '').trim();
+            }
+
+            markers = [...markers, {
+              id: folderName+name,
+              displayName: folderName+name,
+              description: description,
+              coordinate: {
+                latitude: parseFloat(coordinates[1]),
+                longitude: parseFloat(coordinates[0]),
+              },
+              type: 'academic',
+              image: imgSrc,
+            }];
+          }
+        })
+      });
+      onMarkersLoaded(markers);
+    }
+    fetchKml();
+  }, []);
+
+  return markers;
+}
+
 function Map({navigation}) {
   const [filter, setFilter] = useState([]);
 
-  const renderMarkers = () => {
-    return markers.map((marker) => {
+  const renderMarkers = (data) => {
+    return data.map((marker) => {
       // If this marker is not contained in the filter, don't render it
       if (filter.length !== 0 && !filter.includes(marker.type)) {
         console.log("Filtering out " + marker.displayName + " (" + marker.type + ")");
@@ -43,6 +117,10 @@ function Map({navigation}) {
       )
     })
   }
+
+  const [markers, setMarkers] = useState([]);
+
+  LoadMapData(setMarkers);
 
   return (
     <View style={styles.container} >
@@ -84,7 +162,7 @@ function Map({navigation}) {
         loadingBackgroundColor={'rgba(0,0,0,0.5)'}
         loadingIndicatorColor={header_color}
       >
-        {renderMarkers()}
+        {markers && renderMarkers(markers)}
       </MapView>
     </View>
   );
