@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SectionList, FlatList, Pressable, TouchableOpacity, ScrollView, } from 'react-native';
+import { Dimensions, StyleSheet, Text, View, SectionList, FlatList, Pressable, TouchableOpacity, ScrollView, } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useState } from "react";
 
@@ -72,6 +72,8 @@ export const cavernMenu = [
 
 ]
 
+const { width, height } = Dimensions.get('window');
+
 const Stack = createStackNavigator();
 
 export function DiningStack() {
@@ -84,14 +86,6 @@ export function DiningStack() {
   );
 }
 
-/*const ItemSeparatorView = () => {
-  return (
-    //Item Separator
-    <View
-      style={{ height: 0.5, width: '100%', backgroundColor: 'black', zIndex: 10000 }}
-    />
-  );
-};*/
 
 function DiningPage({ navigation, route }) {
   const menus = {
@@ -127,24 +121,16 @@ function DiningPage({ navigation, route }) {
   );
 
   const renderMenu = (menuData) => (
-
     <FlatList
-      ItemSeparatorComponent={
-        (() => (
-          <View
-            style={[styles.separator]}
-          />
-        ))
-      }
-      contentContainerStyle={styles.menuSchedule}
+      style={styles.menuSchedule}
       showsVerticalScrollIndicator={false}
       data={menuData}
       keyExtractor={(item) => item.day}
-      renderItem={({ item, separators }) => (
+      renderItem={({ item }) => (
         <>
-          {item.day && <Text style={styles.day}>{item.day}</Text>}
+          {<Text style={styles.day}>{item.day}</Text>}
           {item.meals.map((meal) => (
-            <View key={meal.meal}>
+            <View key={meal.meal} style={{borderWidth: 4}}>
               <Text style={styles.meal}>{meal.meal}</Text>
               {meal.mealItems.map((mealItem) => (
                 <Text style={styles.item} key={mealItem}>{mealItem}</Text>
@@ -171,11 +157,14 @@ function DiningPage({ navigation, route }) {
 const styles = StyleSheet.create({
   page: {
     flex: 1,
-    backgroundColor: '#f4f4f4',
+    alignItems: 'flex-start',
     width: '100%',
+    borderWidth: 2,
   },
   menuSchedule: {
     paddingHorizontal: 10,
+    flexShrink: 0,
+    width: '100%',
   },
   day: {
     fontSize: 40,
@@ -183,8 +172,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     fontWeight: 'bold',
     color: '#4a4a4a',
-    width: '100%',
-    alignItems: 'flex-start',
+    alignItems: 'center',
     borderWidth: 2,
   },
   meal: {
@@ -195,8 +183,9 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#313131',
     borderWidth: 2,
-    width: '50%',
+    width: '70%',
     alignItems: 'center',
+
   },
   item: {
     fontSize: 18,
