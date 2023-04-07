@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View} from "react-native";
+import {Pressable, StyleSheet, Text, View} from "react-native";
 import MapView, {MapMarker} from "react-native-maps";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -98,6 +98,126 @@ function LoadMapData(onMarkersLoaded) {
 
   return markers;
 }
+function FilterButton({ filter, setFilter }) {
+  const [isOpen, setIsOpen] = useState(false);
+  const toggleFilter = () => setIsOpen(!isOpen);
+
+  let filterIndex = 1;
+
+  const CreateFilterType = ({ type, index }) => {
+    let backgroundColor;
+    switch (type) {
+      case "all":
+        backgroundColor = "white";
+        break;
+      case "parking":
+        backgroundColor = "#771414";
+        break;
+      default:
+        backgroundColor = markerTypes[type].backgroundColor;
+        break;
+    }
+
+    let iconName;
+    switch (type) {
+      case "all":
+        iconName = "all-inclusive";
+        break;
+      case "parking":
+        iconName = "parking";
+        break;
+      default:
+        iconName = markerTypes[type].icon;
+    }
+
+    let displayText;
+    switch (type) {
+      case "all":
+        displayText = "All";
+        break;
+      case "parking":
+        displayText = "Parking";
+        break;
+      default:
+        displayText = markerTypes[type].displayName;
+        break;
+    }
+
+    let textColor;
+    switch (type) {
+      case "all":
+        textColor = "black";
+        break;
+      default:
+        textColor = "white";
+        break;
+    }
+
+    let filterType;
+    switch (type) {
+      case "all":
+        filterType = [];
+      break;
+      case "parking":
+        filterType = Object.keys(markerTypes).filter((key) => key.startsWith("parking"));
+      break;
+    default:
+      filterType = [type];
+      break;
+    }
+
+    return (
+      <Pressable
+        key={type}
+        style={[
+          styles.filterOption,
+          {
+            backgroundColor: backgroundColor,
+            top: (index) * 60,
+          },
+        ]}
+        onPress={() => {
+          setFilter(filterType);
+          toggleFilter();
+        }}
+      >
+        <View style={{left: 10, flexDirection: 'row', alignItems: 'center'}}>
+          <MaterialCommunityIcons name={iconName} size={24} color={textColor} />
+          <Text style={{
+            color: textColor,
+            fontSize: 16,
+            marginLeft: 8,
+          }}>{displayText}</Text>
+        </View>
+      </Pressable>
+    )
+  }
+
+  const getFilterItems = () => {
+    const allButton = <CreateFilterType type={"all"} index={filterIndex}/>
+
+    const filterButtons = Object.keys(markerTypes).map((type, index) => {
+      if (type.startsWith('parking')) return null;
+      filterIndex++;
+      return <CreateFilterType type={type} index={filterIndex}/>
+    })
+
+    filterIndex++;
+
+    const parkingButton = <CreateFilterType type={"parking"} index={filterIndex}/>
+
+    return ([allButton, ...filterButtons, parkingButton]);
+  }
+
+  return (
+    <View style={styles.filterContainer}>
+      {isOpen && getFilterItems()}
+      <Pressable style={styles.filterButton} onPress={toggleFilter}>
+        <MaterialCommunityIcons name="filter-variant" size={24} color="black" />
+      </Pressable>
+    </View>
+  );
+}
 
 function Map({navigation}) {
   const [filter, setFilter] = useState([]);
@@ -106,7 +226,7 @@ function Map({navigation}) {
     return data.map((marker) => {
       // If this marker is not contained in the filter, don't render it
       if (filter.length !== 0 && !filter.includes(marker.type)) {
-        console.log("Filtering out " + marker.displayName + " (" + marker.type + ")");
+        // console.log("Filtering out " + marker.displayName + " (" + marker.type + ")");
         return null;
       }
       return (
@@ -171,53 +291,19 @@ function Map({navigation}) {
       >
         {markers && renderMarkers(markers)}
       </MapView>
+      <FilterButton filter={filter} setFilter={setFilter}/>
     </View>
   );
 }
 
 export default Map;
 
-
-const styles = StyleSheet.create({
-  text: {
-    ...sharedStyles.text,
-    color: 'black',
-    fontSize: 30,
-  },
-  container: {
-    ...sharedStyles.container,
-  },
-  map: {
-    width: '100%',
-    height: '100%',
-  },
-  markerContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  markerTextContainer: {
-    marginLeft: 35,
-    width: '300%',
-    position: 'absolute',
-    zIndex: 1
-  },
-  markerText: {
-    flexWrap: 'wrap',
-  },
-  markerIconContainer: {
-    width: 30,
-    height: 30,
-    borderRadius: 50,
-    zIndex: -1
-  }
-});
-
 const markerTypes = {
-  'academic': {icon: 'school', backgroundColor: '#005eaf'},
-  'recreational': {icon: 'basketball', backgroundColor: '#00a651'},
-  'administrative': {icon: 'office-building', backgroundColor: '#6d0093'},
-  'food': {icon: 'food', backgroundColor: '#d26000'},
-  'dormitory': {icon: 'home', backgroundColor: '#864600'},
+  'academic': {displayName: "Academics", icon: 'school', backgroundColor: '#005eaf'},
+  'recreational': {displayName: "Recreational", icon: 'basketball', backgroundColor: '#00a651'},
+  'administrative': {displayName: "Administrative", icon: 'office-building', backgroundColor: '#6d0093'},
+  'food': {displayName: "Food", icon: 'food', backgroundColor: '#d26000'},
+  'dormitory': {displayName: "Dormitories", icon: 'home', backgroundColor: '#864600'},
   'parking-fac-staff': {icon: 'parking', backgroundColor: '#7e0000'},
   'parking-commuter': {icon: 'parking', backgroundColor: '#005eaf'},
   'parking-resident': {icon: 'parking', backgroundColor: '#b69400'},
@@ -256,7 +342,78 @@ function getMarkerType(folderName, name) {
   }
   else
   {
-    console.log("Unknown folder name: " + folderName);
+    // console.log("Unknown folder name: " + folderName);
     return undefined
   }
 }
+
+
+
+const styles = StyleSheet.create({
+  text: {
+    ...sharedStyles.text,
+    color: 'black',
+    fontSize: 30,
+  },
+  container: {
+    ...sharedStyles.container,
+  },
+  map: {
+    width: '100%',
+    height: '100%',
+  },
+  markerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  markerTextContainer: {
+    marginLeft: 35,
+    width: '300%',
+    position: 'absolute',
+    zIndex: 1
+  },
+  markerText: {
+    flexWrap: 'wrap',
+  },
+  markerIconContainer: {
+    width: 30,
+    height: 30,
+    borderRadius: 50,
+    zIndex: -1
+  },
+  filterContainer: {
+    position: 'absolute',
+    top: 10,
+    left: 10,
+  },
+  filterButton: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  filterOption: {
+    position: 'absolute',
+    flexDirection: 'row',
+    alignItems: 'center',
+    // paddingHorizontal: 12,
+    height: 50,
+    borderRadius: 25,
+    left: 0,
+    zIndex: 5,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+    width: '350%',
+  }
+});
