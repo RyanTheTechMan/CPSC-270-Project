@@ -20,6 +20,10 @@ const ProfileData = {
     moneyBalance: 16.03,
     printAllowance: 50,
     printBalance: 48.52,
+    cumulativeGPA: 3.759,
+    overallProgress: 0.42,
+    totalUnits: 25.5 / 33.5,
+    totalUnitsFromSchool: 21.5 / 33,
     terms: [
 	{id: 1, title: "Fall 2020", grades: [
 		{id: 1, title: "CPSC120", description: "A"},
