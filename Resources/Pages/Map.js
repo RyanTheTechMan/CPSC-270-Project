@@ -98,7 +98,7 @@ function LoadMapData(onMarkersLoaded) {
 
   return markers;
 }
-function FilterButton({ filter, setFilter }) {
+function FilterButton({setFilter}) {
   const [isOpen, setIsOpen] = useState(false);
   const toggleFilter = () => setIsOpen(!isOpen);
 
@@ -194,17 +194,17 @@ function FilterButton({ filter, setFilter }) {
   }
 
   const getFilterItems = () => {
-    const allButton = <CreateFilterType type={"all"} index={filterIndex}/>
+    const allButton = <CreateFilterType type={"all"} index={filterIndex} key={"all"}/>
 
     const filterButtons = Object.keys(markerTypes).map((type, index) => {
       if (type.startsWith('parking')) return null;
       filterIndex++;
-      return <CreateFilterType type={type} index={filterIndex}/>
-    })
+      return <CreateFilterType type={type} index={filterIndex} key={type}/>
+    }).filter((item) => item !== null); // Filter out any null elements from the list
 
     filterIndex++;
 
-    const parkingButton = <CreateFilterType type={"parking"} index={filterIndex}/>
+    const parkingButton = <CreateFilterType type={"parking"} index={filterIndex} key={"parking"}/>
 
     return ([allButton, ...filterButtons, parkingButton]);
   }
@@ -291,7 +291,7 @@ function Map({navigation}) {
       >
         {markers && renderMarkers(markers)}
       </MapView>
-      <FilterButton filter={filter} setFilter={setFilter}/>
+      <FilterButton setFilter={setFilter}/>
     </View>
   );
 }
