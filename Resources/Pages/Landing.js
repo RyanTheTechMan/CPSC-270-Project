@@ -9,7 +9,7 @@ const LandingPage = ({navigation}) => {
     { id: 0, title: 'Dining Options' , pageName: 'Dining'},
     { id: 1, title: 'Mail Services' , pageName: 'Mail'},
     { id: 2, title: 'Academic Information' , pageName: 'Academics'},
-    { id: 3, title: 'Financial Information', pageName: undefined },
+    { id: 3, title: 'Financial Information', pageName: 'Financial' },
     { id: 4, title: '. . .', pageName: undefined},
   ];
 

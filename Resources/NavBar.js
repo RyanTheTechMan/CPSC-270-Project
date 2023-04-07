@@ -9,7 +9,8 @@ import ProfileButton from './Profile/ProfileButton';
 
 
 // Import pages to be used in the bottom tab navigator
-import AcademicInformationPage from './Pages/AcademicInformation'
+import AcademicInformationPage from './Pages/AcademicInformation';
+import FinancialInformationPage from './Pages/FinancialInformation';
 import Map from './Pages/Map';
 import DemoPage from './Pages/DemoPage';
 import SafetyList from "./Pages/SafetyInfo";
@@ -126,6 +127,7 @@ function NavBar() {
       <Stack.Screen name="Dining" component={DiningStack}/>
       <Stack.Screen name="Academics" component={AcademicInformationPage}/>
       <Stack.Screen name="Calendar" component={CalendarPage}/>
+	 <Stack.Screen name="Financial" component={FinancialInformationPage} />
     </Stack.Navigator>
   );
 }
