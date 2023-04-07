@@ -72,7 +72,8 @@ export const cavernMenu = [
 
 ]
 
-const { width, height } = Dimensions.get('window');
+//No longer needed.
+//const { width, height } = Dimensions.get('window');
 
 const Stack = createStackNavigator();
 
