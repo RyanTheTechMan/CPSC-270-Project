@@ -7,6 +7,11 @@ import {useEffect, useState} from "react";
 import {DOMParser} from "@xmldom/xmldom";
 import RenderHTML from 'react-native-render-html';
 
+import Animated, {
+  SlideInLeft, SlideOutLeft,
+  ZoomInUp, ZoomOutDown, ZoomOutUp
+} from "react-native-reanimated";
+
 const MAP_KML_URL = "https://www.google.com/maps/d/kml?mid=1lA47_0BtU22mSzSdaSGpmo0w5Ew&forcekml=1"; // Roanoke College Google Map
 
 function MarkerContent({name, type}) {
@@ -27,76 +32,75 @@ function MarkerContent({name, type}) {
 }
 
 function LoadMapData(onMarkersLoaded) {
+  // console.log("Loading map data...");
   let markers = [];
 
-  useEffect(() => {
-    const fetchKml = async () => {
-      const response = await fetch(MAP_KML_URL);
-      const kmlData = await response.text();
+  const fetchKml = async () => {
+    const response = await fetch(MAP_KML_URL);
+    const kmlData = await response.text();
 
-      const parser = new DOMParser();
-      const kmlXML = parser.parseFromString(kmlData, "text/xml");
+    const parser = new DOMParser();
+    const kmlXML = parser.parseFromString(kmlData, "text/xml");
 
-      const folders = Array.from(kmlXML.getElementsByTagName("Folder"));
-      if (folders.length === 0) return null;
+    const folders = Array.from(kmlXML.getElementsByTagName("Folder"));
+    if (folders.length === 0) return null;
 
-      Array.from(folders).forEach((folder) => {
-        const folderName = folder.getElementsByTagName("name")[0].textContent;
-        Array.from(folder.getElementsByTagName("Placemark")).forEach((placemark) => {
-          const nameElement = placemark.getElementsByTagName("name")[0];
-          const coordinatesElement = placemark.getElementsByTagName("coordinates")[0];
-          const infoElement = placemark.getElementsByTagName("description")[0];
+    Array.from(folders).forEach((folder) => {
+      const folderName = folder.getElementsByTagName("name")[0].textContent;
+      Array.from(folder.getElementsByTagName("Placemark")).forEach((placemark) => {
+        const nameElement = placemark.getElementsByTagName("name")[0];
+        const coordinatesElement = placemark.getElementsByTagName("coordinates")[0];
+        const infoElement = placemark.getElementsByTagName("description")[0];
 
-          if (!nameElement || !coordinatesElement) {
-            console.log("Invalid marker!!");
+        if (!nameElement || !coordinatesElement) {
+          console.log("Invalid marker!!");
+        }
+        else {
+          const name = nameElement.textContent;
+          const coordinates = coordinatesElement.textContent.split(",");
+
+          let description = undefined;
+          let imgSrc = undefined;
+
+          if (infoElement) {
+            const info = infoElement.textContent;
+
+            // Extract the image source
+            const imgMatch = info.match(/<img[^>]*src="([^"]*)"/);
+            imgSrc = imgMatch && imgMatch[1] || null;
+
+            // Remove the <img> element from the info string
+            const cleanedInfo = info.replace(/<img[^>]*>/, '');
+
+            // Use the RenderHTML component to render the cleaned HTML string
+            const renderedHTML = <RenderHTML contentWidth={1} source={{ html: cleanedInfo }} />;
+
+            // Extract the text content from the rendered HTML
+            description = renderedHTML.props.source.html.replace(/<[^>]+>/g, '').trim();
           }
-          else {
-            const name = nameElement.textContent;
-            const coordinates = coordinatesElement.textContent.split(",");
 
-            let description = undefined;
-            let imgSrc = undefined;
-
-            if (infoElement) {
-              const info = infoElement.textContent;
-
-              // Extract the image source
-              const imgMatch = info.match(/<img[^>]*src="([^"]*)"/);
-              imgSrc = imgMatch && imgMatch[1] || null;
-
-              // Remove the <img> element from the info string
-              const cleanedInfo = info.replace(/<img[^>]*>/, '');
-
-              // Use the RenderHTML component to render the cleaned HTML string
-              const renderedHTML = <RenderHTML contentWidth={1} source={{ html: cleanedInfo }} />;
-
-              // Extract the text content from the rendered HTML
-              description = renderedHTML.props.source.html.replace(/<[^>]+>/g, '').trim();
-            }
-
-            const markerType = getMarkerType(folderName, name);
-            if (markerType !== undefined) {
-              markers = [...markers, {
-                id: markers.length,
-                displayName: name,
-                description: description,
-                coordinate: {
-                  latitude: parseFloat(coordinates[1]),
-                  longitude: parseFloat(coordinates[0]),
-                },
-                type: markerType,
-                image: imgSrc,
-              }];
-            }
+          const markerType = getMarkerType(folderName, name);
+          if (markerType !== undefined) {
+            markers = [...markers, {
+              id: markers.length,
+              displayName: name,
+              description: description,
+              coordinate: {
+                latitude: parseFloat(coordinates[1]),
+                longitude: parseFloat(coordinates[0]),
+              },
+              type: markerType,
+              image: imgSrc,
+            }];
           }
-        })
-      });
-      onMarkersLoaded(markers);
-    }
-    fetchKml();
-  }, []);
-
-  return markers;
+        }
+      })
+    });
+    // console.log("Running callback")
+    onMarkersLoaded(markers);
+    // console.log("Callback finished")
+  }
+  fetchKml();
 }
 function FilterButton({setFilter}) {
   const [isOpen, setIsOpen] = useState(false);
@@ -193,21 +197,39 @@ function FilterButton({setFilter}) {
     )
   }
 
-  const getFilterItems = () => {
-    const allButton = <CreateFilterType type={"all"} index={filterIndex} key={"all"}/>
+  const AnimatedComponent = Animated.createAnimatedComponent(View);
+  const FilterOption = ({ type, index }) => {
 
-    const filterButtons = Object.keys(markerTypes).map((type, index) => {
-      if (type.startsWith('parking')) return null;
-      filterIndex++;
-      return <CreateFilterType type={type} index={filterIndex} key={type}/>
-    }).filter((item) => item !== null); // Filter out any null elements from the list
+    return (
+      <AnimatedComponent entering={SlideInLeft.duration(100 * index)} exiting={SlideOutLeft.duration(150 * index)}>
+        <CreateFilterType type={type} index={index} />
+      </AnimatedComponent>
+    );
+  };
+
+  const getFilterItems = () => {
+    const allButton = <FilterOption type={"all"} index={filterIndex} key={"all"} />;
+
+    const filterButtons = Object.keys(markerTypes)
+      .map((type, index) => {
+        if (type.startsWith("parking")) return null;
+        filterIndex++;
+        return <FilterOption type={type} index={filterIndex} key={type} />;
+      })
+      .filter((item) => item !== null); // Filter out any null elements from the list
 
     filterIndex++;
 
-    const parkingButton = <CreateFilterType type={"parking"} index={filterIndex} key={"parking"}/>
+    const parkingButton = <FilterOption type={"parking"} index={filterIndex} key={"parking"} />
 
-    return ([allButton, ...filterButtons, parkingButton]);
-  }
+    return (
+      <>
+        {allButton}
+        {filterButtons}
+        {parkingButton}
+      </>
+    );
+  };
 
   return (
     <View style={styles.filterContainer}>
@@ -219,16 +241,15 @@ function FilterButton({setFilter}) {
   );
 }
 
-function Map({navigation}) {
-  const [filter, setFilter] = useState([]);
-
-  const renderMarkers = (data) => {
-    return data.map((marker) => {
+function RenderMap({navigation, markers, filter, setFilter}) {
+  const renderMarkers = (markers) => {
+    const markerList = markers.map((marker) => {
       // If this marker is not contained in the filter, don't render it
       if (filter.length !== 0 && !filter.includes(marker.type)) {
         // console.log("Filtering out " + marker.displayName + " (" + marker.type + ")");
         return null;
       }
+
       return (
         <MapMarker
           coordinate={marker.coordinate}
@@ -242,15 +263,15 @@ function Map({navigation}) {
           <MarkerContent name={marker.displayName} type={marker.type}/>
         </MapMarker>
       )
-    })
+    }).filter((item) => item !== null); // Filter out any null elements from the list
+
+    // console.log("Rendering " + markerList.length + " markers...");
+
+    return markerList;
   }
 
-  const [markers, setMarkers] = useState([]);
-
-  LoadMapData(setMarkers);
-
   return (
-    <View style={styles.container} >
+    <View style={styles.container}>
       <MapView
         style={styles.map}
         initialRegion={{
@@ -276,15 +297,15 @@ function Map({navigation}) {
         // userInterfaceStyle={"dark"}
         maxZoomLevel={18}
         // minZoomLevel={14} // For some reason breaks zoom
-        onPress={(e) => {
-          console.log(e.nativeEvent.coordinate);
-        }}
-        onMarkerPress={(e) => {
-          console.log(e.nativeEvent);
-        }}
-        onMarkerSelect={(e) => {
-          console.log(e.nativeEvent);
-        }}
+        // onPress={(e) => {
+        //   console.log(e.nativeEvent.coordinate);
+        // }}
+        // onMarkerPress={(e) => {
+        //   console.log(e.nativeEvent);
+        // }}
+        // onMarkerSelect={(e) => {
+        //   console.log(e.nativeEvent);
+        // }}
         loadingEnabled={true}
         loadingBackgroundColor={'rgba(0,0,0,0.5)'}
         loadingIndicatorColor={header_color}
@@ -294,6 +315,17 @@ function Map({navigation}) {
       <FilterButton setFilter={setFilter}/>
     </View>
   );
+}
+
+function Map({navigation}) {
+  const [markers, setMarkers] = useState([]);
+  const [filter, setFilter] = useState([]);
+
+  useEffect(() => {
+    LoadMapData(setMarkers);
+  }, []);
+
+  return <RenderMap navigation={navigation} markers={markers} filter={filter} setFilter={setFilter} />;
 }
 
 export default Map;
@@ -414,6 +446,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
-    width: '350%',
+    width: '315%',
   }
 });
