@@ -40,12 +40,12 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 10,
     marginRight: 20,
-    backgroundColor: '#bdbdbd',
+    backgroundColor: '#fff',
   },
   title: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#ccc',
+    color: '#fff',
   },
 });
 
