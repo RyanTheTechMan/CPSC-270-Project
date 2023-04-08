@@ -9,13 +9,15 @@ import ProfileButton from './Profile/ProfileButton';
 
 
 // Import pages to be used in the bottom tab navigator
-import AcademicInformationPage from './Pages/AcademicInformation'
+import AcademicInformationPage from './Pages/AcademicInformation';
+import FinancialInformationPage from './Pages/FinancialInformation';
 import Map from './Pages/Map';
 import DemoPage from './Pages/DemoPage';
 import SafetyList from "./Pages/SafetyInfo";
 import MailPage from "./Pages/Mail";
 import LandingPage from './Pages/Landing';
 import {DiningStack} from "./Menus";
+import {CalendarPage} from "./Calendar";
 import MapMarker from "./Pages/MapMarker";
 
 const EmptyComponent = () => <View />;
@@ -76,7 +78,7 @@ function NavBar() {
                     case 'Temp':
                       iconName = focused ? 'list' : 'list-outline';
                       break;
-                    case 'Schedule':
+                    case 'Calendar':
                       iconName = focused ? 'calendar' : 'calendar-outline';
                       break;
                     case 'Safety':
@@ -112,7 +114,7 @@ function NavBar() {
               <Tab.Screen name="Home" component={LandingPage} options={{tabBarButton: () => null}} />
 
               <Tab.Screen name="Map" component={Map} />
-              <Tab.Screen name="Schedule" component={EmptyComponent} />
+              <Tab.Screen name="Calendar" component={CalendarPage} />
 
               <Tab.Screen name="Profile" component={EmptyComponent} />
 
@@ -126,6 +128,8 @@ function NavBar() {
       <Stack.Screen name="Mail" component={MailPage}/>
       <Stack.Screen name="Dining" component={DiningStack}/>
       <Stack.Screen name="Academics" component={AcademicInformationPage}/>
+      <Stack.Screen name="Calendar" component={CalendarPage}/>
+	 <Stack.Screen name="Financial" component={FinancialInformationPage} />
     </Stack.Navigator>
   );
 }

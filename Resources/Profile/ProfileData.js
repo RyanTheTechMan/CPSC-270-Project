@@ -1,3 +1,5 @@
+import {Image} from "react-native";
+
 const ProfileData = {
     firstName: "John",
     middleName: "Jacob",
@@ -5,7 +7,7 @@ const ProfileData = {
     email: "jdoe@mail.roanoke.edu",
     phone: "123-456-7890",
     id: "123456789",
-    profileImage: 'https://fakeface.rest/thumb/view?gender=male&minimum_age=18&maximum_age=40',
+    profileImage: Image.resolveAssetSource(require('./image.jpeg')).uri,
     fullName: function() {return this.firstName + " " + this.middleName + " " + this.lastName;},
     displayName: function() {return this.firstName + " " + this.lastName;},
     mailboxNumber: "1234",
@@ -20,6 +22,10 @@ const ProfileData = {
     moneyBalance: 16.03,
     printAllowance: 50,
     printBalance: 48.52,
+    cumulativeGPA: 3.759,
+    overallProgress: 0.42,
+    totalUnits: 25.5 / 33.5,
+    totalUnitsFromSchool: 21.5 / 33,
     terms: [
 	{id: 1, title: "Fall 2020", grades: [
 		{id: 1, title: "CPSC120", description: "A"},
