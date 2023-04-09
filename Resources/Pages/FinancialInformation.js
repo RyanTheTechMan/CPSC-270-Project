@@ -21,11 +21,11 @@ function StudentFinance()
 	return(
 		<RoundedRect title={"Account Overview"}>
 		    <Text style={styles.AmountDue}>{"    Amount Due                                               -$800.00"}</Text>
-		    <Divider width={1} color={style.header_color} />
+		    <Divider width={1} color={style.secondary_color} />
 		    <Text style={styles.AmountDue}>{"+ Amount Overdue                                              $0.00"}</Text>
-		    <Divider width={2} color={style.header_color} />
+		    <Divider width={2} color={style.secondary_color} />
 		    <Text style={styles.AmountDue}>{"= Total Amount Due                                      -$800.00"}</Text>
-		    <Divider width={2} color={style.header_color} /> 
+		    <Divider width={2} color={style.secondary_color} /> 
 		    <Text style={styles.AmountDue}>{"= Total Account Balance                               -$800.00"}</Text>
 		</RoundedRect>
 	)
