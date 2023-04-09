@@ -1,5 +1,5 @@
 import React from "react";
-import {SafeAreaView, ScrollView, View, Text} from "react-native";
+import {StyleSheet, ScrollView, View, Text} from "react-native";
 import ProfileData from '../Profile/ProfileData.js';
 import { RoundedRect, RoundedRectList } from "../RoundedRect.js";
 import * as Progress from 'react-native-progress';
@@ -8,8 +8,15 @@ import * as style from "../Shared/styles";
 function GPA()
 {
 	return(
-		<RoundedRect title={"Cumulative GPA"}>
-			<Text>{ProfileData.cumulativeGPA}</Text>
+		<RoundedRect title={"GPA"}>
+			<RoundedRectList>
+				<RoundedRect title={"Cumulative GPA"}>
+					<Text>{ProfileData.cumulativeGPA}</Text>
+				</RoundedRect>
+				<RoundedRect title={"Major GPA"}>
+					<Text>{ProfileData.majorGPA}</Text>
+				</RoundedRect>
+			</RoundedRectList>
 		</RoundedRect>
 	)
 }
@@ -19,9 +26,13 @@ function Terms({term})
 	return(
 		<RoundedRect title={term.title}>
 			<RoundedRectList>
+				<RoundedRect title={"Term GPA: "}>
+					<Text>{term.gpa}</Text>
+				</RoundedRect>
 				{term.grades.map((myClass) => (
 					<RoundedRect key={myClass.title} title={myClass.title}>
-						<Text>{myClass.description}</Text>
+						<Text>{"Midterm: " + myClass.midterm}</Text>
+						<Text>{"Final: " + myClass.final}</Text>
 					</RoundedRect>
 				))}
 			</RoundedRectList>
