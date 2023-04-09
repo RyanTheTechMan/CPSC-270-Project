@@ -114,7 +114,7 @@ function NavBar() {
               <Tab.Screen name="Home" component={LandingPage} options={{tabBarButton: () => null}} />
 
               <Tab.Screen name="Map" component={Map} />
-              <Tab.Screen name="Calendar" component={CalendarStack} />
+              <Tab.Screen name="Calendar" component={CalendarPage} />
 
               <Tab.Screen name="Profile" component={EmptyComponent} />
 
@@ -128,7 +128,7 @@ function NavBar() {
       <Stack.Screen name="Mail" component={MailPage}/>
       <Stack.Screen name="Dining" component={DiningStack}/>
       <Stack.Screen name="Academics" component={AcademicInformationPage}/>
-      <Stack.Screen name="Calendar" component={CalendarStack}/>
+      <Stack.Screen name="Calendar" component={CalendarPage}/>
 	 <Stack.Screen name="Financial" component={FinancialInformationPage} />
     </Stack.Navigator>
   );
