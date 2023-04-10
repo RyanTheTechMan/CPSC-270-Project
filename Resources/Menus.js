@@ -128,17 +128,17 @@ function DiningPage({ navigation, route }) {
       data={menuData}
       keyExtractor={(item) => item.day}
       renderItem={({ item }) => (
-        <>
+        <View>
           {<Text style={styles.day}>{item.day}</Text>}
           {item.meals.map((meal) => (
-            <View key={meal.meal} style={{borderWidth: 4}}>
+            <View key={meal.meal} style={styles.mealContainer}>
               <Text style={styles.meal}>{meal.meal}</Text>
               {meal.mealItems.map((mealItem) => (
                 <Text style={styles.item} key={mealItem}>{mealItem}</Text>
               ))}
             </View>
           ))}
-        </>
+        </View>
       )}
     />
   );
@@ -174,7 +174,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#4a4a4a',
     alignItems: 'center',
-    borderWidth: 2,
+    width: '100%',
+  },
+  mealContainer: {
+    alignItems: 'center',
   },
   meal: {
     flex: 1,
@@ -183,16 +186,14 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     fontWeight: '600',
     color: '#313131',
-    borderWidth: 2,
-    width: '70%',
-    alignItems: 'center',
-
+    width: 'auto',
   },
   item: {
     fontSize: 18,
-    marginLeft: 20,
     marginBottom: 5,
     color: '#313131',
+    width: 'auto',
+
   },
   diningButtons: {
     flexDirection: 'row',

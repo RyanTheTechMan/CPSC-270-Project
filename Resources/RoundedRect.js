@@ -121,6 +121,7 @@ const styles = StyleSheet.create({
   icon: {
     fontSize: 24,
     fontWeight: "bold",
+    color: '#fff'
   },
   content: {
     padding: 16,
