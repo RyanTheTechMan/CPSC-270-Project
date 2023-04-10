@@ -9,7 +9,9 @@ import {
     View
 } from 'react-native';
 import { Agenda, CalendarProvider } from 'react-native-calendars';
+import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 const calendarData = {
     '2023-04-10': [{ name: 'CPSC270', time: '10:50-11:50pm' }, { name: 'CHEM342', time: '12:00-1:00pm' }],
@@ -18,9 +20,30 @@ const calendarData = {
     '2023-04-14': [{ name: 'CPSC270', time: '10:50-11:50pm' }, { name: 'CHEM342', time: '12:00-1:00pm' }],
 }
 
+const Stack = createStackNavigator();
 
+export function CalendarStack() {
+  return (
+    <Stack.Navigator initialRouteName="EventCalendar" screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="EventCalendar" component={CalendarPage} />
+      <Stack.Screen name="AddEvent" component={AddEventPage} />
+    </Stack.Navigator>
+  );
+}
 
-export function CalendarPage() {
+function AddEventPage() {
+return (
+<View>
+    <Text></Text>
+<TextInput>
+
+</TextInput>
+
+</View>
+);
+};
+
+export function CalendarPage({navigation}) {
     const today = new Date();
     const thisMonth = today.getMonth() + 1;
     return (
@@ -43,7 +66,7 @@ export function CalendarPage() {
                     )}
                 />
             </CalendarProvider>
-            <Pressable style={styles.addButton}>
+            <Pressable style={styles.addButton} onPress={()=>navigation.navigate('AddEvent')}>
                 <Text style={styles.addButtonText}>+</Text>
             </Pressable>
         </View>
