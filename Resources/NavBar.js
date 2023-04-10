@@ -1,4 +1,4 @@
-import React, {useLayoutEffect, useRef} from 'react';
+import React, { useLayoutEffect, useRef } from 'react';
 import { View } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -9,13 +9,16 @@ import ProfileButton from './Profile/ProfileButton';
 
 
 // Import pages to be used in the bottom tab navigator
-import AcademicInformationPage from './Pages/AcademicInformation'
+import AcademicInformationPage from './Pages/AcademicInformation';
+import FinancialInformationPage from './Pages/FinancialInformation';
 import Map from './Pages/Map';
 import DemoPage from './Pages/DemoPage';
 import SafetyList from "./Pages/SafetyInfo";
 import MailPage from "./Pages/Mail";
 import LandingPage from './Pages/Landing';
-import {DiningStack} from "./Menus";
+import { DiningStack } from "./Menus";
+import { CalendarPage, CalendarStack} from "./Calendar";
+import MapMarker from "./Pages/MapMarker";
 
 const EmptyComponent = () => <View />;
 
@@ -36,19 +39,19 @@ function HomeButton({ navigation }) {
 function NavBar() {
   return (
     <Stack.Navigator
-    screenOptions={{
-      headerStyle: {
-        backgroundColor: sharedStyles.header.backgroundColor,
-      },
-      headerBackTitleVisible: false,
-      headerTintColor: sharedStyles.header.tintColor,
-    }}
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: sharedStyles.header.backgroundColor,
+        },
+        headerBackTitleVisible: false,
+        headerTintColor: sharedStyles.header.tintColor,
+      }}
     >
       <Stack.Screen name="Root" options={{ headerShown: false }}>
         {() => (
           <View style={{ flex: 1 }}>
             <Tab.Navigator
-              screenOptions={({ route, navigation}) => ({
+              screenOptions={({ route, navigation }) => ({
                 headerStyle: {
                   backgroundColor: sharedStyles.header.backgroundColor,
                 },
@@ -75,7 +78,7 @@ function NavBar() {
                     case 'Temp':
                       iconName = focused ? 'list' : 'list-outline';
                       break;
-                    case 'Schedule':
+                    case 'Calendar':
                       iconName = focused ? 'calendar' : 'calendar-outline';
                       break;
                     case 'Safety':
@@ -83,7 +86,7 @@ function NavBar() {
                       break;
                   }
 
-                  return <Ionicons name={iconName} size={size} color={color}/>;
+                  return <Ionicons name={iconName} size={size} color={color} />;
                 },
                 headerLeft: () => {
                   if (route.name !== 'Home') {
@@ -99,7 +102,7 @@ function NavBar() {
                   borderTopRightRadius: 40, // Curve the top right corner of the tab bar
 
                   // IOS
-                  shadowOffset: {width: 0, height: -2},
+                  shadowOffset: { width: 0, height: -2 },
                   shadowOpacity: 0.15,
                   shadowRadius: 3,
 
@@ -108,10 +111,10 @@ function NavBar() {
                 },
               })}
             >
-              <Tab.Screen name="Home" component={LandingPage} options={{tabBarButton: () => null}} />
+              <Tab.Screen name="Home" component={LandingPage} options={{ tabBarButton: () => null }} />
 
               <Tab.Screen name="Map" component={Map} />
-              <Tab.Screen name="Schedule" component={EmptyComponent} />
+              <Tab.Screen name="Calendar" component={CalendarStack} />
 
               <Tab.Screen name="Profile" component={EmptyComponent} />
 
@@ -121,9 +124,12 @@ function NavBar() {
           </View>
         )}
       </Stack.Screen>
-      <Stack.Screen name="Mail" component={MailPage}/>
-      <Stack.Screen name="Dining" component={DiningStack}/>
-      <Stack.Screen name="Academics" component={AcademicInformationPage}/>
+      <Stack.Screen name="MapMarker" component={MapMarker} />
+      <Stack.Screen name="Mail" component={MailPage} />
+      <Stack.Screen name="Dining" component={DiningStack} />
+      <Stack.Screen name="Academics" component={AcademicInformationPage} />
+      <Stack.Screen name="Calendar" component={CalendarStack} />
+      <Stack.Screen name="Financial" component={FinancialInformationPage} />
     </Stack.Navigator>
   );
 }

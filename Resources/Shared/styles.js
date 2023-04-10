@@ -8,6 +8,8 @@ const success_color = '#4A9772';
 const warning_color = '#F2C94C';
 const danger_color = '#D83A56';
 const neutral_color = '#EDECD3';
+const progress_bar_color = '#00804d';
+const subProgressBarWidth = 300;
 
 const sharedStyles = StyleSheet.create({
   container: {
@@ -46,5 +48,7 @@ export {
   success_color,
   warning_color,
   danger_color,
-  neutral_color
+  neutral_color,
+  progress_bar_color,
+  subProgressBarWidth
 }
