@@ -12,12 +12,12 @@ import {
 import { header_color } from "./Shared/styles";
 
 // Check if LayoutAnimation is enabled on Android
-if (
-  Platform.OS === "android" &&
-  UIManager.setLayoutAnimationEnabledExperimental
-) {
-  UIManager.setLayoutAnimationEnabledExperimental(true);
-}
+// if (
+//   Platform.OS === "android" &&
+//   UIManager.setLayoutAnimationEnabledExperimental
+// ) {
+//   UIManager.setLayoutAnimationEnabledExperimental(true);
+// }
 
 // A reusable component for rendering a rounded rectangle with a toggleable header and content
 const RoundedRect = ({
