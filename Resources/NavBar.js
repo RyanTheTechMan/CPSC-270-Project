@@ -19,6 +19,7 @@ import LandingPage from './Pages/Landing';
 import { DiningStack } from "./Menus";
 import { CalendarPage, CalendarStack} from "./Calendar";
 import MapMarker from "./Pages/MapMarker";
+import ProfileData from "./Profile/ProfileData";
 
 const EmptyComponent = () => <View />;
 
@@ -93,6 +94,10 @@ function NavBar() {
                     return <HomeButton navigation={navigation} />;
                   }
                 },
+                // show two header right buttons, call the HeaderRight component
+                headerRight: () => {
+                  return <HeaderRight navigation={navigation} route={route} />;
+                },
                 tabBarActiveTintColor: sharedStyles.unselected.color,
                 tabBarInactiveTintColor: sharedStyles.selected.color,
                 tabBarStyle: {
@@ -135,3 +140,39 @@ function NavBar() {
 }
 
 export default NavBar;
+
+function HeaderRight({ navigation, route }) {
+  const hasNotification = ProfileData.hasNotification;
+  return (
+    <View style={{ flexDirection: 'row' }}>
+      <View style={{marginRight: 15}}>
+        <Ionicons
+          name="notifications"
+          size={24}
+          color="#fff"
+          onPress={() => navigation.navigate('Notifications')}
+        >
+        </Ionicons>
+        {hasNotification &&
+          <View
+            style={{
+              width: 7,
+              height: 7,
+              borderRadius: 10,
+              backgroundColor: 'orange',
+              position: 'absolute',
+              right: 0
+            }}
+          />
+        }
+    </View>
+      <Ionicons
+        name="settings"
+        size={24}
+        color="#fff"
+        onPress={() => navigation.navigate('Settings')}
+        style={{ marginRight: 15 }}
+      />
+    </View>
+  );
+}

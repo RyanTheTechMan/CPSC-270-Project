@@ -30,6 +30,7 @@ const ProfileData = {
     attemptedCredits: 18.50,
     completedCredits: 17.50,
     paceOfCompletion: 94.59,
+		hasNotification: true,
     terms: [
 	{id: 1, title: "Fall 2020", grades: [
 		{id: 1, title: "CPSC120", midterm: "A", final: "A"},
