@@ -1,6 +1,10 @@
+//THIS IS USING AN OUTDATED COMPONENT
+
+/*
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import RectList from '../RectList.js';
+import RectList from '../OutOfDate/RectList.js';
+import sharedStyles, {neutral_color} from "../Shared/styles";
 
 const data = [
   { id: 1, title: 'Salem Police Department', description: '1(234) 567-8910' },
@@ -21,6 +25,7 @@ export default function SafetyPage() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: neutral_color
   },
 });
+*/
