@@ -2,7 +2,7 @@ import { Dimensions, StyleSheet, Text, View, SectionList, FlatList, Pressable, T
 import { createStackNavigator } from '@react-navigation/stack';
 import { useState } from "react";
 
-const commonsMenu = [
+export const commonsMenu = [
   {
     day: 'Sunday',
     meals: [{ meal: "Breakfast", mealItems: ["Eggs", "Toast"] }, { meal: "Lunch", mealItems: ["Sandwiches", "Soup", "Cookies"] }, { meal: "Dinner", mealItems: ["Pizza", "Salad", "Burgers"] }]
@@ -27,7 +27,7 @@ const commonsMenu = [
   },
 ]
 
-const freshensMenu = [
+export const freshensMenu = [
   {
     day: 'Sunday',
     meals: [{ meal: "Breakfast", mealItems: ["Breakfast Burrito", "Fruit and Yogurt", "Chicken and Waffles"] }, { meal: "Lunch", mealItems: ["Chicken Salad", "Banana", "Apple", "Smoothies"] }, { meal: "Dinner", mealItems: ["Chicken Pizza", "Home Fries", "Cucumber Slices"] }]
@@ -49,7 +49,7 @@ const freshensMenu = [
   },
 ]
 
-const cavernMenu = [
+export const cavernMenu = [
   {
     day: 'Monday',
     meals: [{ meal: "Dinner", mealItems: ["Fries", "Salad", "Burgers", "Chicken Sandwich"] }]
@@ -72,13 +72,60 @@ const cavernMenu = [
 
 ]
 
-//Renders the selected menu
-function renderMenu(selectedMenu) {
+//No longer needed.
+//const { width, height } = Dimensions.get('window');
+
+const Stack = createStackNavigator();
+
+export function DiningStack() {
   return (
+    <Stack.Navigator initialRouteName="Commons" screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Commons" component={DiningPage} />
+      <Stack.Screen name="Freshens" component={DiningPage} />
+      <Stack.Screen name="Cavern" component={DiningPage} />
+    </Stack.Navigator>
+  );
+}
+
+
+function DiningPage({ navigation, route }) {
+  const menus = {
+    Commons: commonsMenu,
+    Freshens: freshensMenu,
+    Cavern: cavernMenu,
+  };
+
+  const [selectedMenu, setSelectedMenu] = useState('Commons');
+
+  const handleMenuPress = (menu) => {
+    setSelectedMenu(menu);
+  };
+
+  const renderMenuButton = (menu) => (
+    <TouchableOpacity
+      style={[
+        styles.button,
+        selectedMenu === menu ? styles.selectedButton : styles.unselectedButton,
+      ]}
+      onPress={() => handleMenuPress(menu)}
+      key={menu}
+    >
+      <Text
+        style={[
+          styles.buttonText,
+          selectedMenu === menu ? styles.selectedButtonText : null,
+        ]}
+      >
+        {menu}
+      </Text>
+    </TouchableOpacity>
+  );
+
+  const renderMenu = (menuData) => (
     <FlatList
       style={styles.menuSchedule}
       showsVerticalScrollIndicator={false}
-      data={selectedMenu}
+      data={menuData}
       keyExtractor={(item) => item.day}
       renderItem={({ item }) => (
         <View>
@@ -94,83 +141,19 @@ function renderMenu(selectedMenu) {
         </View>
       )}
     />
-  )
-};
+  );
 
-//Changes menu selected
-function handleMenuPress(diningMenu, setSelectedMenu) {
-  setSelectedMenu(diningMenu);
-};
-
-//Converts dining location to corresponding menu object
-function locationToMenuConverter(diningLocation) {
-  switch (diningLocation) {
-    case 'Commons':
-      return commonsMenu;
-    case 'Cavern':
-      return cavernMenu;
-    case 'Freshens':
-      return freshensMenu;
-  }
-};
-
-//Renders buttons for selecting dining locations
-function renderMenuButton(diningLocation, selectedMenu, setSelectedMenu) {
-  diningMenu = locationToMenuConverter(diningLocation);
-  return (
-    <TouchableOpacity
-      style={[
-        styles.button,
-        selectedMenu === diningMenu ? styles.selectedButton : styles.unselectedButton,
-      ]}
-      onPress={() => handleMenuPress(diningMenu, setSelectedMenu)}
-      key={diningMenu}
-    >
-      <Text
-        style={[
-          styles.buttonText,
-          selectedMenu === diningMenu ? styles.selectedButtonText : null,
-        ]}
-      >
-        {diningMenu}
-      </Text>
-    </TouchableOpacity>
-  )
-};
-
-//Calls functions that render buttons to select dining locations and menu of activate button  
-
-function DiningPage() {
-
-  const [selectedMenu, setSelectedMenu] = useState(commonsMenu);
-console.log(selectedMenu);
   return (
     <View style={styles.page}>
       <View style={styles.diningButtons}>
-        {renderMenuButton('Cavern', selectedMenu, setSelectedMenu)}
-        {renderMenuButton('Commons', selectedMenu, setSelectedMenu)}
-        {renderMenuButton('Freshens', selectedMenu, setSelectedMenu)}
+        {renderMenuButton('Cavern')}
+        {renderMenuButton('Commons')}
+        {renderMenuButton('Freshens')}
       </View>
-      {renderMenu(selectedMenu)}
+      {renderMenu(menus[selectedMenu])}
     </View>
   );
 }
-
-
-//Navigation component that manages different dining location pages.  Entry point for Dining.
-
-const Stack = createStackNavigator();
-
-export function DiningStack() {
-  return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Commons" component={DiningPage} />
-      <Stack.Screen name="Freshens" component={DiningPage} />
-      <Stack.Screen name="Cavern" component={DiningPage} />
-    </Stack.Navigator>
-  );
-}
-
 
 const styles = StyleSheet.create({
   page: {
