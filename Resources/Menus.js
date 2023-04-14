@@ -1,5 +1,4 @@
 import { Dimensions, StyleSheet, Text, View, SectionList, FlatList, Pressable, TouchableOpacity, ScrollView, } from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
 import { useState } from "react";
 
 export const commonsMenu = [
@@ -69,73 +68,61 @@ export const cavernMenu = [
     day: 'Saturday',
     meals: [{ meal: "Dinner", mealItems: ["Fries", "Salad", "Burgers", "Chicken Sandwich"] }]
   },
-
 ]
 
-//No longer needed.
-//const { width, height } = Dimensions.get('window');
 
+//renders the items for a meal
+function RenderMealItems(mealItems){
+  return(
+    <FlatList
+      style={styles.mealContainer}
+      data={mealItems.mealItems}
+      renderItem={({ item }) => (
+        <View>
+          <Text style={styles.mealItemText}>{item}</Text>
+        </View>
+      )}
+    />
+  );
+}
 
+//renders the meals offered on a day
+function RenderMeal(dayMeals) {
+  return (
+    <FlatList
+      style={styles.mealContainer}
+      data={dayMeals.dayMeals}
+      renderItem={({ item }) => (
+        <View>
+          <Text style={styles.meal}>{item.meal}</Text>
+          <RenderMealItems mealItems={item.mealItems}/>
+        </View>
+      )}
+    />
+  );
+}
 
+//renders the days a dining location is open
+function RenderDay(locationMenu) {
+  return (
+    <FlatList
+      style={styles.menuSchedule}
+      showsVerticalScrollIndicator={false}
+      data={locationMenu.locationMenu}
+      keyExtractor={(item) => item.day}
+      renderItem={({ item }) => (
+        <View>
+          <Text key={item.day} style={styles.day} >{item.day}</Text>
+          {console.log(item.day)}
+          <RenderMeal dayMeals={item.meals} />
+        </View>
+      )}
+    />
+  );
+}
 
-/*function DiningPage({ navigation, route }) {
-  const menus = {
-    Commons: commonsMenu,
-    Freshens: freshensMenu,
-    Cavern: cavernMenu,
-  };
-
-  const [selectedMenu, setSelectedMenu] = useState('Commons');
-
-  const handleMenuPress = (menu) => {
-    setSelectedMenu(menu);
-  };
-
-  const renderMenuButton = (menu) => (
-    <TouchableOpacity
-      style={[
-        styles.button,
-        selectedMenu === menu ? styles.selectedButton : styles.unselectedButton,
-      ]}
-      onPress={() => handleMenuPress(menu)}
-      key={menu}
-    >
-      <Text
-        style={[
-          styles.buttonText,
-          selectedMenu === menu ? styles.selectedButtonText : null,
-        ]}
-      >
-        {menu}
-      </Text>
-    </TouchableOpacity>
-  );*/
-
-/*const renderMenu = (menuData) => (
-  <FlatList
-    style={styles.menuSchedule}
-    showsVerticalScrollIndicator={false}
-    data={menuData}
-    keyExtractor={(item) => item.day}
-    renderItem={({ item }) => (
-      <View>
-        {<Text style={styles.day}>{item.day}</Text>}
-        {item.meals.map((meal) => (
-          <View key={meal.meal} style={styles.mealContainer}>
-            <Text style={styles.meal}>{meal.meal}</Text>
-            {meal.mealItems.map((mealItem) => (
-              <Text style={styles.item} key={mealItem}>{mealItem}</Text>
-            ))}
-          </View>
-        ))}
-      </View>
-    )}
-  />
-);*/
-
-//converts the name of a dining location to the corresponding menu object
+//takes the name of a dining location and returns the corresponding menu object
 function convertLocationToMenu(selectedLocation) {
-  console.log('selectedLocation = ' + selectedLocation)
   let locationMenu;
   switch (selectedLocation) {
     case 'Cavern':
@@ -151,16 +138,13 @@ function convertLocationToMenu(selectedLocation) {
   return locationMenu;
 }
 
-function RenderLocationMenu(props){
+function RenderLocationMenu(props) {
   const selectedLocation = props.selectedLocation;
   const locationMenu = convertLocationToMenu(selectedLocation);
-  console.log(locationMenu);
+  return (
+    <RenderDay locationMenu={locationMenu} />
+  );
 }
-
-
-
-
-
 
 //Render individual dining location buttons that will set state selectedLocation to named dining location when pressed
 function RenderDiningLocationButton(props) {
@@ -171,11 +155,11 @@ function RenderDiningLocationButton(props) {
     >
       <Text style={[styles.buttonText, props.selectedLocation === props.diningLocation ? styles.selectedText : null]} >{props.diningLocation}</Text>
     </TouchableOpacity>
-  )
+  );
 }
 
 //Render dining location buttons and menu
-export function DiningStack() {
+export function DiningPage() {
 
   const [selectedLocation, setSelectedLocation] = useState('Cavern');
 
@@ -216,7 +200,9 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   mealContainer: {
-    alignItems: 'center',
+    flex: 1,
+    alignContent: 'center',
+    borderWidth: 2,
   },
   meal: {
     flex: 1,
@@ -227,7 +213,7 @@ const styles = StyleSheet.create({
     color: '#313131',
     width: 'auto',
   },
-  item: {
+  mealItemText: {
     fontSize: 18,
     marginBottom: 5,
     color: '#313131',
