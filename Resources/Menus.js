@@ -70,8 +70,6 @@ export const cavernMenu = [
   },
 ]
 
-
-//renders the items for a meal
 function RenderMealItems(mealItems){
   return(
     <FlatList
@@ -86,7 +84,6 @@ function RenderMealItems(mealItems){
   );
 }
 
-//renders the meals offered on a day
 function RenderMeal(dayMeals) {
   return (
     <FlatList
@@ -102,7 +99,6 @@ function RenderMeal(dayMeals) {
   );
 }
 
-//renders the days a dining location is open
 function RenderDay(locationMenu) {
   return (
     <FlatList
@@ -121,7 +117,6 @@ function RenderDay(locationMenu) {
   );
 }
 
-//takes the name of a dining location and returns the corresponding menu object
 function convertLocationToMenu(selectedLocation) {
   let locationMenu;
   switch (selectedLocation) {
@@ -146,7 +141,6 @@ function RenderLocationMenu(props) {
   );
 }
 
-//Render individual dining location buttons that will set state selectedLocation to named dining location when pressed
 function RenderDiningLocationButton(props) {
   return (
     <TouchableOpacity
@@ -158,7 +152,6 @@ function RenderDiningLocationButton(props) {
   );
 }
 
-//Render dining location buttons and menu
 export function DiningPage() {
 
   const [selectedLocation, setSelectedLocation] = useState('Cavern');
