@@ -111,41 +111,64 @@ export const cavernMenu = [
     </TouchableOpacity>
   );*/
 
-  /*const renderMenu = (menuData) => (
-    <FlatList
-      style={styles.menuSchedule}
-      showsVerticalScrollIndicator={false}
-      data={menuData}
-      keyExtractor={(item) => item.day}
-      renderItem={({ item }) => (
-        <View>
-          {<Text style={styles.day}>{item.day}</Text>}
-          {item.meals.map((meal) => (
-            <View key={meal.meal} style={styles.mealContainer}>
-              <Text style={styles.meal}>{meal.meal}</Text>
-              {meal.mealItems.map((mealItem) => (
-                <Text style={styles.item} key={mealItem}>{mealItem}</Text>
-              ))}
-            </View>
-          ))}
-        </View>
-      )}
-    />
-  );*/
+/*const renderMenu = (menuData) => (
+  <FlatList
+    style={styles.menuSchedule}
+    showsVerticalScrollIndicator={false}
+    data={menuData}
+    keyExtractor={(item) => item.day}
+    renderItem={({ item }) => (
+      <View>
+        {<Text style={styles.day}>{item.day}</Text>}
+        {item.meals.map((meal) => (
+          <View key={meal.meal} style={styles.mealContainer}>
+            <Text style={styles.meal}>{meal.meal}</Text>
+            {meal.mealItems.map((mealItem) => (
+              <Text style={styles.item} key={mealItem}>{mealItem}</Text>
+            ))}
+          </View>
+        ))}
+      </View>
+    )}
+  />
+);*/
+
+//converts the name of a dining location to the corresponding menu object
+function convertLocationToMenu(selectedLocation) {
+  console.log('selectedLocation = ' + selectedLocation)
+  let locationMenu;
+  switch (selectedLocation) {
+    case 'Cavern':
+      locationMenu = cavernMenu;
+      break;
+    case 'Commons':
+      locationMenu = commonsMenu;
+      break;
+    case 'Freshens':
+      locationMenu = freshensMenu;
+      break;
+  }
+  return locationMenu;
+}
+
+function RenderLocationMenu(props){
+  const selectedLocation = props.selectedLocation;
+  const locationMenu = convertLocationToMenu(selectedLocation);
+  console.log(locationMenu);
+}
 
 
 
 
 
 
-
-//Render individual items
+//Render individual dining location buttons that will set state selectedLocation to named dining location when pressed
 function RenderDiningLocationButton(props) {
   return (
     <TouchableOpacity
       style={[styles.button, props.selectedLocation === props.diningLocation ? styles.selectedButton : styles.unselectedButton]}
       onPress={() => props.handleLocationPress(props.diningLocation)}
-      >
+    >
       <Text style={[styles.buttonText, props.selectedLocation === props.diningLocation ? styles.selectedText : null]} >{props.diningLocation}</Text>
     </TouchableOpacity>
   )
@@ -159,12 +182,14 @@ export function DiningStack() {
   function handleLocationPress(diningLocation) {
     setSelectedLocation(diningLocation)
   }
-  console.log(selectedLocation);
   return (
-    <View style={styles.diningButtons}>
-      <RenderDiningLocationButton selectedLocation={selectedLocation} diningLocation='Cavern' handleLocationPress={handleLocationPress}/>
-      <RenderDiningLocationButton selectedLocation={selectedLocation} diningLocation='Commons' handleLocationPress={handleLocationPress}/>
-      <RenderDiningLocationButton selectedLocation={selectedLocation} diningLocation='Freshens' handleLocationPress={handleLocationPress}/>
+    <View>
+      <View style={styles.diningButtons}>
+        <RenderDiningLocationButton selectedLocation={selectedLocation} diningLocation='Cavern' handleLocationPress={handleLocationPress} />
+        <RenderDiningLocationButton selectedLocation={selectedLocation} diningLocation='Commons' handleLocationPress={handleLocationPress} />
+        <RenderDiningLocationButton selectedLocation={selectedLocation} diningLocation='Freshens' handleLocationPress={handleLocationPress} />
+      </View>
+      <RenderLocationMenu selectedLocation={selectedLocation} />
     </View>
   );
 }
