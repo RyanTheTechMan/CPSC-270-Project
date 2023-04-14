@@ -75,20 +75,10 @@ export const cavernMenu = [
 //No longer needed.
 //const { width, height } = Dimensions.get('window');
 
-const Stack = createStackNavigator();
-
-export function DiningStack() {
-  return (
-    <Stack.Navigator initialRouteName="Commons" screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Commons" component={DiningPage} />
-      <Stack.Screen name="Freshens" component={DiningPage} />
-      <Stack.Screen name="Cavern" component={DiningPage} />
-    </Stack.Navigator>
-  );
-}
 
 
-function DiningPage({ navigation, route }) {
+
+/*function DiningPage({ navigation, route }) {
   const menus = {
     Commons: commonsMenu,
     Freshens: freshensMenu,
@@ -119,9 +109,9 @@ function DiningPage({ navigation, route }) {
         {menu}
       </Text>
     </TouchableOpacity>
-  );
+  );*/
 
-  const renderMenu = (menuData) => (
+  /*const renderMenu = (menuData) => (
     <FlatList
       style={styles.menuSchedule}
       showsVerticalScrollIndicator={false}
@@ -141,16 +131,40 @@ function DiningPage({ navigation, route }) {
         </View>
       )}
     />
-  );
+  );*/
 
+
+
+
+
+
+
+//Render individual items
+function RenderDiningLocationButton(props) {
   return (
-    <View style={styles.page}>
-      <View style={styles.diningButtons}>
-        {renderMenuButton('Cavern')}
-        {renderMenuButton('Commons')}
-        {renderMenuButton('Freshens')}
-      </View>
-      {renderMenu(menus[selectedMenu])}
+    <TouchableOpacity
+      style={[styles.button, props.selectedLocation === props.diningLocation ? styles.selectedButton : styles.unselectedButton]}
+      onPress={() => props.handleLocationPress(props.diningLocation)}
+      >
+      <Text style={[styles.buttonText, props.selectedLocation === props.diningLocation ? styles.selectedText : null]} >{props.diningLocation}</Text>
+    </TouchableOpacity>
+  )
+}
+
+//Render dining location buttons and menu
+export function DiningStack() {
+
+  const [selectedLocation, setSelectedLocation] = useState('Cavern');
+
+  function handleLocationPress(diningLocation) {
+    setSelectedLocation(diningLocation)
+  }
+  console.log(selectedLocation);
+  return (
+    <View style={styles.diningButtons}>
+      <RenderDiningLocationButton selectedLocation={selectedLocation} diningLocation='Cavern' handleLocationPress={handleLocationPress}/>
+      <RenderDiningLocationButton selectedLocation={selectedLocation} diningLocation='Commons' handleLocationPress={handleLocationPress}/>
+      <RenderDiningLocationButton selectedLocation={selectedLocation} diningLocation='Freshens' handleLocationPress={handleLocationPress}/>
     </View>
   );
 }
@@ -229,7 +243,7 @@ const styles = StyleSheet.create({
     color: '#313131',
     textAlign: 'center',
   },
-  selectedButtonText: {
+  selectedText: {
     color: '#ffffff',
   },
   separator: {
