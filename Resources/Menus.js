@@ -1,5 +1,4 @@
 import { Dimensions, StyleSheet, Text, View, SectionList, FlatList, Pressable, TouchableOpacity, ScrollView, } from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
 import { useState } from "react";
 
 export const commonsMenu = [
@@ -69,88 +68,105 @@ export const cavernMenu = [
     day: 'Saturday',
     meals: [{ meal: "Dinner", mealItems: ["Fries", "Salad", "Burgers", "Chicken Sandwich"] }]
   },
-
 ]
 
-//No longer needed.
-//const { width, height } = Dimensions.get('window');
-
-const Stack = createStackNavigator();
-
-export function DiningStack() {
-  return (
-    <Stack.Navigator initialRouteName="Commons" screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Commons" component={DiningPage} />
-      <Stack.Screen name="Freshens" component={DiningPage} />
-      <Stack.Screen name="Cavern" component={DiningPage} />
-    </Stack.Navigator>
-  );
-}
-
-
-function DiningPage({ navigation, route }) {
-  const menus = {
-    Commons: commonsMenu,
-    Freshens: freshensMenu,
-    Cavern: cavernMenu,
-  };
-
-  const [selectedMenu, setSelectedMenu] = useState('Commons');
-
-  const handleMenuPress = (menu) => {
-    setSelectedMenu(menu);
-  };
-
-  const renderMenuButton = (menu) => (
-    <TouchableOpacity
-      style={[
-        styles.button,
-        selectedMenu === menu ? styles.selectedButton : styles.unselectedButton,
-      ]}
-      onPress={() => handleMenuPress(menu)}
-      key={menu}
-    >
-      <Text
-        style={[
-          styles.buttonText,
-          selectedMenu === menu ? styles.selectedButtonText : null,
-        ]}
-      >
-        {menu}
-      </Text>
-    </TouchableOpacity>
-  );
-
-  const renderMenu = (menuData) => (
+function RenderMealItems(mealItems){
+  return(
     <FlatList
-      style={styles.menuSchedule}
-      showsVerticalScrollIndicator={false}
-      data={menuData}
-      keyExtractor={(item) => item.day}
+      style={styles.mealContainer}
+      data={mealItems.mealItems}
       renderItem={({ item }) => (
         <View>
-          {<Text style={styles.day}>{item.day}</Text>}
-          {item.meals.map((meal) => (
-            <View key={meal.meal} style={styles.mealContainer}>
-              <Text style={styles.meal}>{meal.meal}</Text>
-              {meal.mealItems.map((mealItem) => (
-                <Text style={styles.item} key={mealItem}>{mealItem}</Text>
-              ))}
-            </View>
-          ))}
+          <Text style={styles.mealItemText}>{item}</Text>
         </View>
       )}
     />
   );
+}
 
+function RenderMeal(dayMeals) {
   return (
-    <View style={styles.page}>
+    <FlatList
+      style={styles.mealContainer}
+      data={dayMeals.dayMeals}
+      renderItem={({ item }) => (
+        <View>
+          <Text style={styles.meal}>{item.meal}</Text>
+          <RenderMealItems mealItems={item.mealItems}/>
+        </View>
+      )}
+    />
+  );
+}
+
+function RenderDay(locationMenu) {
+  return (
+    <FlatList
+      style={styles.menuSchedule}
+      showsVerticalScrollIndicator={false}
+      data={locationMenu.locationMenu}
+      keyExtractor={(item) => item.day}
+      renderItem={({ item }) => (
+        <View>
+          <Text key={item.day} style={styles.day} >{item.day}</Text>
+          {console.log(item.day)}
+          <RenderMeal dayMeals={item.meals} />
+        </View>
+      )}
+    />
+  );
+}
+
+function convertLocationToMenu(selectedLocation) {
+  let locationMenu;
+  switch (selectedLocation) {
+    case 'Cavern':
+      locationMenu = cavernMenu;
+      break;
+    case 'Commons':
+      locationMenu = commonsMenu;
+      break;
+    case 'Freshens':
+      locationMenu = freshensMenu;
+      break;
+  }
+  return locationMenu;
+}
+
+function RenderLocationMenu(props) {
+  const selectedLocation = props.selectedLocation;
+  const locationMenu = convertLocationToMenu(selectedLocation);
+  return (
+    <RenderDay locationMenu={locationMenu} />
+  );
+}
+
+function RenderDiningLocationButton(props) {
+  return (
+    <TouchableOpacity
+      style={[styles.button, props.selectedLocation === props.diningLocation ? styles.selectedButton : styles.unselectedButton]}
+      onPress={() => props.handleLocationPress(props.diningLocation)}
+    >
+      <Text style={[styles.buttonText, props.selectedLocation === props.diningLocation ? styles.selectedText : null]} >{props.diningLocation}</Text>
+    </TouchableOpacity>
+  );
+}
+
+export function DiningPage() {
+
+  const [selectedLocation, setSelectedLocation] = useState('Cavern');
+
+  function handleLocationPress(diningLocation) {
+    setSelectedLocation(diningLocation)
+  }
+  return (
+    <View>
       <View style={styles.diningButtons}>
-        {renderMenuButton('Cavern')}
-        {renderMenuButton('Commons')}
-        {renderMenuButton('Freshens')}
+        <RenderDiningLocationButton selectedLocation={selectedLocation} diningLocation='Cavern' handleLocationPress={handleLocationPress} />
+        <RenderDiningLocationButton selectedLocation={selectedLocation} diningLocation='Commons' handleLocationPress={handleLocationPress} />
+        <RenderDiningLocationButton selectedLocation={selectedLocation} diningLocation='Freshens' handleLocationPress={handleLocationPress} />
       </View>
-      {renderMenu(menus[selectedMenu])}
+      <RenderLocationMenu selectedLocation={selectedLocation} />
     </View>
   );
 }
@@ -177,7 +193,9 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   mealContainer: {
-    alignItems: 'center',
+    flex: 1,
+    alignContent: 'center',
+    borderWidth: 2,
   },
   meal: {
     flex: 1,
@@ -188,7 +206,7 @@ const styles = StyleSheet.create({
     color: '#313131',
     width: 'auto',
   },
-  item: {
+  mealItemText: {
     fontSize: 18,
     marginBottom: 5,
     color: '#313131',
@@ -229,7 +247,7 @@ const styles = StyleSheet.create({
     color: '#313131',
     textAlign: 'center',
   },
-  selectedButtonText: {
+  selectedText: {
     color: '#ffffff',
   },
   separator: {
