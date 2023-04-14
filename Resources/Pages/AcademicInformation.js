@@ -5,11 +5,46 @@ import { RoundedRect, RoundedRectList } from "../RoundedRect.js";
 import * as Progress from 'react-native-progress';
 import * as style from "../Shared/styles";
 
-function GPA()
+function TotalSchoolUnits()
 {
 	return(
-		<RoundedRect title={"Cumulative GPA"}>
-			<Text>{ProfileData.cumulativeGPA}</Text>
+		<RoundedRect title={"Total Units from this School"}>
+			<Progress.Bar progress={ProfileData.totalUnitsFromSchool} 
+	 		     width={style.subProgressBarWidth} 
+				color={style.progress_bar_color} />
+		</RoundedRect>
+	)
+}
+
+function TotalUnits()
+{
+	return(
+		<RoundedRect title={"Total Units"}>
+		     <Progress.Bar progress={ProfileData.totalUnits}
+				width={style.subProgressBarWidth} 
+				color={style.progress_bar_color} />
+		</RoundedRect>
+	)
+}
+
+function Progress()
+{
+	<RoundedRect title={"Progress"}>
+	    <Progress.Bar progress={ProfileData.overallProgress} 
+	        	width={style.subProgressBarWidth} 
+			color={style.progress_bar_color}/>
+	</RoundedRect>
+}
+
+function StudentProgress()
+{
+	return(
+		<RoundedRect title={"My Progress"}>
+			<RoundedRectList>
+				<Progress />
+				<TotalUnits />
+				<TotalSchoolUnits />
+			</RoundedRectList>
 		</RoundedRect>
 	)
 }
@@ -44,27 +79,11 @@ function Grades()
 	)
 }
 
-function MyProgress()
+function GPA()
 {
 	return(
-		<RoundedRect title={"My Progress"}>
-			<RoundedRectList>
-				<RoundedRect title={"Progress"}>
-				    <Progress.Bar progress={ProfileData.overallProgress} 
-				    			   width={style.subProgressBarWidth} 
-							   color={style.progress_bar_color}/>
-				</RoundedRect>
-				<RoundedRect title={"Total Units"}>
-				    <Progress.Bar progress={ProfileData.totalUnits}
-				     		   width={style.subProgressBarWidth} 
-							   color={style.progress_bar_color} />
-				</RoundedRect>
-				<RoundedRect title={"Total Units from this School"}>
-				    <Progress.Bar progress={ProfileData.totalUnitsFromSchool} 
-				    			   width={style.subProgressBarWidth} 
-							   color={style.progress_bar_color} />
-				</RoundedRect>
-			</RoundedRectList>
+		<RoundedRect title={"Cumulative GPA"}>
+			<Text>{ProfileData.cumulativeGPA}</Text>
 		</RoundedRect>
 	)
 }
@@ -75,10 +94,9 @@ function AcademicInformationPage()
 		<ScrollView>
 			<GPA />
 			<Grades />
-			<MyProgress />
+			<StudentProgress />
 		</ScrollView>
 	)
 }
-
 
 export default AcademicInformationPage;
