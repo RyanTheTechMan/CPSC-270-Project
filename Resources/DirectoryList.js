@@ -1,8 +1,9 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity, View, Text } from 'react-native';
-import sharedStyles, {header_color} from "./Shared/styles";
+import {header_color} from "./Shared/styles";
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const DirectoryList = ({ data, onPress }) => {
+const DirectoryList = ({ data, onPress, iconName }) => {
   return (
     <View style={styles.container}>
       {data.map((item, index) => (
@@ -12,7 +13,7 @@ const DirectoryList = ({ data, onPress }) => {
           onPress={() => onPress(item.id)}
         >
           <View style={styles.iconSquare}>
-            {/* add your icon here */}
+            <MaterialCommunityIcons name={item.iconName} size={40} color="#fff" style={{alignSelf: 'center', top: 4}}/>
           </View>
           <Text style={styles.title}>{item.title}</Text>
         </TouchableOpacity>
@@ -40,7 +41,7 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 10,
     marginRight: 20,
-    backgroundColor: '#fff',
+    backgroundColor: header_color,
   },
   title: {
     fontSize: 16,
