@@ -61,19 +61,25 @@ function MyProgress()
 		<RoundedRect title={"My Progress"}>
 			<RoundedRectList>
 				<RoundedRect title={"Progress"}>
-				    <Progress.Bar progress={ProfileData.overallProgress} 
-				    			   width={style.subProgressBarWidth} 
-							   color={style.progress_bar_color}/>
+				    <Progress.Bar
+							progress={ProfileData.overallProgress}
+							width={style.subProgressBarWidth}
+							color={style.progress_bar_color}
+						/>
 				</RoundedRect>
 				<RoundedRect title={"Total Units"}>
-				    <Progress.Bar progress={ProfileData.totalUnits}
-				     		   width={style.subProgressBarWidth} 
-							   color={style.progress_bar_color} />
+				    <Progress.Bar
+							progress={ProfileData.totalUnits}
+							width={style.subProgressBarWidth}
+							color={style.progress_bar_color}
+						/>
 				</RoundedRect>
 				<RoundedRect title={"Total Units from this School"}>
-				    <Progress.Bar progress={ProfileData.totalUnitsFromSchool} 
-				    			   width={style.subProgressBarWidth} 
-							   color={style.progress_bar_color} />
+				    <Progress.Bar
+							progress={ProfileData.totalUnitsFromSchool}
+							width={style.subProgressBarWidth}
+							color={style.progress_bar_color}
+						/>
 				</RoundedRect>
 			</RoundedRectList>
 		</RoundedRect>
@@ -90,6 +96,5 @@ function AcademicInformationPage()
 		</ScrollView>
 	)
 }
-
 
 export default AcademicInformationPage;

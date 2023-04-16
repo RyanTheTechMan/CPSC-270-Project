@@ -189,13 +189,12 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     fontWeight: 'bold',
     color: '#4a4a4a',
-    alignItems: 'center',
+    textAlign: 'left',
     width: '100%',
   },
   mealContainer: {
     flex: 1,
     alignContent: 'center',
-    borderWidth: 2,
   },
   meal: {
     flex: 1,
@@ -205,12 +204,14 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#313131',
     width: 'auto',
+    textAlign: 'center',
   },
   mealItemText: {
     fontSize: 18,
     marginBottom: 5,
     color: '#313131',
     width: 'auto',
+    textAlign: 'center',
 
   },
   diningButtons: {

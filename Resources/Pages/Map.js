@@ -81,19 +81,19 @@ function LoadMapData(onMarkersLoaded) {
 
           const markerType = getMarkerType(folderName, name);
           if (markerType !== undefined) {
-            markers = [...markers, {
-              id: markers.length,
-              displayName: name,
-              description: description,
-              coordinate: {
-                latitude: parseFloat(coordinates[1]),
-                longitude: parseFloat(coordinates[0]),
-              },
-              type: markerType,
-              image: imgSrc,
-            }];
+              markers.push({
+                id: markers.length,
+                displayName: name,
+                description: description,
+                coordinate: {
+                  latitude: parseFloat(coordinates[1]),
+                  longitude: parseFloat(coordinates[0]),
+                },
+                type: markerType,
+                image: imgSrc,
+              });
+            }
           }
-        }
       })
     });
     // console.log("Running callback")
