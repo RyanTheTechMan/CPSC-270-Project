@@ -99,7 +99,7 @@ function RenderMeal(dayMeals) {
   );
 }
 
-function RenderDay(locationMenu) {
+export function RenderDay(locationMenu) {
   return (
     <FlatList
       style={styles.menuSchedule}
@@ -133,7 +133,7 @@ function convertLocationToMenu(selectedLocation) {
   return locationMenu;
 }
 
-function RenderLocationMenu(props) {
+export function RenderLocationMenu(props) {
   const selectedLocation = props.selectedLocation;
   const locationMenu = convertLocationToMenu(selectedLocation);
   return (
@@ -141,7 +141,7 @@ function RenderLocationMenu(props) {
   );
 }
 
-function RenderDiningLocationButton(props) {
+export function RenderDiningLocationButton(props) {
   return (
     <TouchableOpacity
       style={[styles.button, props.selectedLocation === props.diningLocation ? styles.selectedButton : styles.unselectedButton]}

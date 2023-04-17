@@ -1,10 +1,39 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import {DiningPage} from './Resources/Menus'
+import { DiningPage, RenderLocationMenu, handleLocationPress, RenderDiningLocationButton, RenderDay, freshensMenu } from './Resources/Menus'
 
 describe('<DiningPage />', () => {
     it('renders correctly', () => {
         const tree = renderer.create(<DiningPage />).toJSON();
+        expect(tree).toMatchSnapshot();
+    });
+
+});
+
+describe('<RenderLocationMenu selectedLocation={selectedLocation} /> where selectedLocation = \'Freshens\'', () => {
+    it('renders correctly', () => {
+        const selectedLocation = 'Freshens';
+        const tree = renderer.create(<RenderLocationMenu selectedLocation={selectedLocation} />).toJSON();
+        expect(tree).toMatchSnapshot();
+    });
+});
+
+describe('<RenderDiningLocationButton /> where selectedLocation = \'Cavern\'', () => {
+    it('renders correctly for selected button', () => {
+        const selectedLocation = 'Cavern';
+        const tree = renderer.create(<RenderDiningLocationButton selectedLocation={selectedLocation} diningLocation='Cavern' handleLocationPress={handleLocationPress} />).toJSON();
+        expect(tree).toMatchSnapshot();
+    });
+    it('renders correctly for unselected button', () => {
+        const selectedLocation = 'Cavern';
+        const tree = renderer.create(<RenderDiningLocationButton selectedLocation={selectedLocation} diningLocation='Commons' handleLocationPress={handleLocationPress} />).toJSON();
+        expect(tree).toMatchSnapshot();
+    });
+});
+
+describe('<RenderLocationMenu locationMenu = {freshensMenu}/> ', () => {
+    it('renders correctly', () => {
+        const tree = renderer.create(<RenderDay locationMenu={freshensMenu} />).toJSON();
         expect(tree).toMatchSnapshot();
     });
 });
