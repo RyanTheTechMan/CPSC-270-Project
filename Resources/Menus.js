@@ -70,13 +70,13 @@ export const cavernMenu = [
   },
 ]
 
-function RenderMealItems(mealItems){
+export function RenderMealItems(mealItems){
   return(
     <FlatList
       style={styles.mealContainer}
       data={mealItems.mealItems}
       renderItem={({ item }) => (
-        <View>
+        <View key={item}>
           <Text style={styles.mealItemText}>{item}</Text>
         </View>
       )}
@@ -84,14 +84,14 @@ function RenderMealItems(mealItems){
   );
 }
 
-function RenderMeal(dayMeals) {
+export function RenderMeal(dayMeals) {
   return (
     <FlatList
       style={styles.mealContainer}
       data={dayMeals.dayMeals}
       renderItem={({ item }) => (
-        <View>
-          <Text style={styles.meal}>{item.meal}</Text>
+        <View key= {item.meal}>
+          <Text  style={styles.meal}>{item.meal}</Text>
           <RenderMealItems mealItems={item.mealItems}/>
         </View>
       )}
@@ -99,7 +99,7 @@ function RenderMeal(dayMeals) {
   );
 }
 
-function RenderDay(locationMenu) {
+export function RenderDay(locationMenu) {
   return (
     <FlatList
       style={styles.menuSchedule}
@@ -107,8 +107,8 @@ function RenderDay(locationMenu) {
       data={locationMenu.locationMenu}
       keyExtractor={(item) => item.day}
       renderItem={({ item }) => (
-        <View>
-          <Text key={item.day} style={styles.day} >{item.day}</Text>
+        <View key={item.day}>
+          <Text  style={styles.day} >{item.day}</Text>
           {console.log(item.day)}
           <RenderMeal dayMeals={item.meals} />
         </View>
@@ -117,7 +117,7 @@ function RenderDay(locationMenu) {
   );
 }
 
-function convertLocationToMenu(selectedLocation) {
+export function convertLocationToMenu(selectedLocation) {
   let locationMenu;
   switch (selectedLocation) {
     case 'Cavern':
@@ -133,7 +133,7 @@ function convertLocationToMenu(selectedLocation) {
   return locationMenu;
 }
 
-function RenderLocationMenu(props) {
+export function RenderLocationMenu(props) {
   const selectedLocation = props.selectedLocation;
   const locationMenu = convertLocationToMenu(selectedLocation);
   return (
@@ -141,7 +141,7 @@ function RenderLocationMenu(props) {
   );
 }
 
-function RenderDiningLocationButton(props) {
+export function RenderDiningLocationButton(props) {
   return (
     <TouchableOpacity
       style={[styles.button, props.selectedLocation === props.diningLocation ? styles.selectedButton : styles.unselectedButton]}
