@@ -16,7 +16,7 @@ import DemoPage from './Pages/DemoPage';
 import SafetyList from "./Pages/SafetyInfo";
 import MailPage from "./Pages/Mail";
 import LandingPage from './Pages/Landing';
-import { DiningStack } from "./Menus";
+import { DiningPage } from "./Menus";
 import { CalendarPage, CalendarStack} from "./Calendar";
 import MapMarker from "./Pages/MapMarker";
 import ProfileData from "./Profile/ProfileData";
@@ -131,7 +131,7 @@ function NavBar() {
       </Stack.Screen>
       <Stack.Screen name="MapMarker" component={MapMarker} />
       <Stack.Screen name="Mail" component={MailPage} />
-      <Stack.Screen name="Dining" component={DiningStack} />
+      <Stack.Screen name="Dining" component={DiningPage} />
       <Stack.Screen name="Academics" component={AcademicInformationPage} />
       <Stack.Screen name="Calendar" component={CalendarStack} />
       <Stack.Screen name="Financial" component={FinancialInformationPage} />
