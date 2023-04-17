@@ -3,34 +3,48 @@ import { StyleSheet, View, Text, ScrollView } from "react-native";
 import { RoundedRect, RoundedRectList } from "../RoundedRect";
 import {neutral_color} from "../Shared/styles";
 import { PhoneNumberLink, EmailLink } from '../PhoneEmailComponents';
+import SafetyData from '../Shared/SafetyData.js';
 
+function EmailContactInfo({pContact})
+{
+	return(
+		<View>
+			{pContact.map((singleContact) => (
+				<View>			
+					<Text style={styles.boldandwhite}>{singleContact.label}</Text>
+					<EmailLink emailAddress={singleContact.contact} />
+				</View>
+			))}
+		</View>
+	)
+}
+
+function PhoneContactInfo({pContact})
+{
+	console.log(pContact);
+	return(
+		<View>
+			{pContact.map((singleContact) => (
+				<View>			
+					<Text style={styles.boldandwhite}>{singleContact.label}</Text>
+					<PhoneNumberLink phoneNumber={singleContact.contact} />
+				</View>
+			))}
+		</View>
+	)
+}
 
 const SafetyList = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <RoundedRectList>
-        <RoundedRect title="Salem Police Department" style={styles.custom}>
-          <View>
-            <Text style={styles.boldandwhite}>Emergency: </Text>
-            <PhoneNumberLink phoneNumber='911' />
-            <Text style={styles.boldandwhite}>Police Non-Emergency Dispatch: </Text>
-            <PhoneNumberLink phoneNumber='540-375-3078' />
-            <Text style={styles.boldandwhite}>Office of Chief of Police and Deputy Chief of Police: </Text>
-            <PhoneNumberLink phoneNumber='540-375-3010' />
-            <Text style={styles.boldandwhite}>Records and Detective Division: </Text>
-            <PhoneNumberLink phoneNumber='540-375-3083' />
-            <Text style={styles.boldandwhite}>Animal Control & Animal Shelter: </Text>
-            <PhoneNumberLink phoneNumber='540-375-3038' />
-            <Text style={styles.boldandwhite}>Salem City Sheriff's Department Non Emergency: </Text>
-            <PhoneNumberLink phoneNumber='540-375-3040' />
-            <Text style={styles.boldandwhite}>or</Text>
-            <PhoneNumberLink phoneNumber='540-389-0978' />
-            <Text style={styles.boldandwhite}>Probation & Parole: </Text>
-            <PhoneNumberLink phoneNumber='540-387-5257' />
-            <Text style={styles.boldandwhite}>Email: </Text>
-            <EmailLink emailAddress='salempolice@salemva.gov' />
-          </View>
-        </RoundedRect>
+		{SafetyData.contacts.map((item) => (
+			<RoundedRect title={item.title} style={styles.custom}>
+				<PhoneContactInfo pContact={item.phoneContactInfo} />
+				<EmailContactInfo pContact={item.emailContactInfo} />
+			</RoundedRect>
+		))}
+        
 
         <RoundedRect title="Campus Safety" style={styles.custom}>
         <View>

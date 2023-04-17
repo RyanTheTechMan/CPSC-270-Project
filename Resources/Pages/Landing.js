@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import DirectoryList from '../DirectoryList';
 
-const LandingPage = ({navigation}) => {
+function LandingPage({navigation}){
   
   const data = [
     { id: 0, title: 'Dining Options' , iconName: 'food', pageName: 'Dining'},
@@ -12,7 +12,7 @@ const LandingPage = ({navigation}) => {
     { id: 4, title: '. . .', iconName: 'file-question', pageName: undefined},
   ];
 
-  const handlePress = (id) => {
+  function handlePress(id){
     if (data[id].pageName !== undefined) {
       console.log('Navigating to ' + data[id].pageName)
       navigation.navigate(data[id].pageName);
@@ -31,7 +31,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    //backgroundColor: neutral_color,
   },
   title: {
     fontSize: 24,
