@@ -76,7 +76,7 @@ export function RenderMealItems(mealItems){
       style={styles.mealContainer}
       data={mealItems.mealItems}
       renderItem={({ item }) => (
-        <View>
+        <View key={item}>
           <Text style={styles.mealItemText}>{item}</Text>
         </View>
       )}
@@ -90,8 +90,8 @@ export function RenderMeal(dayMeals) {
       style={styles.mealContainer}
       data={dayMeals.dayMeals}
       renderItem={({ item }) => (
-        <View>
-          <Text style={styles.meal}>{item.meal}</Text>
+        <View key= {item.meal}>
+          <Text  style={styles.meal}>{item.meal}</Text>
           <RenderMealItems mealItems={item.mealItems}/>
         </View>
       )}
@@ -107,8 +107,8 @@ export function RenderDay(locationMenu) {
       data={locationMenu.locationMenu}
       keyExtractor={(item) => item.day}
       renderItem={({ item }) => (
-        <View>
-          <Text key={item.day} style={styles.day} >{item.day}</Text>
+        <View key={item.day}>
+          <Text  style={styles.day} >{item.day}</Text>
           {console.log(item.day)}
           <RenderMeal dayMeals={item.meals} />
         </View>

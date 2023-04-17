@@ -2,12 +2,14 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import { DiningPage, RenderLocationMenu, handleLocationPress, RenderDiningLocationButton, RenderDay, freshensMenu, commonsMenu, RenderMeal, RenderMealItems, cavernMenu, convertLocationToMenu } from './Resources/Menus'
 
+
+//DINING PAGE TESTS (Menus.js)
+
 describe('<DiningPage />', () => {
     it('renders correctly', () => {
         const tree = renderer.create(<DiningPage />).toJSON();
         expect(tree).toMatchSnapshot();
     });
-
 });
 
 describe('<RenderLocationMenu selectedLocation={selectedLocation} /> where selectedLocation = \'Freshens\'', () => {
