@@ -1,15 +1,11 @@
 import React, {useState} from 'react';
 import {
-    SafeAreaView,
-    ScrollView,
     StyleSheet,
     Text,
-    TouchableOpacity,
     Pressable,
     View
 } from 'react-native';
 import { Agenda, CalendarProvider } from 'react-native-calendars';
-import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import {AddEventPage} from './Pages/AddEventPage';
 
