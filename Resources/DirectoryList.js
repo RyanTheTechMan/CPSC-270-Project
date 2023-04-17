@@ -30,7 +30,7 @@ function DirectoryList({ data, onPress }){
   return (
     <View style={styles.container}>
       {data.map((item, index) => (
-        <DirectoryListItem item={item} index={index} onPress={onPress}/>
+        <DirectoryListItem key={item.title} item={item} index={index} onPress={onPress}/>
       ))}
     </View>
   );
