@@ -17,34 +17,41 @@ const SafetyData =
 			{label: "Email: ", contact: 'salempolice@salemva.gov'}
 		]
 		},
-		// {title: "Campus Safety", contactInfo: [
-		// 	{label: "", contact: ''},
-		// 	{label: "", contact: ''},
-		// 	{label: "", contact: ''},
-		// 	{label: "", contact: ''}
-		// ]
-		// },
-		// {title: "RA on Duty", contactInfo: [
-		// 	{label: "", contact: ''},
-		// 	{label: "", contact: ''},
-		// 	{label: "", contact: ''},
-		// 	{label: "", contact: ''}
-		// ]
-		// },
-		// {title: "Res Life and Housing", contactInfo: [
-		// 	{label: "", contact: ''},
-		// 	{label: "", contact: ''},
-		// 	{label: "", contact: ''},
-		// 	{label: "", contact: ''}
-		// ]
-		// },
-		// {title: "Student Health and Counseling", contactInfo: [
-		// 	{label: "", contact: ''},
-		// 	{label: "", contact: ''},
-		// 	{label: "", contact: ''},
-		// 	{label: "", contact: ''}
-		// ]
-		// },
+		{title: "Campus Safety", 
+		phoneContactInfo: [
+			{label: "Phone: ", contact: '540-375-2310'},
+		],
+		 emailContactInfo: [
+			{label: "Email: ", contact: 'CampusSafety@roanoke.edu'}
+		]
+		},
+		{title: "RA on Duty", 
+		phoneContactInfo: [
+			{label: "North Side RA: ", contact: '540-524-0699'},
+			{label: "South Side RA: ", contact: '540-521-4282'},
+			{label: "West Side RA: ", contact: '540-521-3246'},
+			{label: "Elizabeth Campus RA: ", contact: '540-375-2310'}
+		],
+		emailContactInfo: [
+
+		]
+		},
+		{title: "Res Life and Housing", 
+		phoneContactInfo: [
+			{label: "Phone: ", contact: '540-375-2308'},
+		],
+		emailContactInfo: [
+			{label: "Email: ", contact: 'reslife@roanoke.edu'}
+		]
+		},
+		{title: "Student Health and Counseling", 
+		phoneContactInfo: [
+			{label: "Phone: ", contact: '540-375-2286'},
+		],
+		emailContactInfo: [
+			{label: "Email: ", contact: 'healthservices@roanoke.edu'}
+		]
+		},
 	]
 }
 
