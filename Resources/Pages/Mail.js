@@ -1,6 +1,7 @@
 import { setStatusBarHidden } from "expo-status-bar";
 import { Pressable, StyleSheet, Text, View, } from "react-native";
 import React, { useState } from 'react';
+import { RoundedRect, RoundedRectList } from "../RoundedRect";
 
 
 
@@ -39,16 +40,14 @@ const studentInfoGroup = [
 ];
 
 
-export function MailBoxCode({ currentStudent, hideMailCode }) {
+/*export function MailBoxCode({ currentStudent, hideMailCode }) {
 
     if (!hideMailCode) {
         return (
             <Text style={styles.combination}>{"Box Combination: " + currentStudent.collegeAddress.campusBoxCode}</Text>
         )
     }
-
-
-}
+}*/
 
 export default function MailPage() {
 
@@ -72,10 +71,11 @@ export default function MailPage() {
                 <Text style={styles.addressText}>{"Campus Box: " + currentStudent.collegeAddress.campusBox}</Text>
                 <Text style={styles.addressText}>{currentStudent.collegeAddress.city + ", " + currentStudent.collegeAddress.state + " " + currentStudent.collegeAddress.zipCode}</Text>
             </View>
-            <MailBoxCode currentStudent={currentStudent} hideMailCode={hideMailCode} />
-            <Pressable style={styles.combinationButton} onPress={() => setHideMailCode(!hideMailCode)}>
-                <Text style={styles.combinationButtonText}>Display Combination</Text>
-            </Pressable>
+            <RoundedRect title="Mail Box Code" style={styles.combinationButton}>
+                <View>
+                <Text style={styles.combination}>{"Box Combination: " + currentStudent.collegeAddress.campusBoxCode}</Text>
+                </View>
+            </RoundedRect>
         </View>
     );
 
@@ -112,7 +112,7 @@ export const styles = StyleSheet.create({
         fontSize: 30,
         margin: 10,
         color: 'white',
-        backgroundColor: 'gray',
+        backgroundColor: '#8B1D3D',
         borderRadius: 10,
 
     },
@@ -124,9 +124,24 @@ export const styles = StyleSheet.create({
 
     },
     combination: {
-        fontSize: 30,
+        fontSize: 20,
         margin: 10,
         fontWeight: '600',
-        color: '#313131',
+        color: 'white',
     },
+    custom: {
+        backgroundColor: '#8B1D3D',
+        borderColor: "gray",
+        borderWidth: 2,
+        marginBottom: 20,
+        color: 'white',
+        fontSize: 40,
+        width: '80%',
+      },
 });
+/*
+<MailBoxCode currentStudent={currentStudent} hideMailCode={hideMailCode} />
+<Pressable style={styles.combinationButton} onPress={() => setHideMailCode(!hideMailCode)}>
+    <Text style={styles.combinationButtonText}>Display Combination</Text>
+</Pressable>
+*/
