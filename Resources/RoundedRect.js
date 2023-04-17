@@ -18,13 +18,14 @@ if (
   UIManager.setLayoutAnimationEnabledExperimental(true);
 }
 
-const RoundedRect = ({
+function RoundedRect ({
   children, 
   title = "", 
   isOpen = false, 
   style = {},
   ...props 
-}) => {
+})
+{
   const [isOpenState, setIsOpenState] = useState(isOpen); 
   let heightAnimValue = useRef(null).current;  
 
@@ -33,8 +34,6 @@ const RoundedRect = ({
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     setIsOpenState(!isOpenState);
   };
-
-  
   
   const onLayout = (event) => {
     if (heightAnimValue === null) {
@@ -69,9 +68,9 @@ const RoundedRect = ({
   );
 };
 
-const RoundedRectList = ({ children }) => {
-  return (
-    
+function RoundedRectList({children})
+{
+  return(
     <View style={styles.listContainer}>
       {React.Children.map(children, (child, index) => (
         <View>
