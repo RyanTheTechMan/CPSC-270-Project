@@ -3,20 +3,34 @@ import { StyleSheet, TouchableOpacity, View, Text } from 'react-native';
 import {header_color} from "./Shared/styles";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const DirectoryList = ({ data, onPress, iconName }) => {
+function Icon({item})
+{
+	return(
+		<View style={styles.iconSquare}>
+            <MaterialCommunityIcons name={item.iconName} size={40} color="#fff" style={{alignSelf: 'center', top: 4}}/>
+          </View>
+	)
+}
+
+function DirectoryListItem({item, index, onPress})
+{
+	return(
+		<TouchableOpacity
+          	key={index}
+          	style={styles.item}
+          	onPress={() => onPress(item.id)}
+          >
+          	<Icon item={item}></Icon>
+          	<Text style={styles.title}>{item.title}</Text>
+          </TouchableOpacity>
+	)
+}
+
+function DirectoryList({ data, onPress }){
   return (
     <View style={styles.container}>
       {data.map((item, index) => (
-        <TouchableOpacity
-          key={index}
-          style={styles.item}
-          onPress={() => onPress(item.id)}
-        >
-          <View style={styles.iconSquare}>
-            <MaterialCommunityIcons name={item.iconName} size={40} color="#fff" style={{alignSelf: 'center', top: 4}}/>
-          </View>
-          <Text style={styles.title}>{item.title}</Text>
-        </TouchableOpacity>
+        <DirectoryListItem item={item} index={index} onPress={onPress}/>
       ))}
     </View>
   );
