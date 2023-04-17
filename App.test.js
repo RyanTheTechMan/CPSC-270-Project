@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { DiningPage, RenderLocationMenu, handleLocationPress, RenderDiningLocationButton, RenderDay, freshensMenu } from './Resources/Menus'
+import { DiningPage, RenderLocationMenu, handleLocationPress, RenderDiningLocationButton, RenderDay, freshensMenu, commonsMenu, RenderMeal, RenderMealItems, cavernMenu, convertLocationToMenu } from './Resources/Menus'
 
 describe('<DiningPage />', () => {
     it('renders correctly', () => {
@@ -31,9 +31,27 @@ describe('<RenderDiningLocationButton /> where selectedLocation = \'Cavern\'', (
     });
 });
 
-describe('<RenderLocationMenu locationMenu = {freshensMenu}/> ', () => {
+describe('<RenderDay locationMenu = {freshensMenu}/> ', () => {
     it('renders correctly', () => {
         const tree = renderer.create(<RenderDay locationMenu={freshensMenu} />).toJSON();
         expect(tree).toMatchSnapshot();
     });
+});
+
+describe('<RenderMeal dayMeals = {commonsMenu[1].meals}/> ', () => {
+    it('renders correctly', () => {
+        const tree = renderer.create(<RenderMeal dayMeals={commonsMenu[1].meals} />).toJSON();
+        expect(tree).toMatchSnapshot();
+    });
+});
+
+describe('<RenderMealItems mealItems = {cavernMenu[2].meals[0].mealItems}/> ', () => {
+    it('renders correctly', () => {
+        const tree = renderer.create(<RenderMealItems mealItems={cavernMenu[2].meals[0].mealItems} />).toJSON();
+        expect(tree).toMatchSnapshot();
+    });
+});
+
+test('convertLocationToMenu converts Commons to commonsMenu', () => {
+    expect(convertLocationToMenu('Commons')).toBe(commonsMenu);
 });

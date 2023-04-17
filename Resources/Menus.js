@@ -70,7 +70,7 @@ export const cavernMenu = [
   },
 ]
 
-function RenderMealItems(mealItems){
+export function RenderMealItems(mealItems){
   return(
     <FlatList
       style={styles.mealContainer}
@@ -84,7 +84,7 @@ function RenderMealItems(mealItems){
   );
 }
 
-function RenderMeal(dayMeals) {
+export function RenderMeal(dayMeals) {
   return (
     <FlatList
       style={styles.mealContainer}
@@ -117,7 +117,7 @@ export function RenderDay(locationMenu) {
   );
 }
 
-function convertLocationToMenu(selectedLocation) {
+export function convertLocationToMenu(selectedLocation) {
   let locationMenu;
   switch (selectedLocation) {
     case 'Cavern':
