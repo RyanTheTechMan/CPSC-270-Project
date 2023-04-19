@@ -3,10 +3,7 @@ import { Pressable, StyleSheet, Text, View, } from "react-native";
 import React, { useState } from 'react';
 import { RoundedRect, RoundedRectList } from "../RoundedRect";
 
-
-
 const studentInfoGroup = [
-
     {
         studentId: '0906523',
         studentName: {
@@ -39,18 +36,33 @@ const studentInfoGroup = [
     },
 ];
 
+function RenderMailboxCode(props) {
+    currentStudent = props.currentStudent;
+    <View>
+        <RoundedRect title="Mail Box Code" style={styles.combinationButton}>
+            <View>
+                <Text style={styles.combination}>{"Box Combination: " + currentStudent.collegeAddress.campusBoxCode}</Text>
+            </View>
+        </RoundedRect>
+    </View>
+};
 
-/*export function MailBoxCode({ currentStudent, hideMailCode }) {
-
-    if (!hideMailCode) {
-        return (
-            <Text style={styles.combination}>{"Box Combination: " + currentStudent.collegeAddress.campusBoxCode}</Text>
-        )
-    }
-}*/
+function RenderStudentAddress(props) {
+    const currentStudent = props.currentStudent;
+    return (
+        <View style={styles.mailPage}>
+            <View style={styles.address}>
+                <Text style={styles.addressHeader}>Campus Address:</Text>
+                <Text style={styles.addressText}>{currentStudent.studentName.firstName + " " + currentStudent.studentName.lastName}</Text>
+                <Text style={styles.addressText}>{currentStudent.collegeAddress.street}</Text>
+                <Text style={styles.addressText}>{"Campus Box: " + currentStudent.collegeAddress.campusBox}</Text>
+                <Text style={styles.addressText}>{currentStudent.collegeAddress.city + ", " + currentStudent.collegeAddress.state + " " + currentStudent.collegeAddress.zipCode}</Text>
+            </View>
+        </View>
+    )
+};
 
 export default function MailPage() {
-
     const [selectedId, setSelectedId] = useState('0813342');
     const [currentStudent, setCurrentStudent] = useState(studentInfoGroup[0]);
     const [hideMailCode, setHideMailCode] = useState(false);
@@ -63,22 +75,11 @@ export default function MailPage() {
     }
 
     return (
-        <View style={styles.mailPage}>
-            <View style={styles.address}>
-                <Text style={styles.addressHeader}>Campus Address:</Text>
-                <Text style={styles.addressText}>{currentStudent.studentName.firstName + " " + currentStudent.studentName.lastName}</Text>
-                <Text style={styles.addressText}>{currentStudent.collegeAddress.street}</Text>
-                <Text style={styles.addressText}>{"Campus Box: " + currentStudent.collegeAddress.campusBox}</Text>
-                <Text style={styles.addressText}>{currentStudent.collegeAddress.city + ", " + currentStudent.collegeAddress.state + " " + currentStudent.collegeAddress.zipCode}</Text>
-            </View>
-            <RoundedRect title="Mail Box Code" style={styles.combinationButton}>
-                <View>
-                <Text style={styles.combination}>{"Box Combination: " + currentStudent.collegeAddress.campusBoxCode}</Text>
-                </View>
-            </RoundedRect>
+        <View>
+            <RenderStudentAddress currentStudent={currentStudent} />
+            <RenderMailboxCode currentStudent={currentStudent} />
         </View>
     );
-
 }
 
 export const styles = StyleSheet.create({
@@ -121,7 +122,6 @@ export const styles = StyleSheet.create({
         margin: 10,
         color: 'white',
         fontWeight: '600',
-
     },
     combination: {
         fontSize: 20,
@@ -137,11 +137,5 @@ export const styles = StyleSheet.create({
         color: 'white',
         fontSize: 40,
         width: '80%',
-      },
+    },
 });
-/*
-<MailBoxCode currentStudent={currentStudent} hideMailCode={hideMailCode} />
-<Pressable style={styles.combinationButton} onPress={() => setHideMailCode(!hideMailCode)}>
-    <Text style={styles.combinationButtonText}>Display Combination</Text>
-</Pressable>
-*/
