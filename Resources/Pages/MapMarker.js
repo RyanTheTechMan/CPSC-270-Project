@@ -1,4 +1,4 @@
-import {Pressable, View, StyleSheet, Text} from "react-native";
+import {Pressable, View, StyleSheet, Text, Image} from "react-native";
 import sharedStyles from "../Shared/styles";
 import {createStackNavigator} from "@react-navigation/stack";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -50,7 +50,7 @@ function Overview({navigation, route, marker, topNav}) {
   marker.floorPlan = true;
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{marker.displayName}</Text>
+      <Image source={{uri: marker.image}} style={styles.image} />
       <View style={styles.buttonContainer}>
         <MenuButton title="Navigate" icon="map-marker-right" onPress={() => console.log("navigate")} />
         {marker.floorPlan && ( <MenuButton title="Floor Plan" icon="floor-plan" onPress={() => navigation.navigate("FloorPlan")} /> )}
@@ -72,17 +72,29 @@ function FloorPlan({navigation, route, marker}) {
 
 const styles = StyleSheet.create({
   ...sharedStyles,
+  container: {
+    ...sharedStyles.container,
+    alignSelf: 'auto',
+    justifyContent: 'flex-start'
+  },
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     marginBottom: 10,
   },
   button: {
-    backgroundColor: '#f0f0f0',
+    ...sharedStyles.button,
     padding: 10,
     borderRadius: 5,
+    marginHorizontal: 5
   },
   buttonText: {
+    ...sharedStyles.button_text,
     fontSize: 18,
   },
+  image: {
+    width: '100%',
+    height: '30%',
+    marginBottom: 50
+  }
 });
