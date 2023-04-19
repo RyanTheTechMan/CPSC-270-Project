@@ -1,52 +1,49 @@
 import React from "react";
 import { StyleSheet, View, Text, ScrollView } from "react-native";
 import { RoundedRect, RoundedRectList } from "../RoundedRect";
-import sharedStyles, {neutral_color} from "../Shared/styles";
+import { PhoneNumberLink, EmailLink } from '../PhoneEmailComponents';
+import SafetyData from '../Shared/SafetyData.js';
+
+function EmailContactInfo({pContact})
+{
+	return(
+		<View>
+			{pContact.map((singleContact) => (
+				<View key={singleContact.label}>			
+					<Text style={styles.boldandwhite}>{singleContact.label}</Text>
+					<EmailLink emailAddress={singleContact.contact} />
+				</View>
+			))}
+		</View>
+	)
+}
+
+function PhoneContactInfo({pContact})
+{
+	return(
+		<View>
+			{pContact.map((singleContact) => (
+				<View key={singleContact.label}>			
+					<Text style={styles.boldandwhite}>{singleContact.label}</Text>
+					<PhoneNumberLink phoneNumber={singleContact.contact} />
+				</View>
+			))}
+		</View>
+	)
+}
 
 const SafetyList = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <RoundedRectList>
-        <RoundedRect title="Salem Police Department">
-          <Text>
-            1(234) 567-8910
-          </Text>
-        </RoundedRect>
-
-        <RoundedRect title="Campus Safety">
-          <Text>
-            1(234) 567-8910 
-          </Text>
-        </RoundedRect>
-
-        <RoundedRect title="RA On Duty">
-          <View>
-            <Text>
-              North Side: 1(234) 567-8910 
-            </Text>
-            <Text>
-              South Side: 1(234) 567-8910
-            </Text>
-            <Text>
-              West Side: 1(234) 567-8910
-            </Text>
-            <Text>
-              EC: 1(234) 567-8910
-            </Text>
-          </View>
-        </RoundedRect>
-
-        <RoundedRect title="Res. Life & Housing">
-          <Text>
-            1(234) 567-8910
-          </Text>
-        </RoundedRect>
-
-        <RoundedRect title="Student Health & Counseling">
-          <Text>
-            1(234) 567-8910
-          </Text>
-        </RoundedRect>
+		
+        {SafetyData.contacts.map((item) => (
+          <RoundedRect key={item.title} title={item.title} style={styles.custom}>
+            <PhoneContactInfo pContact={item.phoneContactInfo} />
+            <EmailContactInfo pContact={item.emailContactInfo} />
+          </RoundedRect>
+        ))}
+        
       </RoundedRectList>
 
       
@@ -56,7 +53,6 @@ const SafetyList = () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: neutral_color,
     flexGrow: 1,
     paddingVertical: 16,
     paddingHorizontal: 8,
@@ -68,11 +64,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  custom: {
-    backgroundColor: "purple",
-    borderColor: "pink",
-    borderWidth: 2,
-    marginBottom: 20,
+  boldandwhite: {
+    fontWeight: 'bold', 
+    color: '#fff'
   },
 });
 

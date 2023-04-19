@@ -1,21 +1,50 @@
-import React, { useState } from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import React, { useState, useRef } from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  LayoutAnimation,
+  Platform,
+  UIManager,
+  Animated
+} from "react-native";
+import { header_color } from "./Shared/styles";
 
-const RoundedRect = ({
-  children,
-  title = "",
-  isOpen = false,
+if (
+  Platform.OS === "android" &&
+  UIManager.setLayoutAnimationEnabledExperimental
+) {
+  UIManager.setLayoutAnimationEnabledExperimental(true);
+}
+
+function RoundedRect ({
+  children, 
+  title = "", 
+  isOpen = false, 
   style = {},
-  ...props
-}) => {
-  const [isOpenState, setIsOpenState] = useState(isOpen);
+  ...props 
+})
+{
+  const [isOpenState, setIsOpenState] = useState(isOpen); 
+  let heightAnimValue = useRef(null).current;  
+
+  
+  const toggleOpenState = () => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    setIsOpenState(!isOpenState);
+  };
+  
+  const onLayout = (event) => {
+    if (heightAnimValue === null) {
+      heightAnimValue = new Animated.Value(event.nativeEvent.layout.height);
+    }
+  };
 
   return (
+    
     <View style={[styles.container, style]} {...props}>
-      <TouchableOpacity
-        onPress={() => setIsOpenState(!isOpenState)}
-        style={styles.header}
-      >
+      <TouchableOpacity onPress={toggleOpenState} style={styles.header}>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>{title}</Text>
         </View>
@@ -23,14 +52,25 @@ const RoundedRect = ({
           <Text style={styles.icon}>{isOpenState ? "-" : "+"}</Text>
         </View>
       </TouchableOpacity>
-
-      {isOpenState && <View style={styles.content}>{children}</View>}
+      
+      {isOpenState && (
+        <View style={styles.content} onLayout={onLayout}>
+          {children}
+        </View>
+      )}
+     
+      {!isOpenState && (
+        <View style={styles.collapsedContent} onLayout={onLayout}>
+          {children}
+        </View>
+      )}
     </View>
   );
 };
 
-const RoundedRectList = ({ children }) => {
-  return (
+function RoundedRectList({children})
+{
+  return(
     <View style={styles.listContainer}>
       {React.Children.map(children, (child, index) => (
         <View>
@@ -44,7 +84,7 @@ const RoundedRectList = ({ children }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#ccc",
+    backgroundColor: header_color,
     borderRadius: 10,
     overflow: "hidden",
     marginBottom: 10,
@@ -63,6 +103,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     fontWeight: "bold",
+    color: '#fff'
   },
   iconContainer: {
     justifyContent: "flex-end",
@@ -70,9 +111,14 @@ const styles = StyleSheet.create({
   icon: {
     fontSize: 24,
     fontWeight: "bold",
+    color: '#fff'
   },
   content: {
     padding: 16,
+  },
+  collapsedContent: {
+    height: 0,
+    overflow: "hidden",
   },
   listContainer: {
     flex: 1,
