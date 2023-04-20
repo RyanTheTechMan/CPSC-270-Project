@@ -37,27 +37,28 @@ const studentInfoGroup = [
 ];
 
 function RenderMailboxCode(props) {
-    currentStudent = props.currentStudent;
+    console.log('In RenderMailboxCode');
+    console.log(props.currentStudent);
+    const currentStudent = props.currentStudent;
+    return(
     <View>
         <RoundedRect title="Mail Box Code" style={styles.combinationButton}>
-            <View>
-                <Text style={styles.combination}>{"Box Combination: " + currentStudent.collegeAddress.campusBoxCode}</Text>
-            </View>
+            <Text style={styles.combination}>{"Box Combination: " + currentStudent.collegeAddress.campusBoxCode}</Text>
         </RoundedRect>
     </View>
-};
+)};
 
 function RenderStudentAddress(props) {
+    console.log('In RenderStudentAddress');
+    console.log(props.currentStudent);
     const currentStudent = props.currentStudent;
     return (
-        <View style={styles.mailPage}>
-            <View style={styles.address}>
-                <Text style={styles.addressHeader}>Campus Address:</Text>
-                <Text style={styles.addressText}>{currentStudent.studentName.firstName + " " + currentStudent.studentName.lastName}</Text>
-                <Text style={styles.addressText}>{currentStudent.collegeAddress.street}</Text>
-                <Text style={styles.addressText}>{"Campus Box: " + currentStudent.collegeAddress.campusBox}</Text>
-                <Text style={styles.addressText}>{currentStudent.collegeAddress.city + ", " + currentStudent.collegeAddress.state + " " + currentStudent.collegeAddress.zipCode}</Text>
-            </View>
+        <View style={styles.address}>
+            <Text style={styles.addressHeader}>Campus Address:</Text>
+            <Text style={styles.addressText}>{currentStudent.studentName.firstName + " " + currentStudent.studentName.lastName}</Text>
+            <Text style={styles.addressText}>{currentStudent.collegeAddress.street}</Text>
+            <Text style={styles.addressText}>{"Campus Box: " + currentStudent.collegeAddress.campusBox}</Text>
+            <Text style={styles.addressText}>{currentStudent.collegeAddress.city + ", " + currentStudent.collegeAddress.state + " " + currentStudent.collegeAddress.zipCode}</Text>
         </View>
     )
 };
@@ -75,7 +76,7 @@ export default function MailPage() {
     }
 
     return (
-        <View>
+        <View style={styles.mailPage}>
             <RenderStudentAddress currentStudent={currentStudent} />
             <RenderMailboxCode currentStudent={currentStudent} />
         </View>
@@ -95,8 +96,9 @@ export const styles = StyleSheet.create({
         alignItems: 'left',
     },
     mailPage: {
-        height: '100%',
+        flex: 1,
         alignItems: 'center',
+        height: '100%',
     },
     addressHeader: {
         fontSize: 40,
@@ -107,7 +109,6 @@ export const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: '600',
         color: '#313131',
-
     },
     combinationButton: {
         fontSize: 30,
