@@ -1,7 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { DiningPage, RenderLocationMenu, handleLocationPress, RenderDiningLocationButton, RenderDay, freshensMenu, commonsMenu, RenderMeal, RenderMealItems, cavernMenu, convertLocationToMenu } from './Resources/Menus'
-
+import { DiningPage, RenderLocationMenu, handleLocationPress, RenderDiningLocationButton, RenderDay, RenderMeal, RenderMealItems, convertLocationToMenu } from './Resources/Menus';
+import { freshensMenu, commonsMenu, cavernMenu, } from './Resources/Shared/diningData.js';
 
 //DINING PAGE TESTS (Menus.js)
 
