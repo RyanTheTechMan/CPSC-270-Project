@@ -3,6 +3,8 @@ import renderer from 'react-test-renderer';
 import { DiningPage, RenderLocationMenu, handleLocationPress, RenderDiningLocationButton, RenderDay, RenderMeal, RenderMealItems, convertLocationToMenu } from './Resources/Menus';
 import { freshensMenu, commonsMenu, cavernMenu, } from './Resources/Shared/diningData.js';
 import { MailPage, RenderStudentAddress, RenderMailboxCode, studentInfoGroup } from './Resources/Pages/Mail.js';
+import { data } from './Resources/Pages/Landing.js';
+import { DirectoryListItem } from './Resources/Shared/DirectoryList.js';
 
 //DINING PAGE TESTS (Menus.js)
 
@@ -80,3 +82,11 @@ describe('MailPage', () => {
         expect(tree).toMatchSnapshot();
     });
 });
+
+//DirectoryLists TESTS ./Pages/Landing.js .
+/*describe('Press Dining Options', () => {
+    it('renders correctly', () => {
+        const tree = renderer.create(<DirectoryListItem key = {data[0].id} item = {data[0]} index = '0' onPress = {??}>).toJSON();
+        expect(tree).toMatchSnapshot();
+    });
+});*/
