@@ -3,7 +3,13 @@ import { Pressable, StyleSheet, Text, View, } from "react-native";
 import React, { useState } from 'react';
 import { RoundedRect, RoundedRectList } from "../RoundedRect";
 
-const studentInfoGroup = [
+export const exportedForTesting = {
+    RenderMailboxCode,
+    RenderStudentAddress,
+    MailPage
+  }
+
+export const studentInfoGroup = [
     {
         studentId: '0906523',
         studentName: {
@@ -36,10 +42,9 @@ const studentInfoGroup = [
     },
 ];
 
-function RenderMailboxCode(props) {
-    console.log('In RenderMailboxCode');
-    console.log(props.currentStudent);
+export function RenderMailboxCode(props) {
     const currentStudent = props.currentStudent;
+
     return(
     <View>
         <RoundedRect title="Mail Box Code" style={styles.combinationButton}>
@@ -48,10 +53,9 @@ function RenderMailboxCode(props) {
     </View>
 )};
 
-function RenderStudentAddress(props) {
-    console.log('In RenderStudentAddress');
-    console.log(props.currentStudent);
+export function RenderStudentAddress(props) {
     const currentStudent = props.currentStudent;
+
     return (
         <View style={styles.address}>
             <Text style={styles.addressHeader}>Campus Address:</Text>
@@ -63,7 +67,7 @@ function RenderStudentAddress(props) {
     )
 };
 
-export default function MailPage() {
+export function MailPage() {
     const [selectedId, setSelectedId] = useState('0813342');
     const [currentStudent, setCurrentStudent] = useState(studentInfoGroup[0]);
     const [hideMailCode, setHideMailCode] = useState(false);
