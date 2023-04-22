@@ -1,156 +1,104 @@
 import { Dimensions, StyleSheet, Text, View, SectionList, FlatList, Pressable, TouchableOpacity, ScrollView, } from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
 import { useState } from "react";
+import { commonsMenu, freshensMenu, cavernMenu} from './Shared/diningData.js';
 
-export const commonsMenu = [
-  {
-    day: 'Sunday',
-    meals: [{ meal: "Breakfast", mealItems: ["Eggs", "Toast"] }, { meal: "Lunch", mealItems: ["Sandwiches", "Soup", "Cookies"] }, { meal: "Dinner", mealItems: ["Pizza", "Salad", "Burgers"] }]
-  }, {
-    day: 'Monday',
-    meals: [{ meal: "Breakfast", mealItems: ["Eggs", "Toast"] }, { meal: "Lunch", mealItems: ["Sandwiches", "Soup", "Cookies"] }, { meal: "Dinner", mealItems: ["Pizza", "Salad", "Burgers"] }]
-  }, {
-    day: 'Tuesday',
-    meals: [{ meal: "Breakfast", mealItems: ["Eggs", "Toast"] }, { meal: "Lunch", mealItems: ["Sandwiches", "Soup", "Cookies"] }, { meal: "Dinner", mealItems: ["Pizza", "Salad", "Burgers"] }]
-  }, {
-    day: 'Wednesday',
-    meals: [{ meal: "Breakfast", mealItems: ["Eggs", "Toast"] }, { meal: "Lunch", mealItems: ["Sandwiches", "Soup", "Cookies"] }, { meal: "Dinner", mealItems: ["Pizza", "Salad", "Burgers"] }]
-  }, {
-    day: 'Thursday',
-    meals: [{ meal: "Breakfast", mealItems: ["Eggs", "Toast"] }, { meal: "Lunch", mealItems: ["Sandwiches", "Soup", "Cookies"] }, { meal: "Dinner", mealItems: ["Pizza", "Salad", "Burgers"] }]
-  }, {
-    day: 'Friday',
-    meals: [{ meal: "Breakfast", mealItems: ["Eggs", "Toast"] }, { meal: "Lunch", mealItems: ["Sandwiches", "Soup", "Cookies"] }, { meal: "Dinner", mealItems: ["Pizza", "Salad", "Burgers"] }]
-  }, {
-    day: 'Saturday',
-    meals: [{ meal: "Breakfast", mealItems: ["Eggs", "Toast"] }, { meal: "Lunch", mealItems: ["Sandwiches", "Soup", "Cookies"] }, { meal: "Dinner", mealItems: ["Pizza", "Salad", "Burgers"] }]
-  },
-]
-
-export const freshensMenu = [
-  {
-    day: 'Sunday',
-    meals: [{ meal: "Breakfast", mealItems: ["Breakfast Burrito", "Fruit and Yogurt", "Chicken and Waffles"] }, { meal: "Lunch", mealItems: ["Chicken Salad", "Banana", "Apple", "Smoothies"] }, { meal: "Dinner", mealItems: ["Chicken Pizza", "Home Fries", "Cucumber Slices"] }]
-  }, {
-    day: 'Monday',
-    meals: [{ meal: "Breakfast", mealItems: ["Breakfast Burrito", "Fruit and Yogurt", "Chicken and Waffles"] }, { meal: "Lunch", mealItems: ["Chicken Salad", "Banana", "Apple", "Smoothies"] }, { meal: "Dinner", mealItems: ["Chicken Pizza", "Home Fries", "Cucumber Slices"] }]
-  }, {
-    day: 'Tuesday',
-    meals: [{ meal: "Breakfast", mealItems: ["Breakfast Burrito", "Fruit and Yogurt", "Chicken and Waffles"] }, { meal: "Lunch", mealItems: ["Chicken Salad", "Banana", "Apple", "Smoothies"] }, { meal: "Dinner", mealItems: ["Chicken Pizza", "Home Fries", "Cucumber Slices"] }]
-  }, {
-    day: 'Wednesday',
-    meals: [{ meal: "Breakfast", mealItems: ["Breakfast Burrito", "Fruit and Yogurt", "Chicken and Waffles"] }, { meal: "Lunch", mealItems: ["Chicken Salad", "Banana", "Apple", "Smoothies"] }, { meal: "Dinner", mealItems: ["Chicken Pizza", "Home Fries", "Cucumber Slices"] }]
-  }, {
-    day: 'Thursday',
-    meals: [{ meal: "Breakfast", mealItems: ["Breakfast Burrito", "Fruit and Yogurt", "Chicken and Waffles"] }, { meal: "Lunch", mealItems: ["Chicken Salad", "Banana", "Apple", "Smoothies"] }, { meal: "Dinner", mealItems: ["Chicken Pizza", "Home Fries", "Cucumber Slices"] }]
-  }, {
-    day: 'Friday',
-    meals: [{ meal: "Breakfast", mealItems: ["Breakfast Burrito", "Fruit and Yogurt", "Chicken and Waffles"] }, { meal: "Lunch", mealItems: ["Chicken Salad", "Banana", "Apple", "Smoothies"] }, { meal: "Dinner", mealItems: ["Chicken Pizza", "Home Fries", "Cucumber Slices"] }]
-  },
-]
-
-export const cavernMenu = [
-  {
-    day: 'Monday',
-    meals: [{ meal: "Dinner", mealItems: ["Fries", "Salad", "Burgers", "Chicken Sandwich"] }]
-  }, {
-    day: 'Tuesday',
-    meals: [{ meal: "Dinner", mealItems: ["Fries", "Salad", "Burgers", "Chicken Sandwich"] }]
-  }, {
-    day: 'Wednesday',
-    meals: [{ meal: "Dinner", mealItems: ["Fries", "Salad", "Burgers", "Chicken Sandwich"] }]
-  }, {
-    day: 'Thursday',
-    meals: [{ meal: "Dinner", mealItems: ["Fries", "Salad", "Burgers", "Chicken Sandwich"] }]
-  }, {
-    day: 'Friday',
-    meals: [{ meal: "Dinner", mealItems: ["Fries", "Salad", "Burgers", "Chicken Sandwich"] }]
-  }, {
-    day: 'Saturday',
-    meals: [{ meal: "Dinner", mealItems: ["Fries", "Salad", "Burgers", "Chicken Sandwich"] }]
-  },
-
-]
-
-//No longer needed.
-//const { width, height } = Dimensions.get('window');
-
-const Stack = createStackNavigator();
-
-export function DiningStack() {
-  return (
-    <Stack.Navigator initialRouteName="Commons" screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Commons" component={DiningPage} />
-      <Stack.Screen name="Freshens" component={DiningPage} />
-      <Stack.Screen name="Cavern" component={DiningPage} />
-    </Stack.Navigator>
-  );
-}
-
-
-function DiningPage({ navigation, route }) {
-  const menus = {
-    Commons: commonsMenu,
-    Freshens: freshensMenu,
-    Cavern: cavernMenu,
-  };
-
-  const [selectedMenu, setSelectedMenu] = useState('Commons');
-
-  const handleMenuPress = (menu) => {
-    setSelectedMenu(menu);
-  };
-
-  const renderMenuButton = (menu) => (
-    <TouchableOpacity
-      style={[
-        styles.button,
-        selectedMenu === menu ? styles.selectedButton : styles.unselectedButton,
-      ]}
-      onPress={() => handleMenuPress(menu)}
-      key={menu}
-    >
-      <Text
-        style={[
-          styles.buttonText,
-          selectedMenu === menu ? styles.selectedButtonText : null,
-        ]}
-      >
-        {menu}
-      </Text>
-    </TouchableOpacity>
-  );
-
-  const renderMenu = (menuData) => (
+export function RenderMealItems(mealItems){
+  return(
     <FlatList
-      style={styles.menuSchedule}
-      showsVerticalScrollIndicator={false}
-      data={menuData}
-      keyExtractor={(item) => item.day}
+      style={styles.mealContainer}
+      data={mealItems.mealItems}
       renderItem={({ item }) => (
-        <>
-          {<Text style={styles.day}>{item.day}</Text>}
-          {item.meals.map((meal) => (
-            <View key={meal.meal} style={{borderWidth: 4}}>
-              <Text style={styles.meal}>{meal.meal}</Text>
-              {meal.mealItems.map((mealItem) => (
-                <Text style={styles.item} key={mealItem}>{mealItem}</Text>
-              ))}
-            </View>
-          ))}
-        </>
+        <View key={item}>
+          <Text style={styles.mealItemText}>{item}</Text>
+        </View>
       )}
     />
   );
+}
 
+export function RenderMeal(dayMeals) {
   return (
-    <View style={styles.page}>
+    <FlatList
+      style={styles.mealContainer}
+      data={dayMeals.dayMeals}
+      renderItem={({ item }) => (
+        <View key= {item.meal}>
+          <Text  style={styles.meal}>{item.meal}</Text>
+          <RenderMealItems mealItems={item.mealItems}/>
+        </View>
+      )}
+    />
+  );
+}
+
+export function RenderDay(locationMenu) {
+  return (
+    <FlatList
+      style={styles.menuSchedule}
+      showsVerticalScrollIndicator={false}
+      data={locationMenu.locationMenu}
+      keyExtractor={(item) => item.day}
+      renderItem={({ item }) => (
+        <View key={item.day}>
+          <Text  style={styles.day} >{item.day}</Text>
+          {console.log(item.day)}
+          <RenderMeal dayMeals={item.meals} />
+        </View>
+      )}
+    />
+  );
+}
+
+export function convertLocationToMenu(selectedLocation) {
+  let locationMenu;
+  switch (selectedLocation) {
+    case 'Cavern':
+      locationMenu = cavernMenu;
+      break;
+    case 'Commons':
+      locationMenu = commonsMenu;
+      break;
+    case 'Freshens':
+      locationMenu = freshensMenu;
+      break;
+  }
+  return locationMenu;
+}
+
+export function RenderLocationMenu(props) {
+  const selectedLocation = props.selectedLocation;
+  const locationMenu = convertLocationToMenu(selectedLocation);
+  return (
+    <RenderDay locationMenu={locationMenu} />
+  );
+}
+
+export function RenderDiningLocationButton(props) {
+  return (
+    <TouchableOpacity
+      style={[styles.button, props.selectedLocation === props.diningLocation ? styles.selectedButton : styles.unselectedButton]}
+      onPress={() => props.handleLocationPress(props.diningLocation)}
+    >
+      <Text style={[styles.buttonText, props.selectedLocation === props.diningLocation ? styles.selectedText : null]} >{props.diningLocation}</Text>
+    </TouchableOpacity>
+  );
+}
+
+export function DiningPage() {
+
+  const [selectedLocation, setSelectedLocation] = useState('Cavern');
+
+  function handleLocationPress(diningLocation) {
+    setSelectedLocation(diningLocation)
+  }
+  return (
+    <View>
       <View style={styles.diningButtons}>
-        {renderMenuButton('Cavern')}
-        {renderMenuButton('Commons')}
-        {renderMenuButton('Freshens')}
+        <RenderDiningLocationButton selectedLocation={selectedLocation} diningLocation='Cavern' handleLocationPress={handleLocationPress} />
+        <RenderDiningLocationButton selectedLocation={selectedLocation} diningLocation='Commons' handleLocationPress={handleLocationPress} />
+        <RenderDiningLocationButton selectedLocation={selectedLocation} diningLocation='Freshens' handleLocationPress={handleLocationPress} />
       </View>
-      {renderMenu(menus[selectedMenu])}
+      <RenderLocationMenu selectedLocation={selectedLocation} />
     </View>
   );
 }
@@ -173,8 +121,12 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     fontWeight: 'bold',
     color: '#4a4a4a',
-    alignItems: 'center',
-    borderWidth: 2,
+    textAlign: 'left',
+    width: '100%',
+  },
+  mealContainer: {
+    flex: 1,
+    alignContent: 'center',
   },
   meal: {
     flex: 1,
@@ -183,16 +135,16 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     fontWeight: '600',
     color: '#313131',
-    borderWidth: 2,
-    width: '70%',
-    alignItems: 'center',
-
+    width: 'auto',
+    textAlign: 'center',
   },
-  item: {
+  mealItemText: {
     fontSize: 18,
-    marginLeft: 20,
     marginBottom: 5,
     color: '#313131',
+    width: 'auto',
+    textAlign: 'center',
+
   },
   diningButtons: {
     flexDirection: 'row',
@@ -228,7 +180,7 @@ const styles = StyleSheet.create({
     color: '#313131',
     textAlign: 'center',
   },
-  selectedButtonText: {
+  selectedText: {
     color: '#ffffff',
   },
   separator: {

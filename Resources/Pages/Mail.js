@@ -1,11 +1,15 @@
 import { setStatusBarHidden } from "expo-status-bar";
 import { Pressable, StyleSheet, Text, View, } from "react-native";
 import React, { useState } from 'react';
+import { RoundedRect, RoundedRectList } from "../RoundedRect";
 
+export const exportedForTesting = {
+    RenderMailboxCode,
+    RenderStudentAddress,
+    MailPage
+  }
 
-
-const studentInfoGroup = [
-
+export const studentInfoGroup = [
     {
         studentId: '0906523',
         studentName: {
@@ -38,20 +42,32 @@ const studentInfoGroup = [
     },
 ];
 
+export function RenderMailboxCode(props) {
+    const currentStudent = props.currentStudent;
 
-export function MailBoxCode({ currentStudent, hideMailCode }) {
-
-    if (!hideMailCode) {
-        return (
+    return(
+    <View>
+        <RoundedRect title="Mail Box Code" style={styles.combinationButton}>
             <Text style={styles.combination}>{"Box Combination: " + currentStudent.collegeAddress.campusBoxCode}</Text>
-        )
-    }
+        </RoundedRect>
+    </View>
+)};
 
+export function RenderStudentAddress(props) {
+    const currentStudent = props.currentStudent;
 
-}
+    return (
+        <View style={styles.address}>
+            <Text style={styles.addressHeader}>Campus Address:</Text>
+            <Text style={styles.addressText}>{currentStudent.studentName.firstName + " " + currentStudent.studentName.lastName}</Text>
+            <Text style={styles.addressText}>{currentStudent.collegeAddress.street}</Text>
+            <Text style={styles.addressText}>{"Campus Box: " + currentStudent.collegeAddress.campusBox}</Text>
+            <Text style={styles.addressText}>{currentStudent.collegeAddress.city + ", " + currentStudent.collegeAddress.state + " " + currentStudent.collegeAddress.zipCode}</Text>
+        </View>
+    )
+};
 
-export default function MailPage() {
-
+export function MailPage() {
     const [selectedId, setSelectedId] = useState('0813342');
     const [currentStudent, setCurrentStudent] = useState(studentInfoGroup[0]);
     const [hideMailCode, setHideMailCode] = useState(false);
@@ -65,20 +81,10 @@ export default function MailPage() {
 
     return (
         <View style={styles.mailPage}>
-            <View style={styles.address}>
-                <Text style={styles.addressHeader}>Campus Address:</Text>
-                <Text style={styles.addressText}>{currentStudent.studentName.firstName + " " + currentStudent.studentName.lastName}</Text>
-                <Text style={styles.addressText}>{currentStudent.collegeAddress.street}</Text>
-                <Text style={styles.addressText}>{"Campus Box: " + currentStudent.collegeAddress.campusBox}</Text>
-                <Text style={styles.addressText}>{currentStudent.collegeAddress.city + ", " + currentStudent.collegeAddress.state + " " + currentStudent.collegeAddress.zipCode}</Text>
-            </View>
-            <MailBoxCode currentStudent={currentStudent} hideMailCode={hideMailCode} />
-            <Pressable style={styles.combinationButton} onPress={() => setHideMailCode(!hideMailCode)}>
-                <Text style={styles.combinationButtonText}>Display Combination</Text>
-            </Pressable>
+            <RenderStudentAddress currentStudent={currentStudent} />
+            <RenderMailboxCode currentStudent={currentStudent} />
         </View>
     );
-
 }
 
 export const styles = StyleSheet.create({
@@ -94,8 +100,9 @@ export const styles = StyleSheet.create({
         alignItems: 'left',
     },
     mailPage: {
-        height: '100%',
+        flex: 1,
         alignItems: 'center',
+        height: '100%',
     },
     addressHeader: {
         fontSize: 40,
@@ -106,13 +113,12 @@ export const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: '600',
         color: '#313131',
-
     },
     combinationButton: {
         fontSize: 30,
         margin: 10,
         color: 'white',
-        backgroundColor: 'gray',
+        backgroundColor: '#8B1D3D',
         borderRadius: 10,
 
     },
@@ -121,12 +127,20 @@ export const styles = StyleSheet.create({
         margin: 10,
         color: 'white',
         fontWeight: '600',
-
     },
     combination: {
-        fontSize: 30,
+        fontSize: 20,
         margin: 10,
         fontWeight: '600',
-        color: '#313131',
+        color: 'white',
+    },
+    custom: {
+        backgroundColor: '#8B1D3D',
+        borderColor: "gray",
+        borderWidth: 2,
+        marginBottom: 20,
+        color: 'white',
+        fontSize: 40,
+        width: '80%',
     },
 });
