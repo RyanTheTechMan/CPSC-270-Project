@@ -1,7 +1,10 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { DiningPage, RenderLocationMenu, handleLocationPress, RenderDiningLocationButton, RenderDay, freshensMenu, commonsMenu, RenderMeal, RenderMealItems, cavernMenu, convertLocationToMenu } from './Resources/Menus'
-
+import { DiningPage, RenderLocationMenu, handleLocationPress, RenderDiningLocationButton, RenderDay, RenderMeal, RenderMealItems, convertLocationToMenu } from './Resources/Menus';
+import { freshensMenu, commonsMenu, cavernMenu, } from './Resources/Shared/diningData.js';
+import { MailPage, RenderStudentAddress, RenderMailboxCode, studentInfoGroup } from './Resources/Pages/Mail.js';
+import { data } from './Resources/Pages/Landing.js';
+import { DirectoryListItem } from './Resources/Shared/DirectoryList.js';
 
 //DINING PAGE TESTS (Menus.js)
 
@@ -57,3 +60,33 @@ describe('<RenderMealItems mealItems = {cavernMenu[2].meals[0].mealItems}/> ', (
 test('convertLocationToMenu converts Commons to commonsMenu', () => {
     expect(convertLocationToMenu('Commons')).toBe(commonsMenu);
 });
+
+//MAIL PAGE TESTS ./Pages/Mail.js
+describe('RenderMailboxCode', () => {
+    it('renders correctly', () => {
+        const tree = renderer.create(<RenderMailboxCode currentStudent={studentInfoGroup[1]} />).toJSON();
+        expect(tree).toMatchSnapshot();
+    });
+});
+
+describe('RenderStudentAddress', () => {
+    it('renders correctly', () => {
+        const tree = renderer.create(<RenderStudentAddress currentStudent={studentInfoGroup[1]} />).toJSON();
+        expect(tree).toMatchSnapshot();
+    });
+});
+
+describe('MailPage', () => {
+    it('renders correctly', () => {
+        const tree = renderer.create(<MailPage />).toJSON();
+        expect(tree).toMatchSnapshot();
+    });
+});
+
+//DirectoryLists TESTS ./Pages/Landing.js .
+/*describe('Press Dining Options', () => {
+    it('renders correctly', () => {
+        const tree = renderer.create(<DirectoryListItem key = {data[0].id} item = {data[0]} index = '0' onPress = {??}>).toJSON();
+        expect(tree).toMatchSnapshot();
+    });
+});*/

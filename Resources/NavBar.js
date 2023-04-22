@@ -14,7 +14,7 @@ import FinancialInformationPage from './Pages/FinancialInformation';
 import Map from './Pages/Map';
 import DemoPage from './Pages/DemoPage';
 import SafetyList from "./Pages/SafetyInfo";
-import MailPage from "./Pages/Mail";
+import { MailPage } from "./Pages/Mail";
 import LandingPage from './Pages/Landing';
 import { DiningPage } from "./Menus";
 import { CalendarPage, CalendarStack} from "./Calendar";
