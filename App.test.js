@@ -1,10 +1,11 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
+import { render, fireEvent, screen, debug } from '@testing-library/react-native'
 import { DiningPage, RenderLocationMenu, handleLocationPress, RenderDiningLocationButton, RenderDay, RenderMeal, RenderMealItems, convertLocationToMenu } from './Resources/Menus';
 import { freshensMenu, commonsMenu, cavernMenu, } from './Resources/Shared/diningData.js';
 import { MailPage, RenderStudentAddress, RenderMailboxCode, studentInfoGroup } from './Resources/Pages/Mail.js';
 import { data } from './Resources/Pages/Landing.js';
-import { DirectoryListItem } from './Resources/Shared/DirectoryList.js';
+
 
 //DINING PAGE TESTS (Menus.js)
 
@@ -61,6 +62,36 @@ test('convertLocationToMenu converts Commons to commonsMenu', () => {
     expect(convertLocationToMenu('Commons')).toBe(commonsMenu);
 });
 
+describe('DiningPage', () => {
+    it('displays Freshens menu on button press', () => {
+        const { getByText, debug } = render(<DiningPage />);
+        const freshensButton = getByText('Freshens');
+        fireEvent.press(freshensButton);
+        const tree = screen.toJSON();
+        expect(tree).toMatchSnapshot();
+    });
+});
+
+describe('DiningPage', () => {
+    it('displays Commons menu on button press', () => {
+        const { getByText, debug } = render(<DiningPage />);
+        const commonsButton = getByText('Commons');
+        fireEvent.press(commonsButton);
+        const tree = screen.toJSON();
+        expect(tree).toMatchSnapshot();
+    });
+});
+
+describe('DiningPage', () => {
+    it('displays Cavern menu on button press', () => {
+        const { getByText, debug } = render(<DiningPage />);
+        const cavernButton = getByText('Cavern');
+        fireEvent.press(cavernButton);
+        const tree = screen.toJSON();
+        expect(tree).toMatchSnapshot();
+    });
+});
+
 //MAIL PAGE TESTS ./Pages/Mail.js
 describe('RenderMailboxCode', () => {
     it('renders correctly', () => {
@@ -82,6 +113,33 @@ describe('MailPage', () => {
         expect(tree).toMatchSnapshot();
     });
 });
+
+test('render MailPage Component Correctly', () => {
+    const { getByText } = render(<MailPage />);
+    const mailBoxCodeButton = getByText('Mail Box Code');
+    fireEvent.press(mailBoxCodeButton);
+});
+
+
+
+/*test('render DiningPage Component Correctly', () => {
+    const { getByText , debug, rerender } = render(<DiningPage />);
+    const freshensButton = getByText('Freshens');
+    fireEvent.press(freshensButton);
+    let {screen} = rerender(<DiningPage />);
+    console.log('-----screen-----');
+    console.log(screen);
+    /*const tree = renderer.create(screen).toJSON();
+    expect(tree).toMatchSnapshot();
+});*/
+
+
+/*describe('RenderMailboxCode with box open', () => {
+    it('box opens on press', () => {
+        const { getByTestId } = render(<MailPage />);
+        fireEvent.press(getByTestId('mailBoxCode'))
+    });
+});*/
 
 //DirectoryLists TESTS ./Pages/Landing.js .
 /*describe('Press Dining Options', () => {

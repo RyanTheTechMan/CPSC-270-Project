@@ -47,7 +47,7 @@ export function RenderMailboxCode(props) {
 
     return(
     <View>
-        <RoundedRect title="Mail Box Code" style={styles.combinationButton}>
+        <RoundedRect testID = "mailBoxCode" title="Mail Box Code" style={styles.combinationButton}>
             <Text style={styles.combination}>{"Box Combination: " + currentStudent.collegeAddress.campusBoxCode}</Text>
         </RoundedRect>
     </View>

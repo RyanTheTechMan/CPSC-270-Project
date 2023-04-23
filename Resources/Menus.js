@@ -41,7 +41,6 @@ export function RenderDay(locationMenu) {
       renderItem={({ item }) => (
         <View key={item.day}>
           <Text  style={styles.day} >{item.day}</Text>
-          {console.log(item.day)}
           <RenderMeal dayMeals={item.meals} />
         </View>
       )}
