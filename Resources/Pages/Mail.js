@@ -72,7 +72,7 @@ export function MailPage() {
     const [currentStudent, setCurrentStudent] = useState(studentInfoGroup[0]);
     const [hideMailCode, setHideMailCode] = useState(false);
 
-    for (student in studentInfoGroup) {
+    for (let student in studentInfoGroup) {
         if (student.studentId === selectedId) {
             setCurrentStudent(student);
             return;

@@ -67,6 +67,36 @@ test('convertLocationToMenu converts Commons to commonsMenu', () => {
     expect(convertLocationToMenu('Commons')).toBe(commonsMenu);
 });
 
+describe('DiningPage', () => {
+    it('displays Freshens menu on button press', () => {
+        const { getByText, debug } = render(<DiningPage />);
+        const freshensButton = getByText('Freshens');
+        fireEvent.press(freshensButton);
+        const tree = screen.toJSON();
+        expect(tree).toMatchSnapshot();
+    });
+});
+
+describe('DiningPage', () => {
+    it('displays Commons menu on button press', () => {
+        const { getByText, debug } = render(<DiningPage />);
+        const commonsButton = getByText('Commons');
+        fireEvent.press(commonsButton);
+        const tree = screen.toJSON();
+        expect(tree).toMatchSnapshot();
+    });
+});
+
+describe('DiningPage', () => {
+    it('displays Cavern menu on button press', () => {
+        const { getByText, debug } = render(<DiningPage />);
+        const cavernButton = getByText('Cavern');
+        fireEvent.press(cavernButton);
+        const tree = screen.toJSON();
+        expect(tree).toMatchSnapshot();
+    });
+});
+
 //MAIL PAGE TESTS ./Pages/Mail.js
 
 describe('RenderMailboxCode', () => {
