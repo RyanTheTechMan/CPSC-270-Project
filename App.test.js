@@ -9,6 +9,7 @@ import { data } from './Resources/Pages/Landing.js';
 import { render, fireEvent, screen, debug } from '@testing-library/react-native';
 import { App } from './App';
 import NavBar from './Resources/NavBar';
+import ShallowRenderer from 'react-shallow-renderer';
 
 
 
@@ -231,6 +232,19 @@ describe('App', () => {
 		expect(tree).toMatchSnapshot();
 	});
 });
+
+describe('App', () => {
+	it('navigates to DiningPage then to Commons menu (two buttons pressed)', () => {
+		const { getByText, debug } = render(<App />);
+		const diningPageButton = getByText('Dining Options');
+		fireEvent.press(diningPageButton);
+		const commonsButton = getByText('Commons');
+		fireEvent.press(commonsButton);
+		const tree = screen.toJSON();
+		expect(tree).toMatchSnapshot();
+	});
+});
+
 
 //DirectoryLists TESTS ./Pages/Landing.js .
 /*describe('Press Dining Options', () => {
