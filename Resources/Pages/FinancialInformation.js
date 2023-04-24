@@ -138,7 +138,7 @@ export function ContactFinancialAidOffice()
 	)
 }
 
-export function AcademicInformationPage()
+export function FinancialInformationPage()
 {
 	return(
 		<ScrollView>
