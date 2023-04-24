@@ -17104,9 +17104,29 @@ exports[`App renders correctly 1`] = `
                                 }
                               >
                                 <View
-                                  animatedStyle={
-                                    {
-                                      "value": {
+                                  collapsable={false}
+                                  handlerTag={2}
+                                  handlerType="PanGestureHandler"
+                                  onGestureHandlerEvent={[Function]}
+                                  onGestureHandlerStateChange={[Function]}
+                                  style={
+                                    [
+                                      {
+                                        "alignSelf": "center",
+                                        "backgroundColor": "rgba(0,0,0,1)",
+                                        "borderRadius": 500,
+                                        "bottom": 18,
+                                        "elevation": 7,
+                                        "height": 75,
+                                        "shadowOffset": {
+                                          "height": 12,
+                                          "width": 0,
+                                        },
+                                        "shadowRadius": 10,
+                                        "width": 75,
+                                        "zIndex": 1,
+                                      },
+                                      {
                                         "shadowOpacity": 0.6,
                                         "transform": [
                                           {
@@ -17120,41 +17140,7 @@ exports[`App renders correctly 1`] = `
                                           },
                                         ],
                                       },
-                                    }
-                                  }
-                                  collapsable={false}
-                                  forwardedRef={[Function]}
-                                  handlerTag={2}
-                                  handlerType="PanGestureHandler"
-                                  onGestureHandlerEvent={[Function]}
-                                  style={
-                                    {
-                                      "alignSelf": "center",
-                                      "backgroundColor": "rgba(0,0,0,1)",
-                                      "borderRadius": 500,
-                                      "bottom": 18,
-                                      "elevation": 7,
-                                      "height": 75,
-                                      "shadowOffset": {
-                                        "height": 12,
-                                        "width": 0,
-                                      },
-                                      "shadowOpacity": 0.6,
-                                      "shadowRadius": 10,
-                                      "transform": [
-                                        {
-                                          "translateY": -0,
-                                        },
-                                        {
-                                          "translateX": 0,
-                                        },
-                                        {
-                                          "scale": 1,
-                                        },
-                                      ],
-                                      "width": 75,
-                                      "zIndex": 1,
-                                    }
+                                    ]
                                   }
                                 >
                                   <View
@@ -17385,60 +17371,57 @@ exports[`App renders correctly 1`] = `
                                   Profile
                                 </Text>
                                 <View
-                                  animatedStyle={
-                                    {
-                                      "value": {
-                                        "backgroundColor": "rgba(0,0,0,0)",
-                                        "pointerEvents": "none",
-                                      },
-                                    }
-                                  }
                                   collapsable={false}
-                                  forwardedRef={[Function]}
                                   handlerTag={3}
                                   handlerType="PanGestureHandler"
                                   onGestureHandlerEvent={[Function]}
+                                  onGestureHandlerStateChange={[Function]}
                                   style={
-                                    {
-                                      "backgroundColor": "rgba(0,0,0,0)",
-                                      "pointerEvents": "none",
-                                      "position": "absolute",
-                                      "top": 0,
-                                      "transform": [
-                                        {
-                                          "translateY": -1334,
-                                        },
-                                      ],
-                                      "width": 750,
-                                    }
+                                    [
+                                      {
+                                        "backgroundColor": "rgba(0,0,0,0.7)",
+                                        "pointerEvents": "box-none",
+                                        "position": "absolute",
+                                        "top": 0,
+                                        "transform": [
+                                          {
+                                            "translateY": -1334,
+                                          },
+                                        ],
+                                        "width": 750,
+                                      },
+                                      {
+                                        "backgroundColor": "rgba(0,0,0,0)",
+                                        "pointerEvents": "none",
+                                      },
+                                    ]
                                   }
                                 >
                                   <View>
                                     <View
-                                      animatedStyle={
-                                        {
-                                          "value": {
+                                      style={
+                                        [
+                                          {
+                                            "backgroundColor": "black",
+                                            "pointerEvents": "box-none",
+                                            "position": "absolute",
+                                            "top": 0,
+                                            "width": 750,
+                                          },
+                                          {
                                             "opacity": 0,
                                             "pointerEvents": "none",
                                           },
-                                        }
-                                      }
-                                      collapsable={false}
-                                      style={
-                                        {
-                                          "backgroundColor": "black",
-                                          "opacity": 0,
-                                          "pointerEvents": "none",
-                                          "position": "absolute",
-                                          "top": 0,
-                                          "width": 750,
-                                        }
+                                        ]
                                       }
                                     />
                                     <View
-                                      animatedStyle={
-                                        {
-                                          "value": {
+                                      style={
+                                        [
+                                          {
+                                            "pointerEvents": "box-none",
+                                          },
+                                          {
                                             "opacity": 0,
                                             "transform": [
                                               {
@@ -17446,19 +17429,7 @@ exports[`App renders correctly 1`] = `
                                               },
                                             ],
                                           },
-                                        }
-                                      }
-                                      collapsable={false}
-                                      style={
-                                        {
-                                          "opacity": 0,
-                                          "pointerEvents": "box-none",
-                                          "transform": [
-                                            {
-                                              "translateY": 1250,
-                                            },
-                                          ],
-                                        }
+                                        ]
                                       }
                                     >
                                       <View
@@ -17614,9 +17585,14 @@ exports[`App renders correctly 1`] = `
                                             }
                                           />
                                           <View
-                                            animatedStyle={
-                                              {
-                                                "value": {
+                                            style={
+                                              [
+                                                {
+                                                  "backgroundColor": "#B8BFD8",
+                                                  "borderRadius": 20,
+                                                  "marginTop": 30,
+                                                },
+                                                {
                                                   "marginTop": -0,
                                                   "transform": [
                                                     {
@@ -17624,20 +17600,7 @@ exports[`App renders correctly 1`] = `
                                                     },
                                                   ],
                                                 },
-                                              }
-                                            }
-                                            collapsable={false}
-                                            style={
-                                              {
-                                                "backgroundColor": "#B8BFD8",
-                                                "borderRadius": 20,
-                                                "marginTop": -0,
-                                                "transform": [
-                                                  {
-                                                    "translateX": 0,
-                                                  },
-                                                ],
-                                              }
+                                              ]
                                             }
                                           >
                                             <Text />

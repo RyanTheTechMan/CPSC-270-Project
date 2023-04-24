@@ -58,8 +58,12 @@
       "@testing-library/jest-native/extend-expect"
     ],
     "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|gif)$": "<rootDir>/fileMock.js"
-    }
+      "\\.(jpg|jpeg|png|gif)$": "<rootDir>/fileMock.js",
+      "\\timeProvider$": "<rootDir>/fileMock.js"
+    },
+    "setupFiles": [
+      "<rootDir>/setup.js"
+    ]
   },
   "private": true
 }

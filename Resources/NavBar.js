@@ -36,7 +36,7 @@ function HomeButton({ navigation }) {
     />
   );
 }
-function NavBar() {
+export function NavBar() {
   return (
     <Stack.Navigator
       screenOptions={{

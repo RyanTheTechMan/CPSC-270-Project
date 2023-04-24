@@ -8,6 +8,7 @@ import { BankingInformation, ContactFinancialAidOffice, FinancialAidCounselor, F
 import { data } from './Resources/Pages/Landing.js';
 import { render, fireEvent, screen, debug } from '@testing-library/react-native';
 import { App } from './App';
+import NavBar from './Resources/NavBar';
 
 
 
