@@ -4,6 +4,7 @@ import { DiningPage, RenderLocationMenu, handleLocationPress, RenderDiningLocati
 import { freshensMenu, commonsMenu, cavernMenu, } from './Resources/Shared/diningData.js';
 import { MailPage, RenderStudentAddress, RenderMailboxCode, studentInfoGroup } from './Resources/Pages/Mail.js';
 import { AcademicInformationPage, GPA, Grades, MyProgress } from './Resources/Pages/AcademicInformation.js';
+import { BankingInformation, ContactFinancialAidOffice, FinancialAidCounselor, FinancialInformationPage, SAPDetails, SAPStatus, SatisfactoryAcademicProgress, StudentFinance, TaxInformation} from './Resources/Pages/FinancialInformation';
 import { data } from './Resources/Pages/Landing.js';
 import { DirectoryListItem } from './Resources/Shared/DirectoryList.js';
 
@@ -117,6 +118,78 @@ describe('AcademicInformationPage', () => {
 	    expect(tree).toMatchSnapshot();
 	});
  });
+
+//ACADEMIC INFORMATION PAGE TESTS ./Pages/AcademicInformation.js
+
+describe('BankingInformation', () => {
+	it('renders correctly', () => {
+		const tree = renderer.create(<BankingInformation />);
+		expect(tree).toMatchSnapshot();
+	})
+})
+
+describe('TaxInformation', () => {
+	it('renders correctly', () => {
+		const tree = renderer.create(<TaxInformation />);
+		expect(tree).toMatchSnapshot();
+	})
+})
+
+describe('FinancialAidCounselor', () => {
+	it('renders correctly', () => {
+		const tree = renderer.create(<FinancialAidCounselor />);
+		expect(tree).toMatchSnapshot();
+	})
+})
+
+describe('SAPDetails', () => {
+	it('renders correctly', () => {
+		const tree = renderer.create(<SAPDetails />);
+		expect(tree).toMatchSnapshot();
+	})
+})
+
+describe('SAPStatus', () => {
+	it('renders correctly', () => {
+		const tree = renderer.create(<SAPStatus />);
+		expect(tree).toMatchSnapshot();
+	})
+})
+
+describe('SatisfactoryAcademicProgress', () => {
+	it('renders correctly', () => {
+		const tree = renderer.create(<SatisfactoryAcademicProgress />);
+		expect(tree).toMatchSnapshot();
+	})
+})
+
+describe('FinancialAid', () => {
+	it('renders correctly', () => {
+		const tree = renderer.create(<FinancialAid />);
+		expect(tree).toMatchSnapshot();
+	})
+})
+
+describe('StudentFinance', () => {
+	it('renders correctly', () => {
+		const tree = renderer.create(<StudentFinance />);
+		expect(tree).toMatchSnapshot();
+	})
+})
+
+describe('ContactFinancialAidOffice', () => {
+	it('renders correctly', () => {
+		const tree = renderer.create(<ContactFinancialAidOffice />).toJSON();
+		expect(tree).toMatchSnapshot();
+	})
+})
+
+describe('FinancialInformationPage', () => {
+	it('renders correctly', () => {
+		const tree = renderer.create(<FinancialInformationPage />).toJSON();
+		expect(tree).toMatchSnapshot();
+	})
+})
 
 //DirectoryLists TESTS ./Pages/Landing.js .
 /*describe('Press Dining Options', () => {
