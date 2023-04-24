@@ -6,6 +6,7 @@ import { MailPage, RenderStudentAddress, RenderMailboxCode, studentInfoGroup } f
 import { AcademicInformationPage, GPA, Grades, StudentProgress } from './Resources/Pages/AcademicInformation.js';
 import { BankingInformation, ContactFinancialAidOffice, FinancialAidCounselor, FinancialInformationPage, SAPDetails, SAPStatus, SatisfactoryAcademicProgress, StudentFinance, TaxInformation, FinancialAid} from './Resources/Pages/FinancialInformation';
 import { data } from './Resources/Pages/Landing.js';
+import { render, fireEvent, screen, debug } from '@testing-library/react-native';
 //import { DirectoryListItem } from './Resources/Shared/DirectoryList.js';
 
 
@@ -64,6 +65,36 @@ describe('<RenderMealItems mealItems = {cavernMenu[2].meals[0].mealItems}/> ', (
 
 test('convertLocationToMenu converts Commons to commonsMenu', () => {
     expect(convertLocationToMenu('Commons')).toBe(commonsMenu);
+});
+
+describe('DiningPage', () => {
+    it('displays Freshens menu on button press', () => {
+        const { getByText, debug } = render(<DiningPage />);
+        const freshensButton = getByText('Freshens');
+        fireEvent.press(freshensButton);
+        const tree = screen.toJSON();
+        expect(tree).toMatchSnapshot();
+    });
+});
+
+describe('DiningPage', () => {
+    it('displays Commons menu on button press', () => {
+        const { getByText, debug } = render(<DiningPage />);
+        const commonsButton = getByText('Commons');
+        fireEvent.press(commonsButton);
+        const tree = screen.toJSON();
+        expect(tree).toMatchSnapshot();
+    });
+});
+
+describe('DiningPage', () => {
+    it('displays Cavern menu on button press', () => {
+        const { getByText, debug } = render(<DiningPage />);
+        const cavernButton = getByText('Cavern');
+        fireEvent.press(cavernButton);
+        const tree = screen.toJSON();
+        expect(tree).toMatchSnapshot();
+    });
 });
 
 //MAIL PAGE TESTS ./Pages/Mail.js
