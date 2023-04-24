@@ -138,7 +138,7 @@ export function ContactFinancialAidOffice()
 	)
 }
 
-export function AcademicInformationPage()
+export function FinancialInformationPage()
 {
 	return(
 		<ScrollView>
@@ -157,4 +157,4 @@ const styles = StyleSheet.create({
 	}
 });
 
-export default AcademicInformationPage;
+export default FinancialInformationPage;
