@@ -157,4 +157,4 @@ const styles = StyleSheet.create({
 	}
 });
 
-export default AcademicInformationPage;
+export default FinancialInformationPage;
