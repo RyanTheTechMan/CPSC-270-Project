@@ -18,23 +18,44 @@ if (
   UIManager.setLayoutAnimationEnabledExperimental(true);
 }
 
-function RoundedRect ({
-  children, 
-  title = "", 
-  isOpen = false, 
-  style = {},
-  ...props 
-})
-{
-  const [isOpenState, setIsOpenState] = useState(isOpen); 
-  let heightAnimValue = useRef(null).current;  
+function RoundedRectHeader({ title, isOpenState, onPress }) {
+  return (
+    <TouchableOpacity onPress={onPress} style={styles.header}>
+      <View style={styles.titleContainer}>
+        <Text style={styles.title}>{title}</Text>
+      </View>
+      <View style={styles.iconContainer}>
+        <Text style={styles.icon}>{isOpenState ? "-" : "+"}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+}
 
-  
+function RoundedRectContent({ children, isOpenState, onLayout }) {
+  return (
+    <View style={styles.content} onLayout={onLayout}>
+      {isOpenState && children}
+    </View>
+  );
+}
+
+function RoundedRectCollapsedContent({ children, isOpenState, onLayout }) {
+  return (
+    <View style={styles.collapsedContent} onLayout={onLayout}>
+      {!isOpenState && children}
+    </View>
+  );
+}
+
+function RoundedRect({ children, title = "", isOpen = false, style = {}, ...props }) {
+  const [isOpenState, setIsOpenState] = useState(isOpen);
+  let heightAnimValue = useRef(null).current;
+
   const toggleOpenState = () => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     setIsOpenState(!isOpenState);
   };
-  
+
   const onLayout = (event) => {
     if (heightAnimValue === null) {
       heightAnimValue = new Animated.Value(event.nativeEvent.layout.height);
@@ -42,31 +63,13 @@ function RoundedRect ({
   };
 
   return (
-    
     <View style={[styles.container, style]} {...props}>
-      <TouchableOpacity onPress={toggleOpenState} style={styles.header}>
-        <View style={styles.titleContainer}>
-          <Text style={styles.title}>{title}</Text>
-        </View>
-        <View style={styles.iconContainer}>
-          <Text style={styles.icon}>{isOpenState ? "-" : "+"}</Text>
-        </View>
-      </TouchableOpacity>
-      
-      {isOpenState && (
-        <View style={styles.content} onLayout={onLayout}>
-          {children}
-        </View>
-      )}
-     
-      {!isOpenState && (
-        <View style={styles.collapsedContent} onLayout={onLayout}>
-          {children}
-        </View>
-      )}
+      <RoundedRectHeader title={title} isOpenState={isOpenState} onPress={toggleOpenState} />
+      <RoundedRectContent children={children} isOpenState={isOpenState} onLayout={onLayout} />
+      <RoundedRectCollapsedContent children={children} isOpenState={isOpenState} onLayout={onLayout} />
     </View>
   );
-};
+}
 
 function RoundedRectList({children})
 {

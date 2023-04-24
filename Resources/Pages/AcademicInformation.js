@@ -5,23 +5,51 @@ import { RoundedRect, RoundedRectList } from "../RoundedRect.js";
 import * as Progress from 'react-native-progress';
 import * as style from "../Shared/styles";
 
-function GPA()
+export function TotalSchoolUnits()
 {
 	return(
-		<RoundedRect title={"GPA"}>
+		<RoundedRect title={"Total Units from this School"}>
+			<Progress.Bar progress={ProfileData.totalUnitsFromSchool} 
+	 		     width={style.subProgressBarWidth} 
+				color={style.progress_bar_color} />
+		</RoundedRect>
+	)
+}
+
+export function TotalUnits()
+{
+	return(
+		<RoundedRect title={"Total Units"}>
+		     <Progress.Bar progress={ProfileData.totalUnits}
+				width={style.subProgressBarWidth} 
+				color={style.progress_bar_color} />
+		</RoundedRect>
+	)
+}
+
+export function OverallProgress()
+{
+	<RoundedRect title={"Progress"}>
+	    <Progress.Bar progress={ProfileData.overallProgress} 
+	        	width={style.subProgressBarWidth} 
+			color={style.progress_bar_color}/>
+	</RoundedRect>
+}
+
+export function StudentProgress()
+{
+	return(
+		<RoundedRect title={"My Progress"}>
 			<RoundedRectList>
-				<RoundedRect title={"Cumulative GPA"}>
-					<Text>{ProfileData.cumulativeGPA}</Text>
-				</RoundedRect>
-				<RoundedRect title={"Major GPA"}>
-					<Text>{ProfileData.majorGPA}</Text>
-				</RoundedRect>
+				<OverallProgress />
+				<TotalUnits />
+				<TotalSchoolUnits />
 			</RoundedRectList>
 		</RoundedRect>
 	)
 }
 
-function Terms({term})
+export function Terms({term})
 {
 	return(
 		<RoundedRect title={term.title}>
@@ -40,7 +68,7 @@ function Terms({term})
 	)
 }
 
-function Grades()
+export function Grades()
 {
 	return(
 		<RoundedRect title={"Grades"}>
@@ -55,44 +83,43 @@ function Grades()
 	)
 }
 
-function MyProgress()
+export function MajorGPA()
 {
 	return(
-		<RoundedRect title={"My Progress"}>
+		<RoundedRect title={"Major GPA"}>
+			<Text>{ProfileData.majorGPA}</Text>
+		</RoundedRect>
+	)
+}
+
+export function CumulativeGPA()
+{
+	return(
+		<RoundedRect title={"Cumulative GPA"}>
+				<Text>{ProfileData.cumulativeGPA}</Text>
+		</RoundedRect>
+	)
+}
+
+export function GPA()
+{
+	return(
+		<RoundedRect title={"GPA"}>
 			<RoundedRectList>
-				<RoundedRect title={"Progress"}>
-				    <Progress.Bar
-							progress={ProfileData.overallProgress}
-							width={style.subProgressBarWidth}
-							color={style.progress_bar_color}
-						/>
-				</RoundedRect>
-				<RoundedRect title={"Total Units"}>
-				    <Progress.Bar
-							progress={ProfileData.totalUnits}
-							width={style.subProgressBarWidth}
-							color={style.progress_bar_color}
-						/>
-				</RoundedRect>
-				<RoundedRect title={"Total Units from this School"}>
-				    <Progress.Bar
-							progress={ProfileData.totalUnitsFromSchool}
-							width={style.subProgressBarWidth}
-							color={style.progress_bar_color}
-						/>
-				</RoundedRect>
+				<CumulativeGPA />
+				<MajorGPA />
 			</RoundedRectList>
 		</RoundedRect>
 	)
 }
 
-function AcademicInformationPage()
+export function AcademicInformationPage()
 {
 	return(
 		<ScrollView>
 			<GPA />
 			<Grades />
-			<MyProgress />
+			<StudentProgress />
 		</ScrollView>
 	)
 }

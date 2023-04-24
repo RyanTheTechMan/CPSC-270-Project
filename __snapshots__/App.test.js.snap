@@ -15971,7 +15971,6 @@ exports[`MailPage renders correctly 1`] = `
           },
         ]
       }
-      testID="mailBoxCode"
     >
       <View
         accessibilityState={
@@ -16099,7 +16098,6 @@ exports[`RenderMailboxCode renders correctly 1`] = `
         },
       ]
     }
-    testID="mailBoxCode"
   >
     <View
       accessibilityState={

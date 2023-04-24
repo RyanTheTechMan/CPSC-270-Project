@@ -1,10 +1,14 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { render, fireEvent, screen, debug } from '@testing-library/react-native'
 import { DiningPage, RenderLocationMenu, handleLocationPress, RenderDiningLocationButton, RenderDay, RenderMeal, RenderMealItems, convertLocationToMenu } from './Resources/Menus';
 import { freshensMenu, commonsMenu, cavernMenu, } from './Resources/Shared/diningData.js';
 import { MailPage, RenderStudentAddress, RenderMailboxCode, studentInfoGroup } from './Resources/Pages/Mail.js';
+import { AcademicInformationPage, GPA, Grades, MyProgress } from './Resources/Pages/AcademicInformation.js';
+import { BankingInformation, ContactFinancialAidOffice, FinancialAidCounselor, FinancialInformationPage, SAPDetails, SAPStatus, SatisfactoryAcademicProgress, StudentFinance, TaxInformation} from './Resources/Pages/FinancialInformation';
 import { data } from './Resources/Pages/Landing.js';
+import { DirectoryListItem } from './Resources/Shared/DirectoryList.js';
+
+
 
 
 //DINING PAGE TESTS (Menus.js)
@@ -62,37 +66,8 @@ test('convertLocationToMenu converts Commons to commonsMenu', () => {
     expect(convertLocationToMenu('Commons')).toBe(commonsMenu);
 });
 
-describe('DiningPage', () => {
-    it('displays Freshens menu on button press', () => {
-        const { getByText, debug } = render(<DiningPage />);
-        const freshensButton = getByText('Freshens');
-        fireEvent.press(freshensButton);
-        const tree = screen.toJSON();
-        expect(tree).toMatchSnapshot();
-    });
-});
-
-describe('DiningPage', () => {
-    it('displays Commons menu on button press', () => {
-        const { getByText, debug } = render(<DiningPage />);
-        const commonsButton = getByText('Commons');
-        fireEvent.press(commonsButton);
-        const tree = screen.toJSON();
-        expect(tree).toMatchSnapshot();
-    });
-});
-
-describe('DiningPage', () => {
-    it('displays Cavern menu on button press', () => {
-        const { getByText, debug } = render(<DiningPage />);
-        const cavernButton = getByText('Cavern');
-        fireEvent.press(cavernButton);
-        const tree = screen.toJSON();
-        expect(tree).toMatchSnapshot();
-    });
-});
-
 //MAIL PAGE TESTS ./Pages/Mail.js
+
 describe('RenderMailboxCode', () => {
     it('renders correctly', () => {
         const tree = renderer.create(<RenderMailboxCode currentStudent={studentInfoGroup[1]} />).toJSON();
@@ -114,37 +89,126 @@ describe('MailPage', () => {
     });
 });
 
-test('render MailPage Component Correctly', () => {
-    const { getByText } = render(<MailPage />);
-    const mailBoxCodeButton = getByText('Mail Box Code');
-    fireEvent.press(mailBoxCodeButton);
+//ACADEMIC INFORMATION PAGE TESTS ./Pages/AcademicInformation.js
+
+describe('MyProgress', () => {
+	it('renders correctly', () => {
+		const tree = renderer.create(<MyProgress />).toJSON();
+		expect(tree).toMatchSnapshot();
+	});
 });
 
+describe('Grades', () => {
+	it('renders correctly', () => {
+		const tree = renderer.create(<Grades />).toJSON();
+		expect(tree).toMatchSnapshot();
+	});
+});
 
+describe('GPA', () => {
+	it('renders correctly', () => {
+		const tree = renderer.create(<GPA />).toJSON();
+		expect(tree).toMatchSnapshot();
+	});
+});
 
-/*test('render DiningPage Component Correctly', () => {
-    const { getByText , debug, rerender } = render(<DiningPage />);
-    const freshensButton = getByText('Freshens');
-    fireEvent.press(freshensButton);
-    let {screen} = rerender(<DiningPage />);
-    console.log('-----screen-----');
-    console.log(screen);
-    /*const tree = renderer.create(screen).toJSON();
-    expect(tree).toMatchSnapshot();
-});*/
+describe('AcademicInformationPage', () => {
+	it('renders correctly', () => {
+	    const tree = renderer.create(<AcademicInformationPage />).toJSON();
+	    expect(tree).toMatchSnapshot();
+	});
+ });
 
+//ACADEMIC INFORMATION PAGE TESTS ./Pages/AcademicInformation.js
 
-/*describe('RenderMailboxCode with box open', () => {
-    it('box opens on press', () => {
-        const { getByTestId } = render(<MailPage />);
-        fireEvent.press(getByTestId('mailBoxCode'))
-    });
-});*/
+describe('BankingInformation', () => {
+	it('renders correctly', () => {
+		const tree = renderer.create(<BankingInformation />);
+		expect(tree).toMatchSnapshot();
+	})
+})
+
+describe('TaxInformation', () => {
+	it('renders correctly', () => {
+		const tree = renderer.create(<TaxInformation />);
+		expect(tree).toMatchSnapshot();
+	})
+})
+
+describe('FinancialAidCounselor', () => {
+	it('renders correctly', () => {
+		const tree = renderer.create(<FinancialAidCounselor />);
+		expect(tree).toMatchSnapshot();
+	})
+})
+
+describe('SAPDetails', () => {
+	it('renders correctly', () => {
+		const tree = renderer.create(<SAPDetails />);
+		expect(tree).toMatchSnapshot();
+	})
+})
+
+describe('SAPStatus', () => {
+	it('renders correctly', () => {
+		const tree = renderer.create(<SAPStatus />);
+		expect(tree).toMatchSnapshot();
+	})
+})
+
+describe('SatisfactoryAcademicProgress', () => {
+	it('renders correctly', () => {
+		const tree = renderer.create(<SatisfactoryAcademicProgress />);
+		expect(tree).toMatchSnapshot();
+	})
+})
+
+describe('FinancialAid', () => {
+	it('renders correctly', () => {
+		const tree = renderer.create(<FinancialAid />);
+		expect(tree).toMatchSnapshot();
+	})
+})
+
+describe('StudentFinance', () => {
+	it('renders correctly', () => {
+		const tree = renderer.create(<StudentFinance />);
+		expect(tree).toMatchSnapshot();
+	})
+})
+
+describe('ContactFinancialAidOffice', () => {
+	it('renders correctly', () => {
+		const tree = renderer.create(<ContactFinancialAidOffice />).toJSON();
+		expect(tree).toMatchSnapshot();
+	})
+})
+
+describe('FinancialInformationPage', () => {
+	it('renders correctly', () => {
+		const tree = renderer.create(<FinancialInformationPage />).toJSON();
+		expect(tree).toMatchSnapshot();
+	})
+})
 
 //DirectoryLists TESTS ./Pages/Landing.js .
 /*describe('Press Dining Options', () => {
     it('renders correctly', () => {
-        const tree = renderer.create(<DirectoryListItem key = {data[0].id} item = {data[0]} index = '0' onPress = {??}>).toJSON();
+        const tree = renderer.create(<App />).toJSON();
+        expect(tree).toMatchSnapshot();
+    });
+});
+
+//LANDING PAGE TESTS
+
+/*describe('LandingPage', () => {
+    it('displays Dining Options page correctly on button press', () => {
+        const { getByText, debug } = render(<App />);
+        const diningOptionsButton = getByText('Dining Options');
+        fireEvent.press(diningOptionsButton);
+        const tree = screen.toJSON();
         expect(tree).toMatchSnapshot();
     });
 });*/
+
+
