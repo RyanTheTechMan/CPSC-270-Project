@@ -3,8 +3,8 @@ import renderer from 'react-test-renderer';
 import { DiningPage, RenderLocationMenu, handleLocationPress, RenderDiningLocationButton, RenderDay, RenderMeal, RenderMealItems, convertLocationToMenu } from './Resources/Menus';
 import { freshensMenu, commonsMenu, cavernMenu, } from './Resources/Shared/diningData.js';
 import { MailPage, RenderStudentAddress, RenderMailboxCode, studentInfoGroup } from './Resources/Pages/Mail.js';
-import { AcademicInformationPage, GPA, Grades, MyProgress } from './Resources/Pages/AcademicInformation.js';
-import { BankingInformation, ContactFinancialAidOffice, FinancialAidCounselor, FinancialInformationPage, SAPDetails, SAPStatus, SatisfactoryAcademicProgress, StudentFinance, TaxInformation} from './Resources/Pages/FinancialInformation';
+import { AcademicInformationPage, GPA, Grades, StudentProgress } from './Resources/Pages/AcademicInformation.js';
+import { BankingInformation, ContactFinancialAidOffice, FinancialAidCounselor, FinancialInformationPage, SAPDetails, SAPStatus, SatisfactoryAcademicProgress, StudentFinance, TaxInformation, FinancialAid} from './Resources/Pages/FinancialInformation';
 import { data } from './Resources/Pages/Landing.js';
 //import { DirectoryListItem } from './Resources/Shared/DirectoryList.js';
 
@@ -91,9 +91,9 @@ describe('MailPage', () => {
 
 //ACADEMIC INFORMATION PAGE TESTS ./Pages/AcademicInformation.js
 
-describe('MyProgress', () => {
+describe('StudentProgress', () => {
 	it('renders correctly', () => {
-		const tree = renderer.create(<MyProgress />).toJSON();
+		const tree = renderer.create(<StudentProgress />).toJSON();
 		expect(tree).toMatchSnapshot();
 	});
 });
@@ -119,7 +119,7 @@ describe('AcademicInformationPage', () => {
 	});
  });
 
-//ACADEMIC INFORMATION PAGE TESTS ./Pages/AcademicInformation.js
+//FINANCIAL INFORMATION PAGE TESTS ./Pages/AcademicInformation.js
 
 describe('BankingInformation', () => {
 	it('renders correctly', () => {
