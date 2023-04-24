@@ -1,0 +1,53 @@
+name: Expo Build
+
+on:
+  workflow_dispatch:
+    branches: [ "manual-trigger" ]
+
+env:
+  NODE_VERSION: 20.x
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install Node.js ${{ env.NODE_VERSION }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+    - name: Setup Expo
+      uses: expo/expo-github-action@v8
+      with:
+        token: ${{ secrets.EXPO_CLI_TOKEN }}
+        packager: 'npm'
+        eas-version: latest
+    - name: Install dependencies
+      run: npm ci
+    - name: Run tests
+      id: test
+      run: npm test
+      continue-on-error: true
+    - name: Build Android and iOS Apps
+      run: eas build --platform all --non-interactive | tee build-output.txt
+    - name: Download Android APK
+      run: |
+        apk_url=$(grep -o 'https://expo.dev/artifacts/eas/[^[:space:]]*.apk' build-output.txt)
+        curl -o android.apk "${apk_url}"
+    - name: Download iOS IPA
+      run: |
+        ipa_url=$(grep -o 'https://expo.dev/artifacts/eas/[^[:space:]]*.ipa' build-output.txt)
+        curl -o ios.ipa "${ipa_url}"
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: app-builds
+        path: |
+          android.apk
+          ios.ipa
+    - name: Check test status
+      if: steps.test.outcome == 'failure'
+      run: |
+        echo "::warning::Tests failed, adding warning"

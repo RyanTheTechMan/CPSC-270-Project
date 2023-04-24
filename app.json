@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "RC-App",
-    "slug": "RC-App",
+    "slug": "rc-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -15,16 +15,24 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "edu.roanoke.rcapp"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "edu.roanoke.rcapp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "4ab5312c-940e-4574-8a77-ab0b8a2ca1e0"
+      }
+    },
+    "owner": "ryanthetechman"
   }
 }
