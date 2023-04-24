@@ -10,7 +10,7 @@ import DirectoryList from '../DirectoryList';
     { id: 4, title: '. . .', iconName: 'file-question', pageName: undefined },
   ];
 
-function LandingPage({ navigation }) {
+export function LandingPage({ navigation }) {
 
   function handlePress(id) {
     if (data[id].pageName !== undefined) {
