@@ -81,7 +81,7 @@ export function SAPStatus()
 				<RoundedRect title="Program">
 					<Text>{"Data Science - Bachelor of Science - Honors Program"}</Text>
 				</RoundedRect>
-				<RoundedRect title="SAP Status">
+				<RoundedRect title="My SAP Status">
 					<Text>{"✓ Satisfactory"}</Text>
 				</RoundedRect>
 			</RoundedRectList>
@@ -125,8 +125,6 @@ export function StudentFinance()
 		</RoundedRect>
 	)
 }
-
-//<Divider width={1} color={style.secondary_color} />
 
 export function ContactFinancialAidOffice()
 {
