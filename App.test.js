@@ -6,7 +6,10 @@ import { MailPage, RenderStudentAddress, RenderMailboxCode, studentInfoGroup } f
 import { AcademicInformationPage, GPA, Grades, MyProgress } from './Resources/Pages/AcademicInformation.js';
 import { BankingInformation, ContactFinancialAidOffice, FinancialAidCounselor, FinancialInformationPage, SAPDetails, SAPStatus, SatisfactoryAcademicProgress, StudentFinance, TaxInformation} from './Resources/Pages/FinancialInformation';
 import { data } from './Resources/Pages/Landing.js';
-import { DirectoryListItem } from './Resources/Shared/DirectoryList.js';
+//import { DirectoryListItem } from './Resources/Shared/DirectoryList.js';
+
+
+
 
 //DINING PAGE TESTS (Menus.js)
 
@@ -191,7 +194,21 @@ describe('FinancialInformationPage', () => {
 //DirectoryLists TESTS ./Pages/Landing.js .
 /*describe('Press Dining Options', () => {
     it('renders correctly', () => {
-        const tree = renderer.create(<DirectoryListItem key = {data[0].id} item = {data[0]} index = '0' onPress = {??}>).toJSON();
+        const tree = renderer.create(<App />).toJSON();
+        expect(tree).toMatchSnapshot();
+    });
+});
+
+//LANDING PAGE TESTS
+
+/*describe('LandingPage', () => {
+    it('displays Dining Options page correctly on button press', () => {
+        const { getByText, debug } = render(<App />);
+        const diningOptionsButton = getByText('Dining Options');
+        fireEvent.press(diningOptionsButton);
+        const tree = screen.toJSON();
         expect(tree).toMatchSnapshot();
     });
 });*/
+
+

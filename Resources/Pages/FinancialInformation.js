@@ -2,7 +2,7 @@ import React from "react";
 import {SafeAreaView, ScrollView, StyleSheet, Text, View} from "react-native";
 import ProfileData from '../Profile/ProfileData.js';
 import { RoundedRect, RoundedRectList } from "../RoundedRect.js";
-import { Divider } from '@rneui/themed';
+//import { Divider } from '@rneui/themed';
 import * as style from "../Shared/styles";
 import { EmailLink, PhoneNumberLink } from "../PhoneEmailComponents.js";
 
@@ -116,15 +116,17 @@ export function StudentFinance()
 	return(
 		<RoundedRect title={"Account Overview"}>
 		    <Text style={styles.AmountDue}>{"    Amount Due                                               -$800.00"}</Text>
-		    <Divider width={1} color={style.secondary_color} />
+		    <View borderBottomWidth={2} borderBottomcolor={style.secondary_color} />
 		    <Text style={styles.AmountDue}>{"+ Amount Overdue                                              $0.00"}</Text>
-		    <Divider width={2} color={style.secondary_color} />
+		    <View borderBottomWidth={2} borderBottomcolor={style.secondary_color} />
 		    <Text style={styles.AmountDue}>{"= Total Amount Due                                      -$800.00"}</Text>
-		    <Divider width={2} color={style.secondary_color} /> 
+		    <View borderBottomWidth={2} borderBottomcolor={style.secondary_color} /> 
 		    <Text style={styles.AmountDue}>{"= Total Account Balance                               -$800.00"}</Text>
 		</RoundedRect>
 	)
 }
+
+//<Divider width={1} color={style.secondary_color} />
 
 export function ContactFinancialAidOffice()
 {

@@ -17,12 +17,12 @@ import SafetyList from "./Pages/SafetyInfo";
 import { MailPage } from "./Pages/Mail";
 import LandingPage from './Pages/Landing';
 import { DiningPage } from "./Menus";
-import { CalendarPage, CalendarStack} from "./Calendar";
+import { CalendarPage, CalendarStack } from "./Calendar";
 import MapMarker from "./Pages/MapMarker";
 
 const EmptyComponent = () => <View />;
 
-const Stack = createStackNavigator();
+export const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 function HomeButton({ navigation }) {
