@@ -6,7 +6,7 @@ import { Divider } from '@rneui/themed';
 import * as style from "../Shared/styles";
 import { EmailLink, PhoneNumberLink } from "../PhoneEmailComponents.js";
 
-function BankingInformation()
+export function BankingInformation()
 {
 	return(
 		<RoundedRect title={"Banking Information"}>
@@ -22,7 +22,7 @@ function BankingInformation()
 	)
 }
 
-function TaxInformation()
+export function TaxInformation()
 {
 	return(
 		<RoundedRect title={"Tax Information"}>
@@ -38,7 +38,7 @@ function TaxInformation()
 	)
 }
 
-function FinancialAidCounselor()
+export function FinancialAidCounselor()
 {
 	return(
 		<RoundedRect title="Financial Aid Counselor">
@@ -48,7 +48,7 @@ function FinancialAidCounselor()
 	)
 }
 
-function SAPDetails()
+export function SAPDetails()
 {
 	return(
 		<RoundedRect title="SAP Details">
@@ -70,7 +70,7 @@ function SAPDetails()
 	)
 }
 
-function SAPStatus()
+export function SAPStatus()
 {
 	return(
 		<RoundedRect title="SAP Status">
@@ -89,7 +89,7 @@ function SAPStatus()
 	)
 }
 
-function SatisfactoryAcademicProgress()
+export function SatisfactoryAcademicProgress()
 {
 	return(
 		<RoundedRect title={"Satisfactory Academic Progress"}>
@@ -102,7 +102,7 @@ function SatisfactoryAcademicProgress()
 	)
 }
 
-function FinancialAid()
+export function FinancialAid()
 {
 	return(
 		<RoundedRect title={"Financial Aid"}>
@@ -111,7 +111,7 @@ function FinancialAid()
 	)
 }
 
-function StudentFinance()
+export function StudentFinance()
 {
 	return(
 		<RoundedRect title={"Account Overview"}>
@@ -126,7 +126,7 @@ function StudentFinance()
 	)
 }
 
-function ContactFinancialAidOffice()
+export function ContactFinancialAidOffice()
 {
 	return(
 		<RoundedRect title="Contact Financial Aid Office">
@@ -136,7 +136,7 @@ function ContactFinancialAidOffice()
 	)
 }
 
-function AcademicInformationPage()
+export function AcademicInformationPage()
 {
 	return(
 		<ScrollView>
