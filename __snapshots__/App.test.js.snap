@@ -36680,6 +36680,14 @@ exports[`MailPage renders correctly 1`] = `
         onLayout={[Function]}
         style={
           {
+            "padding": 16,
+          }
+        }
+      />
+      <View
+        onLayout={[Function]}
+        style={
+          {
             "height": 0,
             "overflow": "hidden",
           }
@@ -36803,6 +36811,14 @@ exports[`RenderMailboxCode renders correctly 1`] = `
         </Text>
       </View>
     </View>
+    <View
+      onLayout={[Function]}
+      style={
+        {
+          "padding": 16,
+        }
+      }
+    />
     <View
       onLayout={[Function]}
       style={
