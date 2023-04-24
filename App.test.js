@@ -6,7 +6,7 @@ import { MailPage, RenderStudentAddress, RenderMailboxCode, studentInfoGroup } f
 import { AcademicInformationPage, GPA, Grades, MyProgress } from './Resources/Pages/AcademicInformation.js';
 import { BankingInformation, ContactFinancialAidOffice, FinancialAidCounselor, FinancialInformationPage, SAPDetails, SAPStatus, SatisfactoryAcademicProgress, StudentFinance, TaxInformation} from './Resources/Pages/FinancialInformation';
 import { data } from './Resources/Pages/Landing.js';
-import { DirectoryListItem } from './Resources/Shared/DirectoryList.js';
+//import { DirectoryListItem } from './Resources/Shared/DirectoryList.js';
 
 
 
