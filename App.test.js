@@ -3,16 +3,9 @@ import renderer from 'react-test-renderer';
 import { DiningPage, RenderLocationMenu, handleLocationPress, RenderDiningLocationButton, RenderDay, RenderMeal, RenderMealItems, convertLocationToMenu } from './Resources/Menus';
 import { freshensMenu, commonsMenu, cavernMenu, } from './Resources/Shared/diningData.js';
 import { MailPage, RenderStudentAddress, RenderMailboxCode, studentInfoGroup } from './Resources/Pages/Mail.js';
-import { data, LandingPage } from './Resources/Pages/Landing.js';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
-import { App } from './App.js';
-import {ProfileData} from './Resources/Profile/ProfileData';
-import {Image} from "react-native";
-import { StatusBar } from 'expo-status-bar';
-import {NavigationContainer} from "@react-navigation/native";
-import styles from "./Resources/Shared/styles";
-import NavBar from "./Resources/NavBar";
+import { AcademicInformationPage, GPA, Grades, MyProgress } from './Resources/Pages/AcademicInformation.js';
+import { data } from './Resources/Pages/Landing.js';
+import { DirectoryListItem } from './Resources/Shared/DirectoryList.js';
 
 
 
@@ -73,6 +66,7 @@ test('convertLocationToMenu converts Commons to commonsMenu', () => {
 });
 
 //MAIL PAGE TESTS ./Pages/Mail.js
+
 describe('RenderMailboxCode', () => {
     it('renders correctly', () => {
         const tree = renderer.create(<RenderMailboxCode currentStudent={studentInfoGroup[1]} />).toJSON();
@@ -94,16 +88,38 @@ describe('MailPage', () => {
     });
 });
 
-/*test('render MailPage Component Correctly', () => {
-    const { getByText } = render(<MailPage />);
-    const mailBoxCodeButton = getByText('Mail Box Code');
-    fireEvent.press(mailBoxCodeButton);
-});*/
+//ACADEMIC INFORMATION PAGE TESTS ./Pages/AcademicInformation.js
 
+describe('MyProgress', () => {
+	it('renders correctly', () => {
+		const tree = renderer.create(<MyProgress />).toJSON();
+		expect(tree).toMatchSnapshot();
+	});
+});
 
-//APP TESTS
+describe('Grades', () => {
+	it('renders correctly', () => {
+		const tree = renderer.create(<Grades />).toJSON();
+		expect(tree).toMatchSnapshot();
+	});
+});
 
-describe('App', () => {
+describe('GPA', () => {
+	it('renders correctly', () => {
+		const tree = renderer.create(<GPA />).toJSON();
+		expect(tree).toMatchSnapshot();
+	});
+});
+
+describe('AcademicInformationPage', () => {
+	it('renders correctly', () => {
+	    const tree = renderer.create(<AcademicInformationPage />).toJSON();
+	    expect(tree).toMatchSnapshot();
+	});
+ });
+
+//DirectoryLists TESTS ./Pages/Landing.js .
+/*describe('Press Dining Options', () => {
     it('renders correctly', () => {
         const tree = renderer.create(<App />).toJSON();
         expect(tree).toMatchSnapshot();
