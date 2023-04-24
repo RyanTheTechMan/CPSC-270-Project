@@ -1,8 +1,8 @@
-import {Pressable, View, StyleSheet, Text, Image} from "react-native";
+import {Pressable, View, StyleSheet, Text, Image, ScrollView, FlatList, Dimensions} from "react-native";
 import sharedStyles from "../Shared/styles";
 import {createStackNavigator} from "@react-navigation/stack";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 
 const Stack = createStackNavigator();
 
@@ -63,10 +63,44 @@ function Overview({navigation, route, marker, topNav}) {
 }
 
 function FloorPlan({navigation, route, marker}) {
+  // TODO: When expo is removed, use react-native-pdf
+
+  const [images, setImages] = useState([]);
+
+  useEffect(() => {
+    loadLocalImages();
+  }, []);
+
+  const loadLocalImages = () => {
+    const localImages = [
+      require('../Profile/example_floor_plan.jpg'),
+      require('../Profile/example_floor_plan.jpg'),
+      require('../Profile/example_floor_plan.jpg'),
+      require('../Profile/example_floor_plan.jpg'),
+    ];
+
+    const imagesWithDimensions = localImages.map((image) => {
+      const resolvedImage = Image.resolveAssetSource(image);
+      const screenWidth = Dimensions.get('window').width;
+      const scaleFactor = resolvedImage.width / screenWidth;
+      const imageHeight = resolvedImage.height / scaleFactor;
+      return { uri: resolvedImage.uri, width: screenWidth, height: imageHeight };
+    });
+
+    setImages(imagesWithDimensions);
+  };
+
+  const renderItem = ({ item }) => {
+    return <Image source={{ uri: item.uri }} style={{ width: item.width, height: item.height }} />;
+  };
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>some cool stuff</Text>
-    </View>
+    <FlatList
+      data={images}
+      renderItem={renderItem}
+      keyExtractor={(item, index) => index.toString()}
+      ItemSeparatorComponent={() => <View style={styles.separator} />}
+    />
   );
 }
 
@@ -91,6 +125,11 @@ const styles = StyleSheet.create({
   buttonText: {
     ...sharedStyles.button_text,
     fontSize: 18,
+  },
+  separator: {
+    marginVertical: 5,
+    borderBottomColor: 'rgba(0,0,0,0)',
+    borderBottomWidth: StyleSheet.hairlineWidth,
   },
   image: {
     width: '100%',
