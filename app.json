@@ -27,12 +27,6 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    },
-    "extra": {
-      "eas": {
-        "projectId": "4ab5312c-940e-4574-8a77-ab0b8a2ca1e0"
-      }
-    },
-    "owner": "ryanthetechman"
+    }
   }
 }

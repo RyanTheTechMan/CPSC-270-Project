@@ -6,12 +6,22 @@ import { MailPage, RenderStudentAddress, RenderMailboxCode, studentInfoGroup } f
 import { AcademicInformationPage, GPA, Grades, StudentProgress, CumulativeGPA, MajorGPA, TotalSchoolUnits, TotalUnits } from './Resources/Pages/AcademicInformation.js';
 import { BankingInformation, ContactFinancialAidOffice, FinancialAidCounselor, FinancialInformationPage, SAPDetails, SAPStatus, SatisfactoryAcademicProgress, StudentFinance, TaxInformation, FinancialAid } from './Resources/Pages/FinancialInformation';
 import { data } from './Resources/Pages/Landing.js';
-import { render, fireEvent, screen, debug, act } from '@testing-library/react-native';
+import { render, fireEvent, screen, debug, act, update } from '@testing-library/react-native';
 import { App } from './App';
 import NavBar from './Resources/NavBar';
-import ShallowRenderer from 'react-shallow-renderer';
 
 
+
+beforeEach(() => {
+	jest.spyOn(console, 'error')
+	// @ts-ignore jest.spyOn adds this functionallity
+	console.error.mockImplementation(() => null);
+});
+
+afterEach(() => {
+	// @ts-ignore jest.spyOn adds this functionallity
+	console.error.mockRestore()
+});
 
 
 //DINING PAGE TESTS (Menus.js)
@@ -376,25 +386,45 @@ describe('App', () => {
 describe('App', () => {
 	it('navigates to DiningPage then to Commons menu (two buttons pressed)', () => {
 		const { getByText, debug } = render(<App />);
-			const diningPageButton = getByText('Dining Options');
-			fireEvent.press(diningPageButton);
-			const commonsButton = getByText('Commons');
-			fireEvent.press(commonsButton);
+		const diningPageButton = getByText('Dining Options');
+		fireEvent.press(diningPageButton);
+		const commonsButton = getByText('Commons');
+		fireEvent.press(commonsButton);
 		const tree = screen.toJSON();
 		expect(tree).toMatchSnapshot();
 	});
 
 	it('navigates to DiningPage then to Freshens menu (two buttons pressed)', () => {
 		const { getByText, debug } = render(<App />);
-			const diningPageButton = getByText('Dining Options');
-			fireEvent.press(diningPageButton);
-			const freshensButton = getByText('Freshens');
-			fireEvent.press(freshensButton);
+		const diningPageButton = getByText('Dining Options');
+		fireEvent.press(diningPageButton);
+		const freshensButton = getByText('Freshens');
+		fireEvent.press(freshensButton);
 		const tree = screen.toJSON();
 		expect(tree).toMatchSnapshot();
-		debug();
 	});
 
+	it('navigates to DiningPage then to Freshens menu then back to Cavern menu (three buttons pressed)', () => {
+		const { getByText, debug } = render(<App />);
+		const diningPageButton = getByText('Dining Options');
+		fireEvent.press(diningPageButton);
+		const freshensButton = getByText('Freshens');
+		fireEvent.press(freshensButton);
+		const cavernButton = getByText('Cavern');
+		fireEvent.press(cavernButton);
+		const tree = screen.toJSON();
+		expect(tree).toMatchSnapshot();
+	});
+
+	it('navigates to Mail Services Page on button press', () => {
+		const { getByText, debug } = render(<App />);
+		const mailServicesButton = getByText('Mail Services');
+		fireEvent.press(mailServicesButton);
+		/*const mailBoxCodeButton = getByText('Mail Box Code');
+		fireEvent.press(mailBoxCodeButton);*/
+		const tree = screen.toJSON();
+		expect(tree).toMatchSnapshot();
+	});
 });
 
 
