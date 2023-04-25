@@ -246,6 +246,7 @@ describe('App', () => {
 });
 
 
+
 //DirectoryLists TESTS ./Pages/Landing.js .
 /*describe('Press Dining Options', () => {
 	it('renders correctly', () => {
