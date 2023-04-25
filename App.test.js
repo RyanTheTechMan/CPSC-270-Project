@@ -382,6 +382,8 @@ describe('App', () => {
 		expect(tree).toMatchSnapshot();
 	});
 
+////////////////////////////////DINING PAGE TESTS///////////////////////////////////////////
+
 	it('navigates to DiningPage then to Commons menu (two buttons pressed)', () => {
 		const { getByText, debug } = render(<App />);
 		const diningPageButton = getByText('Dining Options');
@@ -414,6 +416,8 @@ describe('App', () => {
 		expect(tree).toMatchSnapshot();
 	});
 
+////////////////////////////////////////MAIL PAGE TESTS/////////////////////////////////////////////
+
 	it('navigates to Mail Services Page on button press', () => {
 		const { getByText, debug } = render(<App />);
 		const mailServicesButton = getByText('Mail Services');
@@ -431,6 +435,8 @@ describe('App', () => {
 		const tree = screen.toJSON();
 		expect(tree).toMatchSnapshot();
 	});
+
+/////////////////////////////////////FINANCIAL PAGE TESTS///////////////////////////////////////////
 
 	it('navigates to Financial Information Page on button press', () => {
 		const { getByText, debug } = render(<App />);
@@ -545,7 +551,7 @@ describe('App', () => {
 		const tree = screen.toJSON();
 	});
 
-//SAP Details depth tests
+	//SAP Details depth tests
 	it('navigates to and opens SAP Details on Financial Information Page with four button presses', () => {
 		const { getByText, debug } = render(<App />);
 		const financialInformationButton = getByText('Financial Information');
@@ -623,7 +629,7 @@ describe('App', () => {
 		const tree = screen.toJSON();
 		expect(tree).toMatchSnapshot();
 	});
-	
+
 	it('navigates to and opens Financial Aid Counselor on Financial Information Page with five button presses', () => {
 		const { getByText, debug } = render(<App />);
 		const financialInformationButton = getByText('Financial Information');
@@ -638,34 +644,101 @@ describe('App', () => {
 		fireEvent.press(financialAidCounselorButton);
 		const tree = screen.toJSON();
 		expect(tree).toMatchSnapshot();
-		debug();
 	});
 
 	//Tax Information depth tests
 
-
-});
-
-
-
-//DirectoryLists TESTS ./Pages/Landing.js .
-/*describe('Press Dining Options', () => {
-	it('renders correctly', () => {
-		const tree = renderer.create(<App />).toJSON();
-		expect(tree).toMatchSnapshot();
-	});
-});
-
-//LANDING PAGE TESTS
-
-/*describe('LandingPage', () => {
-	it('displays Dining Options page correctly on button press', () => {
+	it('navigates to and opens Tax Information on Financial Information Page with two button presses', () => {
 		const { getByText, debug } = render(<App />);
-		const diningOptionsButton = getByText('Dining Options');
-		fireEvent.press(diningOptionsButton);
+		const financialInformationButton = getByText('Financial Information');
+		fireEvent.press(financialInformationButton);
+		const taxInformationButton = getByText('Tax Information');
+		fireEvent.press(taxInformationButton);
 		const tree = screen.toJSON();
 		expect(tree).toMatchSnapshot();
 	});
-});*/
 
+	it('navigates to and opens W2 Forms on Financial Information Page with three button presses', () => {
+		const { getByText, debug } = render(<App />);
+		const financialInformationButton = getByText('Financial Information');
+		fireEvent.press(financialInformationButton);
+		const taxInformationButton = getByText('Tax Information');
+		fireEvent.press(taxInformationButton);
+		const w2FormButton = getByText('W2 Forms');
+		fireEvent.press(w2FormButton);
+		const tree = screen.toJSON();
+		expect(tree).toMatchSnapshot();
+	});
+
+	it('navigates to and opens 1098 Statements on Financial Information Page with three button presses', () => {
+		const { getByText, debug } = render(<App />);
+		const financialInformationButton = getByText('Financial Information');
+		fireEvent.press(financialInformationButton);
+		const taxInformationButton = getByText('Tax Information');
+		fireEvent.press(taxInformationButton);
+		const tax1098StatementsButton = getByText('1098 Statements');
+		fireEvent.press(tax1098StatementsButton);
+		const tree = screen.toJSON();
+		expect(tree).toMatchSnapshot();
+	});
+
+	it('navigates to and opens 1098 Statements on Financial Information Page with three button presses', () => {
+		const { getByText, debug } = render(<App />);
+		const financialInformationButton = getByText('Financial Information');
+		fireEvent.press(financialInformationButton);
+		const taxInformationButton = getByText('Tax Information');
+		fireEvent.press(taxInformationButton);
+		const tax1098StatementsButton = getByText('1098 Statements');
+		fireEvent.press(tax1098StatementsButton);
+		const tree = screen.toJSON();
+		expect(tree).toMatchSnapshot();
+	});
+
+	//Banking Information depth tests
+
+	it('navigates to and opens Banking Information on Financial Information Page with two button presses', () => {
+		const { getByText, debug } = render(<App />);
+		const financialInformationButton = getByText('Financial Information');
+		fireEvent.press(financialInformationButton);
+		const bankingInformationButton = getByText('Banking Information');
+		fireEvent.press(bankingInformationButton);
+		const tree = screen.toJSON();
+		expect(tree).toMatchSnapshot();
+	});
+
+	it('navigates to and opens Payroll Deposits on Financial Information Page with three button presses', () => {
+		const { getByText, debug } = render(<App />);
+		const financialInformationButton = getByText('Financial Information');
+		fireEvent.press(financialInformationButton);
+		const bankingInformationButton = getByText('Banking Information');
+		fireEvent.press(bankingInformationButton);
+		const payrollDepositsButton = getByText('Payroll Deposits');
+		fireEvent.press(payrollDepositsButton);
+		const tree = screen.toJSON();
+		expect(tree).toMatchSnapshot();
+	});
+
+	it('navigates to and opens Refunds, Reimbursements & Payments on Financial Information Page with three button presses', () => {
+		const { getByText, debug } = render(<App />);
+		const financialInformationButton = getByText('Financial Information');
+		fireEvent.press(financialInformationButton);
+		const bankingInformationButton = getByText('Banking Information');
+		fireEvent.press(bankingInformationButton);
+		const RRPButton = getByText('Refunds, Reimbursements & Payments');
+		fireEvent.press(RRPButton);
+		const tree = screen.toJSON();
+		expect(tree).toMatchSnapshot();
+	});
+
+	////////////////////////////////////////SAFETY PAGE TESTS//////////////////////////////////////
+
+	it('navigates to Saftey page with one button press on the nav bar', () => {
+		const { getByText, debug } = render(<App />);
+		const safetyButton = getByText('Safety');
+		fireEvent.press(safetyButton);
+		const tree = screen.toJSON();
+		expect(tree).toMatchSnapshot();
+		debug();
+	});
+});
 
