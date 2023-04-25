@@ -4,9 +4,9 @@ import { DiningPage, RenderLocationMenu, handleLocationPress, RenderDiningLocati
 import { freshensMenu, commonsMenu, cavernMenu, } from './Resources/Shared/diningData.js';
 import { MailPage, RenderStudentAddress, RenderMailboxCode, studentInfoGroup } from './Resources/Pages/Mail.js';
 import { AcademicInformationPage, GPA, Grades, StudentProgress, CumulativeGPA, MajorGPA, TotalSchoolUnits, TotalUnits } from './Resources/Pages/AcademicInformation.js';
-import { BankingInformation, ContactFinancialAidOffice, FinancialAidCounselor, FinancialInformationPage, SAPDetails, SAPStatus, SatisfactoryAcademicProgress, StudentFinance, TaxInformation, FinancialAid} from './Resources/Pages/FinancialInformation';
+import { BankingInformation, ContactFinancialAidOffice, FinancialAidCounselor, FinancialInformationPage, SAPDetails, SAPStatus, SatisfactoryAcademicProgress, StudentFinance, TaxInformation, FinancialAid } from './Resources/Pages/FinancialInformation';
 import { data } from './Resources/Pages/Landing.js';
-import { render, fireEvent, screen, debug } from '@testing-library/react-native';
+import { render, fireEvent, screen, debug, act } from '@testing-library/react-native';
 import { App } from './App';
 import NavBar from './Resources/NavBar';
 import ShallowRenderer from 'react-shallow-renderer';
@@ -135,7 +135,7 @@ describe('TotalSchoolUnits', () => {
 		fireEvent.press(RoundedRectButton);
 		const tree = screen.toJSON();
 		expect(tree).toMatchSnapshot();
-	 });	
+	});
 });
 
 describe('TotalUnits', () => {
@@ -149,7 +149,7 @@ describe('TotalUnits', () => {
 		fireEvent.press(RoundedRectButton);
 		const tree = screen.toJSON();
 		expect(tree).toMatchSnapshot();
-	 });	
+	});
 });
 
 describe('StudentProgress', () => {
@@ -163,7 +163,7 @@ describe('StudentProgress', () => {
 		fireEvent.press(RoundedRectButton);
 		const tree = screen.toJSON();
 		expect(tree).toMatchSnapshot();
-	 });	
+	});
 });
 
 describe('Grades', () => {
@@ -177,7 +177,7 @@ describe('Grades', () => {
 		fireEvent.press(RoundedRectButton);
 		const tree = screen.toJSON();
 		expect(tree).toMatchSnapshot();
-	 });	
+	});
 });
 
 describe('MajorGPA', () => {
@@ -191,7 +191,7 @@ describe('MajorGPA', () => {
 		fireEvent.press(RoundedRectButton);
 		const tree = screen.toJSON();
 		expect(tree).toMatchSnapshot();
-	 });	
+	});
 });
 
 describe('CumulativeGPA', () => {
@@ -205,7 +205,7 @@ describe('CumulativeGPA', () => {
 		fireEvent.press(RoundedRectButton);
 		const tree = screen.toJSON();
 		expect(tree).toMatchSnapshot();
-	 });	
+	});
 });
 
 describe('GPA', () => {
@@ -219,7 +219,7 @@ describe('GPA', () => {
 		fireEvent.press(RoundedRectButton);
 		const tree = screen.toJSON();
 		expect(tree).toMatchSnapshot();
-	 });	
+	});
 });
 
 describe('AcademicInformationPage', () => {
@@ -242,7 +242,7 @@ describe('BankingInformation', () => {
 		fireEvent.press(RoundedRectButton);
 		const tree = screen.toJSON();
 		expect(tree).toMatchSnapshot();
-	 });	
+	});
 })
 
 describe('TaxInformation', () => {
@@ -256,7 +256,7 @@ describe('TaxInformation', () => {
 		fireEvent.press(RoundedRectButton);
 		const tree = screen.toJSON();
 		expect(tree).toMatchSnapshot();
-	 });
+	});
 })
 
 describe('FinancialAidCounselor', () => {
@@ -270,7 +270,7 @@ describe('FinancialAidCounselor', () => {
 		fireEvent.press(RoundedRectButton);
 		const tree = screen.toJSON();
 		expect(tree).toMatchSnapshot();
-	 });
+	});
 })
 
 describe('SAPDetails', () => {
@@ -284,7 +284,7 @@ describe('SAPDetails', () => {
 		fireEvent.press(RoundedRectButton);
 		const tree = screen.toJSON();
 		expect(tree).toMatchSnapshot();
-	 });
+	});
 })
 
 describe('SAPStatus', () => {
@@ -298,7 +298,7 @@ describe('SAPStatus', () => {
 		fireEvent.press(RoundedRectButton);
 		const tree = screen.toJSON();
 		expect(tree).toMatchSnapshot();
-	 });
+	});
 })
 
 describe('SatisfactoryAcademicProgress', () => {
@@ -312,7 +312,7 @@ describe('SatisfactoryAcademicProgress', () => {
 		fireEvent.press(RoundedRectButton);
 		const tree = screen.toJSON();
 		expect(tree).toMatchSnapshot();
-	 });
+	});
 })
 
 describe('FinancialAid', () => {
@@ -326,7 +326,7 @@ describe('FinancialAid', () => {
 		fireEvent.press(RoundedRectButton);
 		const tree = screen.toJSON();
 		expect(tree).toMatchSnapshot();
-	 });
+	});
 })
 
 describe('StudentFinance', () => {
@@ -340,7 +340,7 @@ describe('StudentFinance', () => {
 		fireEvent.press(RoundedRectButton);
 		const tree = screen.toJSON();
 		expect(tree).toMatchSnapshot();
-	 });
+	});
 })
 
 describe('ContactFinancialAidOffice', () => {
@@ -354,7 +354,7 @@ describe('ContactFinancialAidOffice', () => {
 		fireEvent.press(RoundedRectButton);
 		const tree = screen.toJSON();
 		expect(tree).toMatchSnapshot();
-	 });
+	});
 })
 
 describe('FinancialInformationPage', () => {
@@ -376,13 +376,25 @@ describe('App', () => {
 describe('App', () => {
 	it('navigates to DiningPage then to Commons menu (two buttons pressed)', () => {
 		const { getByText, debug } = render(<App />);
-		const diningPageButton = getByText('Dining Options');
-		fireEvent.press(diningPageButton);
-		const commonsButton = getByText('Commons');
-		fireEvent.press(commonsButton);
+			const diningPageButton = getByText('Dining Options');
+			fireEvent.press(diningPageButton);
+			const commonsButton = getByText('Commons');
+			fireEvent.press(commonsButton);
 		const tree = screen.toJSON();
 		expect(tree).toMatchSnapshot();
 	});
+
+	it('navigates to DiningPage then to Freshens menu (two buttons pressed)', () => {
+		const { getByText, debug } = render(<App />);
+			const diningPageButton = getByText('Dining Options');
+			fireEvent.press(diningPageButton);
+			const freshensButton = getByText('Freshens');
+			fireEvent.press(freshensButton);
+		const tree = screen.toJSON();
+		expect(tree).toMatchSnapshot();
+		debug();
+	});
+
 });
 
 
