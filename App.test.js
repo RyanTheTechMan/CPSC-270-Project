@@ -381,9 +381,7 @@ describe('App', () => {
 		const tree = renderer.create(<App />).toJSON();
 		expect(tree).toMatchSnapshot();
 	});
-});
 
-describe('App', () => {
 	it('navigates to DiningPage then to Commons menu (two buttons pressed)', () => {
 		const { getByText, debug } = render(<App />);
 		const diningPageButton = getByText('Dining Options');
@@ -420,11 +418,232 @@ describe('App', () => {
 		const { getByText, debug } = render(<App />);
 		const mailServicesButton = getByText('Mail Services');
 		fireEvent.press(mailServicesButton);
-		/*const mailBoxCodeButton = getByText('Mail Box Code');
-		fireEvent.press(mailBoxCodeButton);*/
 		const tree = screen.toJSON();
 		expect(tree).toMatchSnapshot();
 	});
+
+	it('navigates to Mail Services Page and then displays mail box combination after button press', () => {
+		const { getByText, debug } = render(<App />);
+		const mailServicesButton = getByText('Mail Services');
+		fireEvent.press(mailServicesButton);
+		const mailBoxCodeButton = getByText('Mail Box Code');
+		fireEvent.press(mailBoxCodeButton);
+		const tree = screen.toJSON();
+		expect(tree).toMatchSnapshot();
+	});
+
+	it('navigates to Financial Information Page on button press', () => {
+		const { getByText, debug } = render(<App />);
+		const financialInformationButton = getByText('Financial Information');
+		fireEvent.press(financialInformationButton);
+		const tree = screen.toJSON();
+		expect(tree).toMatchSnapshot();
+	});
+
+	it('navigates to Financial Information Page and opens Contact Financial Aid Office with a button press', () => {
+		const { getByText, debug } = render(<App />);
+		const financialInformationButton = getByText('Financial Information');
+		fireEvent.press(financialInformationButton);
+		const financialAidOfficeButton = getByText('Contact Financial Aid Office');
+		fireEvent.press(financialAidOfficeButton);
+		const tree = screen.toJSON();
+		expect(tree).toMatchSnapshot();
+	});
+
+	it('navigates to Financial Information Page and opens Account Overview with a button press', () => {
+		const { getByText, debug } = render(<App />);
+		const financialInformationButton = getByText('Financial Information');
+		fireEvent.press(financialInformationButton);
+		const accountOverviewButton = getByText('Account Overview');
+		fireEvent.press(accountOverviewButton);
+		const tree = screen.toJSON();
+		expect(tree).toMatchSnapshot();
+	});
+
+	it('navigates to Financial Information Page and opens Financial Aid with a button press', () => {
+		const { getByText, debug } = render(<App />);
+		const financialInformationButton = getByText('Financial Information');
+		fireEvent.press(financialInformationButton);
+		const financialAidButton = getByText('Financial Aid');
+		fireEvent.press(financialAidButton);
+		const tree = screen.toJSON();
+		expect(tree).toMatchSnapshot();
+	});
+
+	it('navigates to Financial Information Page and opens Financial Aid then Satisfactory Academic Progress (three buttons total)', () => {
+		const { getByText, debug } = render(<App />);
+		const financialInformationButton = getByText('Financial Information');
+		fireEvent.press(financialInformationButton);
+		const financialAidButton = getByText('Financial Aid');
+		fireEvent.press(financialAidButton);
+		const satisfactoryAcademicProgressButton = getByText('Satisfactory Academic Progress');
+		fireEvent.press(satisfactoryAcademicProgressButton);
+		const tree = screen.toJSON();
+		expect(tree).toMatchSnapshot();
+	});
+
+
+	//SAP Status depth tests
+	it('navigates to and opens SAP Status on Financial Information Page with four button presses', () => {
+		const { getByText, debug } = render(<App />);
+		const financialInformationButton = getByText('Financial Information');
+		fireEvent.press(financialInformationButton);
+		const financialAidButton = getByText('Financial Aid');
+		fireEvent.press(financialAidButton);
+		const satisfactoryAcademicProgressButton = getByText('Satisfactory Academic Progress');
+		fireEvent.press(satisfactoryAcademicProgressButton);
+		const sapStatusButton = getByText('SAP Status');
+		fireEvent.press(sapStatusButton);
+		const tree = screen.toJSON();
+		expect(tree).toMatchSnapshot();
+	});
+
+	it('navigates to and opens Evaluation Period on Financial Information Page with five button presses', () => {
+		const { getByText, debug } = render(<App />);
+		const financialInformationButton = getByText('Financial Information');
+		fireEvent.press(financialInformationButton);
+		const financialAidButton = getByText('Financial Aid');
+		fireEvent.press(financialAidButton);
+		const satisfactoryAcademicProgressButton = getByText('Satisfactory Academic Progress');
+		fireEvent.press(satisfactoryAcademicProgressButton);
+		const sapStatusButton = getByText('SAP Status');
+		fireEvent.press(sapStatusButton);
+		const evaluationPeriodButton = getByText('Evaluation Period');
+		fireEvent.press(evaluationPeriodButton);
+		const tree = screen.toJSON();
+		expect(tree).toMatchSnapshot();
+	});
+
+	it('navigates to and opens Program on Financial Information Page with five button presses', () => {
+		const { getByText, debug } = render(<App />);
+		const financialInformationButton = getByText('Financial Information');
+		fireEvent.press(financialInformationButton);
+		const financialAidButton = getByText('Financial Aid');
+		fireEvent.press(financialAidButton);
+		const satisfactoryAcademicProgressButton = getByText('Satisfactory Academic Progress');
+		fireEvent.press(satisfactoryAcademicProgressButton);
+		const sapStatusButton = getByText('SAP Status');
+		fireEvent.press(sapStatusButton);
+		const programButton = getByText('Program');
+		fireEvent.press(programButton);
+		const tree = screen.toJSON();
+		expect(tree).toMatchSnapshot();
+	});
+
+	it('navigates to and opens My SAP Status on Financial Information Page with five button presses', () => {
+		const { getByText, debug } = render(<App />);
+		const financialInformationButton = getByText('Financial Information');
+		fireEvent.press(financialInformationButton);
+		const financialAidButton = getByText('Financial Aid');
+		fireEvent.press(financialAidButton);
+		const satisfactoryAcademicProgressButton = getByText('Satisfactory Academic Progress');
+		fireEvent.press(satisfactoryAcademicProgressButton);
+		const sapStatusButton = getByText('SAP Status');
+		fireEvent.press(sapStatusButton);
+		const mySAPStatusButton = getByText('My SAP Status');
+		fireEvent.press(mySAPStatusButton);
+		const tree = screen.toJSON();
+	});
+
+//SAP Details depth tests
+	it('navigates to and opens SAP Details on Financial Information Page with four button presses', () => {
+		const { getByText, debug } = render(<App />);
+		const financialInformationButton = getByText('Financial Information');
+		fireEvent.press(financialInformationButton);
+		const financialAidButton = getByText('Financial Aid');
+		fireEvent.press(financialAidButton);
+		const satisfactoryAcademicProgressButton = getByText('Satisfactory Academic Progress');
+		fireEvent.press(satisfactoryAcademicProgressButton);
+		const sapDetailsButton = getByText('SAP Details');
+		fireEvent.press(sapDetailsButton);
+		const tree = screen.toJSON();
+		expect(tree).toMatchSnapshot();
+	});
+
+	it('navigates to and opens Attempted Credits on Financial Information Page with five button presses', () => {
+		const { getByText, debug } = render(<App />);
+		const financialInformationButton = getByText('Financial Information');
+		fireEvent.press(financialInformationButton);
+		const financialAidButton = getByText('Financial Aid');
+		fireEvent.press(financialAidButton);
+		const satisfactoryAcademicProgressButton = getByText('Satisfactory Academic Progress');
+		fireEvent.press(satisfactoryAcademicProgressButton);
+		const sapDetailsButton = getByText('SAP Details');
+		fireEvent.press(sapDetailsButton);
+		const attemptedCreditsButton = getByText('Attempted Credits');
+		fireEvent.press(attemptedCreditsButton);
+		const tree = screen.toJSON();
+		expect(tree).toMatchSnapshot();
+	});
+
+	it('navigates to and opens Completed Credits on Financial Information Page with five button presses', () => {
+		const { getByText, debug } = render(<App />);
+		const financialInformationButton = getByText('Financial Information');
+		fireEvent.press(financialInformationButton);
+		const financialAidButton = getByText('Financial Aid');
+		fireEvent.press(financialAidButton);
+		const satisfactoryAcademicProgressButton = getByText('Satisfactory Academic Progress');
+		fireEvent.press(satisfactoryAcademicProgressButton);
+		const sapDetailsButton = getByText('SAP Details');
+		fireEvent.press(sapDetailsButton);
+		const completedCreditsButton = getByText('Completed Credits');
+		fireEvent.press(completedCreditsButton);
+		const tree = screen.toJSON();
+		expect(tree).toMatchSnapshot();
+	});
+
+	it('navigates to and opens Cumulative GPA on Financial Information Page with five button presses', () => {
+		const { getByText, debug } = render(<App />);
+		const financialInformationButton = getByText('Financial Information');
+		fireEvent.press(financialInformationButton);
+		const financialAidButton = getByText('Financial Aid');
+		fireEvent.press(financialAidButton);
+		const satisfactoryAcademicProgressButton = getByText('Satisfactory Academic Progress');
+		fireEvent.press(satisfactoryAcademicProgressButton);
+		const sapDetailsButton = getByText('SAP Details');
+		fireEvent.press(sapDetailsButton);
+		const cumulativeGPAButton = getByText('Cumulative GPA');
+		fireEvent.press(cumulativeGPAButton);
+		const tree = screen.toJSON();
+		expect(tree).toMatchSnapshot();
+	});
+
+	it('navigates to and opens Pace of Completion on Financial Information Page with five button presses', () => {
+		const { getByText, debug } = render(<App />);
+		const financialInformationButton = getByText('Financial Information');
+		fireEvent.press(financialInformationButton);
+		const financialAidButton = getByText('Financial Aid');
+		fireEvent.press(financialAidButton);
+		const satisfactoryAcademicProgressButton = getByText('Satisfactory Academic Progress');
+		fireEvent.press(satisfactoryAcademicProgressButton);
+		const sapDetailsButton = getByText('SAP Details');
+		fireEvent.press(sapDetailsButton);
+		const paceOfCompletionButton = getByText('Pace of Completion');
+		fireEvent.press(paceOfCompletionButton);
+		const tree = screen.toJSON();
+		expect(tree).toMatchSnapshot();
+	});
+	
+	it('navigates to and opens Financial Aid Counselor on Financial Information Page with five button presses', () => {
+		const { getByText, debug } = render(<App />);
+		const financialInformationButton = getByText('Financial Information');
+		fireEvent.press(financialInformationButton);
+		const financialAidButton = getByText('Financial Aid');
+		fireEvent.press(financialAidButton);
+		const satisfactoryAcademicProgressButton = getByText('Satisfactory Academic Progress');
+		fireEvent.press(satisfactoryAcademicProgressButton);
+		const sapDetailsButton = getByText('SAP Details');
+		fireEvent.press(sapDetailsButton);
+		const financialAidCounselorButton = getByText('Financial Aid Counselor');
+		fireEvent.press(financialAidCounselorButton);
+		const tree = screen.toJSON();
+		expect(tree).toMatchSnapshot();
+		debug();
+	});
+
+	//Tax Information depth tests
+
+
 });
 
 
