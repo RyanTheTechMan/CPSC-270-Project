@@ -3,8 +3,8 @@ import renderer from 'react-test-renderer';
 import { DiningPage, RenderLocationMenu, handleLocationPress, RenderDiningLocationButton, RenderDay, RenderMeal, RenderMealItems, convertLocationToMenu } from './Resources/Menus';
 import { freshensMenu, commonsMenu, cavernMenu, } from './Resources/Shared/diningData.js';
 import { MailPage, RenderStudentAddress, RenderMailboxCode, studentInfoGroup } from './Resources/Pages/Mail.js';
-import { AcademicInformationPage, GPA, Grades, StudentProgress } from './Resources/Pages/AcademicInformation.js';
-import { BankingInformation, ContactFinancialAidOffice, FinancialAidCounselor, FinancialInformationPage, SAPDetails, SAPStatus, SatisfactoryAcademicProgress, StudentFinance, TaxInformation, FinancialAid } from './Resources/Pages/FinancialInformation';
+import { AcademicInformationPage, GPA, Grades, StudentProgress, CumulativeGPA, MajorGPA, TotalSchoolUnits, TotalUnits } from './Resources/Pages/AcademicInformation.js';
+import { BankingInformation, ContactFinancialAidOffice, FinancialAidCounselor, FinancialInformationPage, SAPDetails, SAPStatus, SatisfactoryAcademicProgress, StudentFinance, TaxInformation, FinancialAid} from './Resources/Pages/FinancialInformation';
 import { data } from './Resources/Pages/Landing.js';
 import { render, fireEvent, screen, debug } from '@testing-library/react-native';
 import { App } from './App';
@@ -124,11 +124,46 @@ describe('MailPage', () => {
 
 //ACADEMIC INFORMATION PAGE TESTS ./Pages/AcademicInformation.js
 
+describe('TotalSchoolUnits', () => {
+	it('renders correctly', () => {
+		const tree = renderer.create(<TotalSchoolUnits />).toJSON();
+		expect(tree).toMatchSnapshot();
+	});
+	it('displays student school units on button press', () => {
+		const { getByText, debug } = render(<TotalSchoolUnits />);
+		const RoundedRectButton = getByText('Total Units from this School');
+		fireEvent.press(RoundedRectButton);
+		const tree = screen.toJSON();
+		expect(tree).toMatchSnapshot();
+	 });	
+});
+
+describe('TotalUnits', () => {
+	it('renders correctly', () => {
+		const tree = renderer.create(<TotalUnits />).toJSON();
+		expect(tree).toMatchSnapshot();
+	});
+	it('displays student total units on button press', () => {
+		const { getByText, debug } = render(<TotalUnits />);
+		const RoundedRectButton = getByText('Total Units');
+		fireEvent.press(RoundedRectButton);
+		const tree = screen.toJSON();
+		expect(tree).toMatchSnapshot();
+	 });	
+});
+
 describe('StudentProgress', () => {
 	it('renders correctly', () => {
 		const tree = renderer.create(<StudentProgress />).toJSON();
 		expect(tree).toMatchSnapshot();
 	});
+	it('displays student progress on button press', () => {
+		const { getByText, debug } = render(<StudentProgress />);
+		const RoundedRectButton = getByText('My Progress');
+		fireEvent.press(RoundedRectButton);
+		const tree = screen.toJSON();
+		expect(tree).toMatchSnapshot();
+	 });	
 });
 
 describe('Grades', () => {
@@ -136,6 +171,41 @@ describe('Grades', () => {
 		const tree = renderer.create(<Grades />).toJSON();
 		expect(tree).toMatchSnapshot();
 	});
+	it('displays grades on button press', () => {
+		const { getByText, debug } = render(<Grades />);
+		const RoundedRectButton = getByText('Grades');
+		fireEvent.press(RoundedRectButton);
+		const tree = screen.toJSON();
+		expect(tree).toMatchSnapshot();
+	 });	
+});
+
+describe('MajorGPA', () => {
+	it('renders correctly', () => {
+		const tree = renderer.create(<MajorGPA />).toJSON();
+		expect(tree).toMatchSnapshot();
+	});
+	it('displays gpa information on button press', () => {
+		const { getByText, debug } = render(<MajorGPA />);
+		const RoundedRectButton = getByText('Major GPA');
+		fireEvent.press(RoundedRectButton);
+		const tree = screen.toJSON();
+		expect(tree).toMatchSnapshot();
+	 });	
+});
+
+describe('CumulativeGPA', () => {
+	it('renders correctly', () => {
+		const tree = renderer.create(<CumulativeGPA />).toJSON();
+		expect(tree).toMatchSnapshot();
+	});
+	it('displays gpa information on button press', () => {
+		const { getByText, debug } = render(<CumulativeGPA />);
+		const RoundedRectButton = getByText('Cumulative GPA');
+		fireEvent.press(RoundedRectButton);
+		const tree = screen.toJSON();
+		expect(tree).toMatchSnapshot();
+	 });	
 });
 
 describe('GPA', () => {
@@ -143,6 +213,13 @@ describe('GPA', () => {
 		const tree = renderer.create(<GPA />).toJSON();
 		expect(tree).toMatchSnapshot();
 	});
+	it('displays gpa information on button press', () => {
+		const { getByText, debug } = render(<GPA />);
+		const RoundedRectButton = getByText('GPA');
+		fireEvent.press(RoundedRectButton);
+		const tree = screen.toJSON();
+		expect(tree).toMatchSnapshot();
+	 });	
 });
 
 describe('AcademicInformationPage', () => {
@@ -158,70 +235,133 @@ describe('BankingInformation', () => {
 	it('renders correctly', () => {
 		const tree = renderer.create(<BankingInformation />);
 		expect(tree).toMatchSnapshot();
-	})
+	});
+	it('displays banking information on button press', () => {
+		const { getByText, debug } = render(<BankingInformation />);
+		const RoundedRectButton = getByText('Banking Information');
+		fireEvent.press(RoundedRectButton);
+		const tree = screen.toJSON();
+		expect(tree).toMatchSnapshot();
+	 });	
 })
 
 describe('TaxInformation', () => {
 	it('renders correctly', () => {
 		const tree = renderer.create(<TaxInformation />);
 		expect(tree).toMatchSnapshot();
-	})
+	});
+	it('displays tax information on button press', () => {
+		const { getByText, debug } = render(<TaxInformation />);
+		const RoundedRectButton = getByText('Tax Information');
+		fireEvent.press(RoundedRectButton);
+		const tree = screen.toJSON();
+		expect(tree).toMatchSnapshot();
+	 });
 })
 
 describe('FinancialAidCounselor', () => {
 	it('renders correctly', () => {
 		const tree = renderer.create(<FinancialAidCounselor />);
 		expect(tree).toMatchSnapshot();
-	})
+	});
+	it('displays financial aid counselor details on button press', () => {
+		const { getByText, debug } = render(<FinancialAidCounselor />);
+		const RoundedRectButton = getByText('Financial Aid Counselor');
+		fireEvent.press(RoundedRectButton);
+		const tree = screen.toJSON();
+		expect(tree).toMatchSnapshot();
+	 });
 })
 
 describe('SAPDetails', () => {
 	it('renders correctly', () => {
 		const tree = renderer.create(<SAPDetails />);
 		expect(tree).toMatchSnapshot();
-	})
+	});
+	it('displays satisfactory academic progress details on button press', () => {
+		const { getByText, debug } = render(<SAPDetails />);
+		const RoundedRectButton = getByText('SAP Details');
+		fireEvent.press(RoundedRectButton);
+		const tree = screen.toJSON();
+		expect(tree).toMatchSnapshot();
+	 });
 })
 
 describe('SAPStatus', () => {
 	it('renders correctly', () => {
 		const tree = renderer.create(<SAPStatus />);
 		expect(tree).toMatchSnapshot();
-	})
+	});
+	it('displays satisfactory academic progress status on button press', () => {
+		const { getByText, debug } = render(<SAPStatus />);
+		const RoundedRectButton = getByText('SAP Status');
+		fireEvent.press(RoundedRectButton);
+		const tree = screen.toJSON();
+		expect(tree).toMatchSnapshot();
+	 });
 })
 
 describe('SatisfactoryAcademicProgress', () => {
 	it('renders correctly', () => {
 		const tree = renderer.create(<SatisfactoryAcademicProgress />);
 		expect(tree).toMatchSnapshot();
-	})
+	});
+	it('displays satisfactory academic progress on button press', () => {
+		const { getByText, debug } = render(<SatisfactoryAcademicProgress />);
+		const RoundedRectButton = getByText('Satisfactory Academic Progress');
+		fireEvent.press(RoundedRectButton);
+		const tree = screen.toJSON();
+		expect(tree).toMatchSnapshot();
+	 });
 })
 
 describe('FinancialAid', () => {
 	it('renders correctly', () => {
 		const tree = renderer.create(<FinancialAid />);
 		expect(tree).toMatchSnapshot();
-	})
+	});
+	it('displays financial aid info on button press', () => {
+		const { getByText, debug } = render(<FinancialAid />);
+		const RoundedRectButton = getByText('Financial Aid');
+		fireEvent.press(RoundedRectButton);
+		const tree = screen.toJSON();
+		expect(tree).toMatchSnapshot();
+	 });
 })
 
 describe('StudentFinance', () => {
 	it('renders correctly', () => {
 		const tree = renderer.create(<StudentFinance />);
 		expect(tree).toMatchSnapshot();
-	})
+	});
+	it('displays account overview on button press', () => {
+		const { getByText, debug } = render(<StudentFinance />);
+		const RoundedRectButton = getByText('Account Overview');
+		fireEvent.press(RoundedRectButton);
+		const tree = screen.toJSON();
+		expect(tree).toMatchSnapshot();
+	 });
 })
 
 describe('ContactFinancialAidOffice', () => {
 	it('renders correctly', () => {
 		const tree = renderer.create(<ContactFinancialAidOffice />).toJSON();
 		expect(tree).toMatchSnapshot();
-	})
+	});
+	it('displays contact info for Financial Aid Office on button press', () => {
+		const { getByText, debug } = render(<ContactFinancialAidOffice />);
+		const RoundedRectButton = getByText('Contact Financial Aid Office');
+		fireEvent.press(RoundedRectButton);
+		const tree = screen.toJSON();
+		expect(tree).toMatchSnapshot();
+	 });
 })
 
 describe('FinancialInformationPage', () => {
 	it('renders correctly', () => {
 		const tree = renderer.create(<FinancialInformationPage />).toJSON();
 		expect(tree).toMatchSnapshot();
-	})
+	});
 })
 
 //Testing starting at APP
