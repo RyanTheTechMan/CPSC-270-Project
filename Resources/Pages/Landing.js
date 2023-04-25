@@ -14,7 +14,7 @@ export function LandingPage({ navigation }) {
 
   function handlePress(id) {
     if (data[id].pageName !== undefined) {
-      console.log('Navigating to ' + data[id].pageName)
+      //console.log('Navigating to ' + data[id].pageName)
       navigation.navigate(data[id].pageName);
     } else
       console.log('No page for "' + data[id].title + '"');

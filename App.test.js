@@ -382,7 +382,7 @@ describe('App', () => {
 		expect(tree).toMatchSnapshot();
 	});
 
-////////////////////////////////DINING PAGE TESTS///////////////////////////////////////////
+	////////////////////////////////DINING PAGE TESTS///////////////////////////////////////////
 
 	it('navigates to DiningPage then to Commons menu (two buttons pressed)', () => {
 		const { getByText, debug } = render(<App />);
@@ -416,7 +416,7 @@ describe('App', () => {
 		expect(tree).toMatchSnapshot();
 	});
 
-////////////////////////////////////////MAIL PAGE TESTS/////////////////////////////////////////////
+	////////////////////////////////////////MAIL PAGE TESTS/////////////////////////////////////////////
 
 	it('navigates to Mail Services Page on button press', () => {
 		const { getByText, debug } = render(<App />);
@@ -436,7 +436,7 @@ describe('App', () => {
 		expect(tree).toMatchSnapshot();
 	});
 
-/////////////////////////////////////FINANCIAL PAGE TESTS///////////////////////////////////////////
+	/////////////////////////////////////FINANCIAL PAGE TESTS///////////////////////////////////////////
 
 	it('navigates to Financial Information Page on button press', () => {
 		const { getByText, debug } = render(<App />);
@@ -738,7 +738,56 @@ describe('App', () => {
 		fireEvent.press(safetyButton);
 		const tree = screen.toJSON();
 		expect(tree).toMatchSnapshot();
-		debug();
 	});
-});
 
+	it('navigates to Salem Police Department with two button presses', () => {
+		const { getByText, debug } = render(<App />);
+		const safetyButton = getByText('Safety');
+		fireEvent.press(safetyButton);
+		const salemPoliceDepartmentButton = getByText('Salem Police Department');
+		fireEvent.press(salemPoliceDepartmentButton);
+		const tree = screen.toJSON();
+		expect(tree).toMatchSnapshot();
+	});
+
+	it('navigates to Campus Safety with two button presses', () => {
+		const { getByText, debug } = render(<App />);
+		const safetyButton = getByText('Safety');
+		fireEvent.press(safetyButton);
+		const campusSafetyButton = getByText('Campus Safety');
+		fireEvent.press(campusSafetyButton);
+		const tree = screen.toJSON();
+		expect(tree).toMatchSnapshot();
+	});
+
+	it('navigates to RA on Duty with two button presses', () => {
+		const { getByText, debug } = render(<App />);
+		const safetyButton = getByText('Safety');
+		fireEvent.press(safetyButton);
+		const RAonDutyButton = getByText('RA on Duty');
+		fireEvent.press(RAonDutyButton);
+		const tree = screen.toJSON();
+		expect(tree).toMatchSnapshot();
+	});
+
+	it('navigates to Res Life and Housing with two button presses', () => {
+		const { getByText, debug } = render(<App />);
+		const safetyButton = getByText('Safety');
+		fireEvent.press(safetyButton);
+		const resLifeAndHousingButton = getByText('Res Life and Housing');
+		fireEvent.press(resLifeAndHousingButton);
+		const tree = screen.toJSON();
+		expect(tree).toMatchSnapshot();
+	});
+
+	it('navigates to Student Health and Counseling with two button presses', () => {
+		const { getByText, debug } = render(<App />);
+		const safetyButton = getByText('Safety');
+		fireEvent.press(safetyButton);
+		const studentHealthAndCounselingButton = getByText('Student Health and Counseling');
+		fireEvent.press(studentHealthAndCounselingButton);
+		const tree = screen.toJSON();
+		expect(tree).toMatchSnapshot();
+	});
+
+});
