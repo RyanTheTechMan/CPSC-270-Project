@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
     StyleSheet,
     Text,
@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import { Agenda, CalendarProvider } from 'react-native-calendars';
 import { createStackNavigator } from '@react-navigation/stack';
-import {AddEventPage} from './Pages/AddEventPage';
+import { AddEventPage } from './Pages/AddEventPage';
 
 const initialCalendarData = {
     '2023-04-10': [{ name: 'CPSC270', time: '10:50-11:50pm' }, { name: 'CHEM342', time: '12:00-1:00pm' }],
@@ -19,44 +19,53 @@ const initialCalendarData = {
 const Stack = createStackNavigator();
 
 export function CalendarStack() {
+    const [calendarData, setCalendarData] = useState(initialCalendarData);
+    const CalendarContext = React.createContext();
 
-  return (
-    <Stack.Navigator initialRouteName="EventCalendar" screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="EventCalendar" component={CalendarPage} />
-      <Stack.Screen name="AddEvent" component={AddEventPage} />
-    </Stack.Navigator>
-  );
+    return (
+        <CalendarContext.Provider calendarData={calendarData} onAddEvent={(newData) => {
+            setCalendarData(newData)
+            console.log("New data added");
+            console.log(newData);
+        }}>
+            <Stack.Navigator initialRouteName="EventCalendar" screenOptions={{ headerShown: false }}>
+                <Stack.Screen name="EventCalendar" component={CalendarPage} />
+                <Stack.Screen name="AddEvent" component={AddEventPage} />
+            </Stack.Navigator>
+        </CalendarContext.Provider>
+    );
 }
 
+export function CalendarPage({ route, navigation }) {
 
-
-export function CalendarPage({route, navigation}) {
-const [calendarData, setCalendarData] = useState(initialCalendarData);
-onAddEvent = (newData) => {setCalendarData(newData)};
     return (
-        <View style={styles.calendar}>
-            <CalendarProvider style={styles.container}>
-                <Agenda
-                    theme={{
-                        dotColor: '#8B1D3D',
-                        selectedDayBackgroundColor: '#8B1D3D',
-                    }}
-                    renderEmptyData={() => {
-                        return <View />
-                    }}
-                    items={calendarData}
-                    renderItem={(item) => (
-                        <Pressable style={styles.item}>
-                            <Text style={styles.itemText}>{item.name}</Text>
-                            <Text style={styles.itemText}>{item.time}</Text>
-                        </Pressable>
-                    )}
-                />
-            </CalendarProvider>
-            <Pressable style={styles.addButton} onPress={()=>navigation.navigate('AddEvent', {calendarData, onAddEvent} )}>
-                <Text style={styles.addButtonText}>+</Text>
-            </Pressable>
-        </View>
+        <CalendarContext.User>
+            <View style={styles.calendar}>
+                <CalendarProvider style={styles.container}>
+                    <Agenda
+                        theme={{
+                            dotColor: '#8B1D3D',
+                            selectedDayBackgroundColor: '#8B1D3D',
+                        }}
+                        renderEmptyData={() => {
+                            return <View />
+                        }}
+                        items={calendarData}
+                        renderItem={(item) => (
+                            <Pressable style={styles.item}>
+                                <Text style={styles.itemText}>{item.name}</Text>
+                                <Text style={styles.itemText}>{item.time}</Text>
+                            </Pressable>
+                        )}
+                    />
+                </CalendarProvider>
+                <Pressable style={styles.addButton} onPress={() => navigation.navigate('AddEvent', {
+                    calendarData: calendarData,
+                })}>
+                    <Text style={styles.addButtonText}>+</Text>
+                </Pressable>
+            </View>
+        </CalendarContext.User>
     );
 };
 

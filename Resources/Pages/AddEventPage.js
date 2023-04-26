@@ -4,13 +4,14 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { format } from 'date-fns'
 
 export function AddEventPage({ route, navigation }) {
+  //const onAddEvent = route.params.onAddEvent;
   console.log(route.params.calendarData);
   let tempCalendarData = route.params.calendarData;
   const [datePicker, setDatePicker] = useState(false);
   const [date, setDate] = useState(new Date());
-  const [timePicker, setTimePicker] = useState(false);
+  const [startTimePicker, setTimePicker] = useState(false);
   const [endTimePicker, setEndTimePicker] = useState(false);
-  const [time, setTime] = useState(new Date(Date.now()));
+  const [startTime, setStartTime] = useState(new Date(Date.now()));
   const [endTime, setEndTime] = useState(new Date(Date.now()));
   const [eventText, setEventText] = useState('');
 
@@ -32,7 +33,7 @@ export function AddEventPage({ route, navigation }) {
   };
 
   function onStartTimeSelected(event, value) {
-    setTime(value);
+    setStartTime(value);
     setTimePicker(false);
   };
 
@@ -43,14 +44,14 @@ export function AddEventPage({ route, navigation }) {
 
   console.log(format(date, 'yyyy-MM-dd'));
   const dateInKeyFormat = format(date, 'yyyy-MM-dd');
-  const startTime = time.toLocaleTimeString('en-US');
+  //const startTime = time.toLocaleTimeString('en-US');
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styleSheet.MainContainer}>
 
         <Text style={styleSheet.text}>Date = {date.toDateString()}</Text>
 
-        <Text style={styleSheet.text}>Start Time = {time.toLocaleTimeString('en-US')}</Text>
+        <Text style={styleSheet.text}>Start Time = {startTime.toLocaleTimeString('en-US')}</Text>
 
         <Text style={styleSheet.text}>End Time = {endTime.toLocaleTimeString('en-US')}</Text>
 
@@ -72,9 +73,9 @@ export function AddEventPage({ route, navigation }) {
           />
         )}
 
-        {timePicker && (
+        {startTimePicker && (
           <DateTimePicker
-            value={time}
+            value={startTime}
             mode={'time'}
             display={Platform.OS === 'ios' ? 'spinner' : 'default'}
             is24Hour={false}
@@ -85,7 +86,7 @@ export function AddEventPage({ route, navigation }) {
 
         {endTimePicker && (
           <DateTimePicker
-            value={time}
+            value={endTime}
             mode={'time'}
             display={Platform.OS === 'ios' ? 'spinner' : 'default'}
             is24Hour={false}
@@ -102,7 +103,7 @@ export function AddEventPage({ route, navigation }) {
           </View>
         )}
 
-        {!timePicker && (
+        {!startTimePicker && (
           <View style={{ margin: 10 }}>
             <Pressable style={styleSheet.pickerToggle} onPress={showTimePicker}>
               <Text style={styleSheet.pickerText}>Event Start Time</Text>
@@ -119,8 +120,8 @@ export function AddEventPage({ route, navigation }) {
         )}
         <Pressable style={styleSheet.pickerToggle}
           onPress={() => {
-            tempCalendarData[dateInKeyFormat] = [{name: eventText, time: startTime }];
-            onAddEvent(tempCalendarData);
+            tempCalendarData[dateInKeyFormat] = [{ name: eventText, time: startTime }];
+            //onAddEvent(tempCalendarData);
           }}
         >
           <Text style={styleSheet.pickerText}>Add This Event to Calendar</Text>
