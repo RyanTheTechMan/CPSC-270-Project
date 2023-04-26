@@ -120,7 +120,7 @@ export function AddEventPage({ route, navigation }) {
         <Pressable style={styleSheet.pickerToggle}
           onPress={() => {
             tempCalendarData[dateInKeyFormat] = [{name: eventText, time: startTime }];
-            onAddEvent(tempCalendarData);
+            route.params.changeCalendar(tempCalendarData);
           }}
         >
           <Text style={styleSheet.pickerText}>Add This Event to Calendar</Text>
