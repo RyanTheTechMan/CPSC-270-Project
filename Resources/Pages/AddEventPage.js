@@ -52,9 +52,9 @@ export function AddEventPage({ route, navigation, calendarData, setCalendarData 
 
         <Text style={styleSheet.text}>Date = {date.toDateString()}</Text>
 
-        <Text style={styleSheet.text}>Start Time = {time.toLocaleTimeString('en-US')}</Text>
+        <Text style={styleSheet.text}>Start Time = {startingTime}</Text>
 
-        <Text style={styleSheet.text}>End Time = {endTime.toLocaleTimeString('en-US')}</Text>
+        <Text style={styleSheet.text}>End Time = {endingTime}</Text>
 
         <TextInput
           style={styleSheet.eventText}
@@ -168,7 +168,7 @@ const styleSheet = StyleSheet.create({
 
   text: {
     fontSize: 25,
-    color: 'red',
+    color: '#8B1D3D',
     padding: 3,
     marginBottom: 10,
     textAlign: 'center'
