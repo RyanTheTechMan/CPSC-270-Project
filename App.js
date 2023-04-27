@@ -5,11 +5,13 @@ import styles from "./Resources/Shared/styles";
 
 import NavBar from "./Resources/NavBar";
 
-export default function App() {
+export function App() {
   return (
     <NavigationContainer>
       <StatusBar style="auto" animated={true} hidden={false} translucent={true} />
       <NavBar />
     </NavigationContainer>
   );
-}
+};
+
+export default App;

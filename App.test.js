@@ -4,120 +4,132 @@ import { DiningPage, RenderLocationMenu, handleLocationPress, RenderDiningLocati
 import { freshensMenu, commonsMenu, cavernMenu, } from './Resources/Shared/diningData.js';
 import { MailPage, RenderStudentAddress, RenderMailboxCode, studentInfoGroup } from './Resources/Pages/Mail.js';
 import { AcademicInformationPage, GPA, Grades, StudentProgress, CumulativeGPA, MajorGPA, TotalSchoolUnits, TotalUnits } from './Resources/Pages/AcademicInformation.js';
-import { BankingInformation, ContactFinancialAidOffice, FinancialAidCounselor, FinancialInformationPage, SAPDetails, SAPStatus, SatisfactoryAcademicProgress, StudentFinance, TaxInformation, FinancialAid} from './Resources/Pages/FinancialInformation';
+import { BankingInformation, ContactFinancialAidOffice, FinancialAidCounselor, FinancialInformationPage, SAPDetails, SAPStatus, SatisfactoryAcademicProgress, StudentFinance, TaxInformation, FinancialAid } from './Resources/Pages/FinancialInformation';
 import { data } from './Resources/Pages/Landing.js';
-import { render, fireEvent, screen, debug } from '@testing-library/react-native';
-//import { DirectoryListItem } from './Resources/Shared/DirectoryList.js';
+import { render, fireEvent, screen, debug, act, update } from '@testing-library/react-native';
+import { App } from './App';
+import NavBar from './Resources/NavBar';
 
 
+
+beforeEach(() => {
+	jest.spyOn(console, 'error')
+	// @ts-ignore jest.spyOn adds this functionallity
+	console.error.mockImplementation(() => null);
+});
+
+afterEach(() => {
+	// @ts-ignore jest.spyOn adds this functionallity
+	console.error.mockRestore()
+});
 
 
 //DINING PAGE TESTS (Menus.js)
 
 describe('<DiningPage />', () => {
-    it('renders correctly', () => {
-        const tree = renderer.create(<DiningPage />).toJSON();
-        expect(tree).toMatchSnapshot();
-    });
+	it('renders correctly', () => {
+		const tree = renderer.create(<DiningPage />).toJSON();
+		expect(tree).toMatchSnapshot();
+	});
 });
 
 describe('<RenderLocationMenu selectedLocation={selectedLocation} /> where selectedLocation = \'Freshens\'', () => {
-    it('renders correctly', () => {
-        const selectedLocation = 'Freshens';
-        const tree = renderer.create(<RenderLocationMenu selectedLocation={selectedLocation} />).toJSON();
-        expect(tree).toMatchSnapshot();
-    });
+	it('renders correctly', () => {
+		const selectedLocation = 'Freshens';
+		const tree = renderer.create(<RenderLocationMenu selectedLocation={selectedLocation} />).toJSON();
+		expect(tree).toMatchSnapshot();
+	});
 });
 
 describe('<RenderDiningLocationButton /> where selectedLocation = \'Cavern\'', () => {
-    it('renders correctly for selected button', () => {
-        const selectedLocation = 'Cavern';
-        const tree = renderer.create(<RenderDiningLocationButton selectedLocation={selectedLocation} diningLocation='Cavern' handleLocationPress={handleLocationPress} />).toJSON();
-        expect(tree).toMatchSnapshot();
-    });
-    it('renders correctly for unselected button', () => {
-        const selectedLocation = 'Cavern';
-        const tree = renderer.create(<RenderDiningLocationButton selectedLocation={selectedLocation} diningLocation='Commons' handleLocationPress={handleLocationPress} />).toJSON();
-        expect(tree).toMatchSnapshot();
-    });
+	it('renders correctly for selected button', () => {
+		const selectedLocation = 'Cavern';
+		const tree = renderer.create(<RenderDiningLocationButton selectedLocation={selectedLocation} diningLocation='Cavern' handleLocationPress={handleLocationPress} />).toJSON();
+		expect(tree).toMatchSnapshot();
+	});
+	it('renders correctly for unselected button', () => {
+		const selectedLocation = 'Cavern';
+		const tree = renderer.create(<RenderDiningLocationButton selectedLocation={selectedLocation} diningLocation='Commons' handleLocationPress={handleLocationPress} />).toJSON();
+		expect(tree).toMatchSnapshot();
+	});
 });
 
 describe('<RenderDay locationMenu = {freshensMenu}/> ', () => {
-    it('renders correctly', () => {
-        const tree = renderer.create(<RenderDay locationMenu={freshensMenu} />).toJSON();
-        expect(tree).toMatchSnapshot();
-    });
+	it('renders correctly', () => {
+		const tree = renderer.create(<RenderDay locationMenu={freshensMenu} />).toJSON();
+		expect(tree).toMatchSnapshot();
+	});
 });
 
 describe('<RenderMeal dayMeals = {commonsMenu[1].meals}/> ', () => {
-    it('renders correctly', () => {
-        const tree = renderer.create(<RenderMeal dayMeals={commonsMenu[1].meals} />).toJSON();
-        expect(tree).toMatchSnapshot();
-    });
+	it('renders correctly', () => {
+		const tree = renderer.create(<RenderMeal dayMeals={commonsMenu[1].meals} />).toJSON();
+		expect(tree).toMatchSnapshot();
+	});
 });
 
 describe('<RenderMealItems mealItems = {cavernMenu[2].meals[0].mealItems}/> ', () => {
-    it('renders correctly', () => {
-        const tree = renderer.create(<RenderMealItems mealItems={cavernMenu[2].meals[0].mealItems} />).toJSON();
-        expect(tree).toMatchSnapshot();
-    });
+	it('renders correctly', () => {
+		const tree = renderer.create(<RenderMealItems mealItems={cavernMenu[2].meals[0].mealItems} />).toJSON();
+		expect(tree).toMatchSnapshot();
+	});
 });
 
 test('convertLocationToMenu converts Commons to commonsMenu', () => {
-    expect(convertLocationToMenu('Commons')).toBe(commonsMenu);
+	expect(convertLocationToMenu('Commons')).toBe(commonsMenu);
 });
 
 describe('DiningPage', () => {
-    it('displays Freshens menu on button press', () => {
-        const { getByText, debug } = render(<DiningPage />);
-        const freshensButton = getByText('Freshens');
-        fireEvent.press(freshensButton);
-        const tree = screen.toJSON();
-        expect(tree).toMatchSnapshot();
-    });
+	it('displays Freshens menu on button press', () => {
+		const { getByText, debug } = render(<DiningPage />);
+		const freshensButton = getByText('Freshens');
+		fireEvent.press(freshensButton);
+		const tree = screen.toJSON();
+		expect(tree).toMatchSnapshot();
+	});
 });
 
 describe('DiningPage', () => {
-    it('displays Commons menu on button press', () => {
-        const { getByText, debug } = render(<DiningPage />);
-        const commonsButton = getByText('Commons');
-        fireEvent.press(commonsButton);
-        const tree = screen.toJSON();
-        expect(tree).toMatchSnapshot();
-    });
+	it('displays Commons menu on button press', () => {
+		const { getByText, debug } = render(<DiningPage />);
+		const commonsButton = getByText('Commons');
+		fireEvent.press(commonsButton);
+		const tree = screen.toJSON();
+		expect(tree).toMatchSnapshot();
+	});
 });
 
 describe('DiningPage', () => {
-    it('displays Cavern menu on button press', () => {
-        const { getByText, debug } = render(<DiningPage />);
-        const cavernButton = getByText('Cavern');
-        fireEvent.press(cavernButton);
-        const tree = screen.toJSON();
-        expect(tree).toMatchSnapshot();
-    });
+	it('displays Cavern menu on button press', () => {
+		const { getByText, debug } = render(<DiningPage />);
+		const cavernButton = getByText('Cavern');
+		fireEvent.press(cavernButton);
+		const tree = screen.toJSON();
+		expect(tree).toMatchSnapshot();
+	});
 });
 
 //MAIL PAGE TESTS ./Pages/Mail.js
 
 describe('RenderMailboxCode', () => {
-    it('renders correctly', () => {
-        const tree = renderer.create(<RenderMailboxCode currentStudent={studentInfoGroup[1]} />).toJSON();
-        expect(tree).toMatchSnapshot();
-    });
+	it('renders correctly', () => {
+		const tree = renderer.create(<RenderMailboxCode currentStudent={studentInfoGroup[1]} />).toJSON();
+		expect(tree).toMatchSnapshot();
+	});
 });
 
 describe('RenderStudentAddress', () => {
-    it('renders correctly', () => {
-        const tree = renderer.create(<RenderStudentAddress currentStudent={studentInfoGroup[1]} />).toJSON();
-        expect(tree).toMatchSnapshot();
-    });
+	it('renders correctly', () => {
+		const tree = renderer.create(<RenderStudentAddress currentStudent={studentInfoGroup[1]} />).toJSON();
+		expect(tree).toMatchSnapshot();
+	});
 });
 
 describe('MailPage', () => {
-    it('renders correctly', () => {
-        const tree = renderer.create(<MailPage />).toJSON();
-        expect(tree).toMatchSnapshot();
-    });
+	it('renders correctly', () => {
+		const tree = renderer.create(<MailPage />).toJSON();
+		expect(tree).toMatchSnapshot();
+	});
 });
 
 //ACADEMIC INFORMATION PAGE TESTS ./Pages/AcademicInformation.js
@@ -133,7 +145,7 @@ describe('TotalSchoolUnits', () => {
 		fireEvent.press(RoundedRectButton);
 		const tree = screen.toJSON();
 		expect(tree).toMatchSnapshot();
-	 });	
+	});
 });
 
 describe('TotalUnits', () => {
@@ -147,7 +159,7 @@ describe('TotalUnits', () => {
 		fireEvent.press(RoundedRectButton);
 		const tree = screen.toJSON();
 		expect(tree).toMatchSnapshot();
-	 });	
+	});
 });
 
 describe('StudentProgress', () => {
@@ -161,7 +173,7 @@ describe('StudentProgress', () => {
 		fireEvent.press(RoundedRectButton);
 		const tree = screen.toJSON();
 		expect(tree).toMatchSnapshot();
-	 });	
+	});
 });
 
 describe('Grades', () => {
@@ -175,7 +187,7 @@ describe('Grades', () => {
 		fireEvent.press(RoundedRectButton);
 		const tree = screen.toJSON();
 		expect(tree).toMatchSnapshot();
-	 });	
+	});
 });
 
 describe('MajorGPA', () => {
@@ -189,7 +201,7 @@ describe('MajorGPA', () => {
 		fireEvent.press(RoundedRectButton);
 		const tree = screen.toJSON();
 		expect(tree).toMatchSnapshot();
-	 });	
+	});
 });
 
 describe('CumulativeGPA', () => {
@@ -203,7 +215,7 @@ describe('CumulativeGPA', () => {
 		fireEvent.press(RoundedRectButton);
 		const tree = screen.toJSON();
 		expect(tree).toMatchSnapshot();
-	 });	
+	});
 });
 
 describe('GPA', () => {
@@ -217,15 +229,15 @@ describe('GPA', () => {
 		fireEvent.press(RoundedRectButton);
 		const tree = screen.toJSON();
 		expect(tree).toMatchSnapshot();
-	 });	
+	});
 });
 
 describe('AcademicInformationPage', () => {
 	it('renders correctly', () => {
-	    const tree = renderer.create(<AcademicInformationPage />).toJSON();
-	    expect(tree).toMatchSnapshot();
+		const tree = renderer.create(<AcademicInformationPage />).toJSON();
+		expect(tree).toMatchSnapshot();
 	});
- });
+});
 
 //FINANCIAL INFORMATION PAGE TESTS ./Pages/AcademicInformation.js
 
@@ -240,7 +252,7 @@ describe('BankingInformation', () => {
 		fireEvent.press(RoundedRectButton);
 		const tree = screen.toJSON();
 		expect(tree).toMatchSnapshot();
-	 });	
+	});
 })
 
 describe('TaxInformation', () => {
@@ -254,7 +266,7 @@ describe('TaxInformation', () => {
 		fireEvent.press(RoundedRectButton);
 		const tree = screen.toJSON();
 		expect(tree).toMatchSnapshot();
-	 });
+	});
 })
 
 describe('FinancialAidCounselor', () => {
@@ -268,7 +280,7 @@ describe('FinancialAidCounselor', () => {
 		fireEvent.press(RoundedRectButton);
 		const tree = screen.toJSON();
 		expect(tree).toMatchSnapshot();
-	 });
+	});
 })
 
 describe('SAPDetails', () => {
@@ -282,7 +294,7 @@ describe('SAPDetails', () => {
 		fireEvent.press(RoundedRectButton);
 		const tree = screen.toJSON();
 		expect(tree).toMatchSnapshot();
-	 });
+	});
 })
 
 describe('SAPStatus', () => {
@@ -296,7 +308,7 @@ describe('SAPStatus', () => {
 		fireEvent.press(RoundedRectButton);
 		const tree = screen.toJSON();
 		expect(tree).toMatchSnapshot();
-	 });
+	});
 })
 
 describe('SatisfactoryAcademicProgress', () => {
@@ -310,7 +322,7 @@ describe('SatisfactoryAcademicProgress', () => {
 		fireEvent.press(RoundedRectButton);
 		const tree = screen.toJSON();
 		expect(tree).toMatchSnapshot();
-	 });
+	});
 })
 
 describe('FinancialAid', () => {
@@ -324,7 +336,7 @@ describe('FinancialAid', () => {
 		fireEvent.press(RoundedRectButton);
 		const tree = screen.toJSON();
 		expect(tree).toMatchSnapshot();
-	 });
+	});
 })
 
 describe('StudentFinance', () => {
@@ -338,7 +350,7 @@ describe('StudentFinance', () => {
 		fireEvent.press(RoundedRectButton);
 		const tree = screen.toJSON();
 		expect(tree).toMatchSnapshot();
-	 });
+	});
 })
 
 describe('ContactFinancialAidOffice', () => {
@@ -352,7 +364,7 @@ describe('ContactFinancialAidOffice', () => {
 		fireEvent.press(RoundedRectButton);
 		const tree = screen.toJSON();
 		expect(tree).toMatchSnapshot();
-	 });
+	});
 })
 
 describe('FinancialInformationPage', () => {
@@ -362,24 +374,79 @@ describe('FinancialInformationPage', () => {
 	});
 })
 
+//Testing starting at APP
+
+describe('App', () => {
+	it('renders correctly', () => {
+		const tree = renderer.create(<App />).toJSON();
+		expect(tree).toMatchSnapshot();
+	});
+});
+
+describe('App', () => {
+	it('navigates to DiningPage then to Commons menu (two buttons pressed)', () => {
+		const { getByText, debug } = render(<App />);
+		const diningPageButton = getByText('Dining Options');
+		fireEvent.press(diningPageButton);
+		const commonsButton = getByText('Commons');
+		fireEvent.press(commonsButton);
+		const tree = screen.toJSON();
+		expect(tree).toMatchSnapshot();
+	});
+
+	it('navigates to DiningPage then to Freshens menu (two buttons pressed)', () => {
+		const { getByText, debug } = render(<App />);
+		const diningPageButton = getByText('Dining Options');
+		fireEvent.press(diningPageButton);
+		const freshensButton = getByText('Freshens');
+		fireEvent.press(freshensButton);
+		const tree = screen.toJSON();
+		expect(tree).toMatchSnapshot();
+	});
+
+	it('navigates to DiningPage then to Freshens menu then back to Cavern menu (three buttons pressed)', () => {
+		const { getByText, debug } = render(<App />);
+		const diningPageButton = getByText('Dining Options');
+		fireEvent.press(diningPageButton);
+		const freshensButton = getByText('Freshens');
+		fireEvent.press(freshensButton);
+		const cavernButton = getByText('Cavern');
+		fireEvent.press(cavernButton);
+		const tree = screen.toJSON();
+		expect(tree).toMatchSnapshot();
+	});
+
+	it('navigates to Mail Services Page on button press', () => {
+		const { getByText, debug } = render(<App />);
+		const mailServicesButton = getByText('Mail Services');
+		fireEvent.press(mailServicesButton);
+		/*const mailBoxCodeButton = getByText('Mail Box Code');
+		fireEvent.press(mailBoxCodeButton);*/
+		const tree = screen.toJSON();
+		expect(tree).toMatchSnapshot();
+	});
+});
+
+
+
 //DirectoryLists TESTS ./Pages/Landing.js .
 /*describe('Press Dining Options', () => {
-    it('renders correctly', () => {
-        const tree = renderer.create(<App />).toJSON();
-        expect(tree).toMatchSnapshot();
-    });
+	it('renders correctly', () => {
+		const tree = renderer.create(<App />).toJSON();
+		expect(tree).toMatchSnapshot();
+	});
 });
 
 //LANDING PAGE TESTS
 
 /*describe('LandingPage', () => {
-    it('displays Dining Options page correctly on button press', () => {
-        const { getByText, debug } = render(<App />);
-        const diningOptionsButton = getByText('Dining Options');
-        fireEvent.press(diningOptionsButton);
-        const tree = screen.toJSON();
-        expect(tree).toMatchSnapshot();
-    });
+	it('displays Dining Options page correctly on button press', () => {
+		const { getByText, debug } = render(<App />);
+		const diningOptionsButton = getByText('Dining Options');
+		fireEvent.press(diningOptionsButton);
+		const tree = screen.toJSON();
+		expect(tree).toMatchSnapshot();
+	});
 });*/
 
 
