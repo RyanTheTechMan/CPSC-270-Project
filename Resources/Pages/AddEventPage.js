@@ -119,8 +119,13 @@ export function AddEventPage({ route, navigation }) {
         )}
         <Pressable style={styleSheet.pickerToggle}
           onPress={() => {
-            tempCalendarData[dateInKeyFormat] = [{name: eventText, time: startTime }];
-            route.params.changeCalendar(tempCalendarData);
+const eventData = {
+date: dateInKeyFormat,
+name: eventText,
+time: startTime,
+};
+            const updatedCalendarData = updateCalendarData(eventData, tempCalendarData);
+            route.params.changeCalendar(updatedCalendarData);
           }}
         >
           <Text style={styleSheet.pickerText}>Add This Event to Calendar</Text>
@@ -130,6 +135,10 @@ export function AddEventPage({ route, navigation }) {
     </SafeAreaView>
   );
 }
+function updateCalendarData(eventData, tempCalendarData){
+  tempCalendarData[eventData.date] = [{name: eventData.name, time: eventData.time }];
+  return tempCalendarData;
+};
 
 const styleSheet = StyleSheet.create({
 
