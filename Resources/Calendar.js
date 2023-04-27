@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
     StyleSheet,
     Text,
@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import { Agenda, CalendarProvider } from 'react-native-calendars';
 import { createStackNavigator } from '@react-navigation/stack';
-import {AddEventPage} from './Pages/AddEventPage';
+import { AddEventPage } from './Pages/AddEventPage';
 
 const initialCalendarData = {
     '2023-04-24': [{ name: 'CPSC270', startTime: '10:50 AM', endTime: '11:50 AM' }, { name: 'CHEM342', startTime: '12:00 PM', endTime: '1:00 PM' }],
@@ -18,24 +18,21 @@ const initialCalendarData = {
 const Stack = createStackNavigator();
 
 export function CalendarStack() {
-
-  return (
-    <Stack.Navigator initialRouteName="EventCalendar" screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="EventCalendar" component={CalendarPage} />
-      <Stack.Screen name="AddEvent" component={AddEventPage} />
-    </Stack.Navigator>
-  );
+    const [calendarData, setCalendarData] = useState(initialCalendarData);
+    return (
+        <Stack.Navigator initialRouteName="EventCalendar" screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="EventCalendar"  >
+                {(props) => <CalendarPage {...props} calendarData={calendarData} setCalendarData={setCalendarData} key={calendarData} />}
+            </Stack.Screen>
+            <Stack.Screen name="AddEvent" component={AddEventPage} />
+        </Stack.Navigator>
+    );
 }
 
+export function CalendarPage({ route, navigation, calendarData, setCalendarData }) {
 
-
-export function CalendarPage({route, navigation}) {
-const [calendarData, setCalendarData] = useState(initialCalendarData);
-/*const addEvent = (newData) => {
-    setCalendarData(newData)
-};*/
-console.log('CALENDAR DATA');
-console.log(calendarData);
+    console.log('CALENDAR DATA');
+    console.log(calendarData);
     return (
         <View style={styles.calendar}>
             <CalendarProvider style={styles.container}>
@@ -49,14 +46,16 @@ console.log(calendarData);
                     }}
                     items={calendarData}
                     renderItem={(item) => (
-                        <Pressable key={item.name} style={styles.item}>
-                            <Text style={styles.itemText}>{item.name}</Text>
-                            <Text style={styles.itemText}>{item.startTime} - {item.endTime}</Text>
-                        </Pressable>
+                        <View key={item.name}>
+                            <Pressable  style={styles.item}>
+                                <Text style={styles.itemText}>{item.name}</Text>
+                                <Text style={styles.itemText}>{item.startTime} - {item.endTime}</Text>
+                            </Pressable>
+                        </View>
                     )}
                 />
             </CalendarProvider>
-            <Pressable style={styles.addButton} onPress={()=>navigation.navigate('AddEvent', {calendarData, setCalendarData} )}>
+            <Pressable style={styles.addButton} onPress={() => navigation.navigate('AddEvent', { calendarData, setCalendarData })}>
                 <Text style={styles.addButtonText}>+</Text>
             </Pressable>
         </View>
