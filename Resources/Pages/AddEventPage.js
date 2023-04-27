@@ -4,7 +4,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { format } from 'date-fns'
 
 export function AddEventPage({ route, navigation }) {
-  console.log(route.params.calendarData);
+  //console.log(route.params.calendarData);
   let tempCalendarData = route.params.calendarData;
   const [datePicker, setDatePicker] = useState(false);
   const [date, setDate] = useState(new Date());
@@ -41,7 +41,7 @@ export function AddEventPage({ route, navigation }) {
     setEndTimePicker(false);
   };
 
-  console.log(format(date, 'yyyy-MM-dd'));
+  //console.log(format(date, 'yyyy-MM-dd'));
   const dateInKeyFormat = format(date, 'yyyy-MM-dd');
   let startingTime = format(time, 'h:mm a');
   let endingTime = format(endTime, 'h:mm a');
@@ -128,12 +128,11 @@ export function AddEventPage({ route, navigation }) {
               endTime: endingTime,
             };
             const updatedCalendarData = updateCalendarData(eventData, tempCalendarData);
-            route.params.changeCalendar(updatedCalendarData);
+            route.params.setCalendarData(updatedCalendarData);
           }}
         >
           <Text style={styleSheet.pickerText}>Add This Event to Calendar</Text>
         </Pressable>
-
       </View>
     </SafeAreaView>
   );

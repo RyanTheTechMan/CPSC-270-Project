@@ -31,7 +31,11 @@ export function CalendarStack() {
 
 export function CalendarPage({route, navigation}) {
 const [calendarData, setCalendarData] = useState(initialCalendarData);
-const addEvent = (newData) => {setCalendarData(newData)};
+/*const addEvent = (newData) => {
+    setCalendarData(newData)
+};*/
+console.log('CALENDAR DATA');
+console.log(calendarData);
     return (
         <View style={styles.calendar}>
             <CalendarProvider style={styles.container}>
@@ -52,7 +56,7 @@ const addEvent = (newData) => {setCalendarData(newData)};
                     )}
                 />
             </CalendarProvider>
-            <Pressable style={styles.addButton} onPress={()=>navigation.navigate('AddEvent', {calendarData, changeCalendar: (data) => addEvent(data)} )}>
+            <Pressable style={styles.addButton} onPress={()=>navigation.navigate('AddEvent', {calendarData, setCalendarData} )}>
                 <Text style={styles.addButtonText}>+</Text>
             </Pressable>
         </View>
