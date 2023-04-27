@@ -119,11 +119,11 @@ export function AddEventPage({ route, navigation }) {
         )}
         <Pressable style={styleSheet.pickerToggle}
           onPress={() => {
-const eventData = {
-date: dateInKeyFormat,
-name: eventText,
-time: startTime,
-};
+            const eventData = {
+              date: dateInKeyFormat,
+              name: eventText,
+              time: startTime,
+            };
             const updatedCalendarData = updateCalendarData(eventData, tempCalendarData);
             route.params.changeCalendar(updatedCalendarData);
           }}
@@ -135,8 +135,26 @@ time: startTime,
     </SafeAreaView>
   );
 }
-function updateCalendarData(eventData, tempCalendarData){
-  tempCalendarData[eventData.date] = [{name: eventData.name, time: eventData.time }];
+function compareDates(){
+  return 
+}
+
+function updateCalendarData(eventData, tempCalendarData) {
+  if (!tempCalendarData[eventData.date]) {
+    tempCalendarData[eventData.date] = [{ name: eventData.name, time: eventData.time }];
+  }
+  else {
+    tempCalendarData[eventData.date].push({ name: eventData.name, time: eventData.time });
+    tempCalendarData[eventData.date].sort((eventA, eventB) => { 
+if (eventA.time < eventB.time){
+  return -1;
+}
+if (eventA.time > eventB.time){
+  return 1;
+}
+return 0;
+    });
+  }
   return tempCalendarData;
 };
 
