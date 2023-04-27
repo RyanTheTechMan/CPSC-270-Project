@@ -43,7 +43,10 @@ export function AddEventPage({ route, navigation }) {
 
   console.log(format(date, 'yyyy-MM-dd'));
   const dateInKeyFormat = format(date, 'yyyy-MM-dd');
-  const startTime = time.toLocaleTimeString('en-US');
+  let startTime = format(time, 'K:mm a');
+  //console.log('STARTTIME');
+  //console.log(startTime);
+  
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styleSheet.MainContainer}>
@@ -135,9 +138,6 @@ export function AddEventPage({ route, navigation }) {
     </SafeAreaView>
   );
 }
-function compareDates(){
-  return 
-}
 
 function updateCalendarData(eventData, tempCalendarData) {
   if (!tempCalendarData[eventData.date]) {
@@ -145,14 +145,14 @@ function updateCalendarData(eventData, tempCalendarData) {
   }
   else {
     tempCalendarData[eventData.date].push({ name: eventData.name, time: eventData.time });
-    tempCalendarData[eventData.date].sort((eventA, eventB) => { 
-if (eventA.time < eventB.time){
-  return -1;
-}
-if (eventA.time > eventB.time){
-  return 1;
-}
-return 0;
+    tempCalendarData[eventData.date].sort((eventA, eventB) => {
+      if (eventA.time < eventB.time) {
+        return -1;
+      }
+      if (eventA.time > eventB.time) {
+        return 1;
+      }
+      return 0;
     });
   }
   return tempCalendarData;
