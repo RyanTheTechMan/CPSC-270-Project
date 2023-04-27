@@ -3,9 +3,9 @@ import { Button, SafeAreaView, StyleSheet, Text, View, Pressable, TextInput } fr
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { format } from 'date-fns'
 
-export function AddEventPage({ route, navigation }) {
+export function AddEventPage({ route, navigation, calendarData, setCalendarData }) {
   //console.log(route.params.calendarData);
-  let tempCalendarData = route.params.calendarData;
+  let tempCalendarData = calendarData;
   const [datePicker, setDatePicker] = useState(false);
   const [date, setDate] = useState(new Date());
   const [timePicker, setTimePicker] = useState(false);
@@ -128,7 +128,7 @@ export function AddEventPage({ route, navigation }) {
               endTime: endingTime,
             };
             const updatedCalendarData = updateCalendarData(eventData, tempCalendarData);
-            route.params.setCalendarData(updatedCalendarData);
+            setCalendarData(updatedCalendarData);
           }}
         >
           <Text style={styleSheet.pickerText}>Add This Event to Calendar</Text>
