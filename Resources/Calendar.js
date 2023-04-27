@@ -10,10 +10,9 @@ import { createStackNavigator } from '@react-navigation/stack';
 import {AddEventPage} from './Pages/AddEventPage';
 
 const initialCalendarData = {
-    '2023-04-10': [{ name: 'CPSC270', time: '10:50-11:50pm' }, { name: 'CHEM342', time: '12:00-1:00pm' }],
-    '2023-04-11': [],
-    '2023-04-12': [{ name: 'CPSC270', time: '10:50-11:50pm' }, { name: 'CHEM342', time: '12:00-1:00pm' }, { name: 'CHEM342L', time: '2:20-5:20pm' }],
-    '2023-04-14': [{ name: 'CPSC270', time: '10:50-11:50pm' }, { name: 'CHEM342', time: '12:00-1:00pm' }],
+    '2023-04-24': [{ name: 'CPSC270', startTime: '10:50 AM', endTime: '11:50 AM' }, { name: 'CHEM342', startTime: '12:00 PM', endTime: '1:00 PM' }],
+    '2023-04-25': [{ name: 'CPSC270', startTime: '10:50 AM', endTime: '11:50 AM' }, { name: 'CHEM342', startTime: '12:00 PM', endTime: '1:00 PM' }],
+    '2023-04-28': [{ name: 'CPSC270 Final', startTime: '10:00 AM', endTime: '11:30 AM' }, { name: 'Lunch with Cathy', startTime: '12:00 PM', endTime: '1:00 PM' }],
 }
 
 const Stack = createStackNavigator();
@@ -46,9 +45,9 @@ const addEvent = (newData) => {setCalendarData(newData)};
                     }}
                     items={calendarData}
                     renderItem={(item) => (
-                        <Pressable style={styles.item}>
+                        <Pressable key={item.name} style={styles.item}>
                             <Text style={styles.itemText}>{item.name}</Text>
-                            <Text style={styles.itemText}>{item.time}</Text>
+                            <Text style={styles.itemText}>{item.startTime} - {item.endTime}</Text>
                         </Pressable>
                     )}
                 />

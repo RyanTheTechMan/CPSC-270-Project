@@ -43,9 +43,8 @@ export function AddEventPage({ route, navigation }) {
 
   console.log(format(date, 'yyyy-MM-dd'));
   const dateInKeyFormat = format(date, 'yyyy-MM-dd');
-  let startTime = format(time, 'K:mm a');
-  //console.log('STARTTIME');
-  //console.log(startTime);
+  let startingTime = format(time, 'h:mm a');
+  let endingTime = format(endTime, 'h:mm a');
   
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -125,7 +124,8 @@ export function AddEventPage({ route, navigation }) {
             const eventData = {
               date: dateInKeyFormat,
               name: eventText,
-              time: startTime,
+              time: startingTime,
+              endTime: endingTime,
             };
             const updatedCalendarData = updateCalendarData(eventData, tempCalendarData);
             route.params.changeCalendar(updatedCalendarData);
@@ -141,15 +141,15 @@ export function AddEventPage({ route, navigation }) {
 
 function updateCalendarData(eventData, tempCalendarData) {
   if (!tempCalendarData[eventData.date]) {
-    tempCalendarData[eventData.date] = [{ name: eventData.name, time: eventData.time }];
+    tempCalendarData[eventData.date] = [{ name: eventData.name, startTime: eventData.time, endTime: eventData.endTime }];
   }
   else {
-    tempCalendarData[eventData.date].push({ name: eventData.name, time: eventData.time });
+    tempCalendarData[eventData.date].push({ name: eventData.name, startTime: eventData.time, endTime: eventData.endTime });
     tempCalendarData[eventData.date].sort((eventA, eventB) => {
-      if (eventA.time < eventB.time) {
+      if ((eventA.startTime < eventB.startTime) || (eventA.startTime.slice(-2) < eventB.startTime.slice(-2))) {
         return -1;
       }
-      if (eventA.time > eventB.time) {
+      if (eventA.startTime > eventB.startTime) {
         return 1;
       }
       return 0;
