@@ -1,66 +1,66 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
-    SafeAreaView,
-    ScrollView,
     StyleSheet,
     Text,
-    TouchableOpacity,
     Pressable,
     View
 } from 'react-native';
 import { Agenda, CalendarProvider } from 'react-native-calendars';
-import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import {AddEventPage} from './Pages/AddEventPage';
+import { AddEventPage } from './Pages/AddEventPage';
+
 
 const initialCalendarData = {
-    '2023-04-10': [{ name: 'CPSC270', time: '10:50-11:50pm' }, { name: 'CHEM342', time: '12:00-1:00pm' }],
-    '2023-04-12': [{ name: 'CPSC270', time: '10:50-11:50pm' }, { name: 'CHEM342', time: '12:00-1:00pm' }, { name: 'CHEM342L', time: '2:20-5:20pm' }],
-    '2023-04-14': [{ name: 'CPSC270', time: '10:50-11:50pm' }, { name: 'CHEM342', time: '12:00-1:00pm' }],
+    '2023-04-24': [{ name: 'CPSC270', startTime: '10:50 AM', endTime: '11:50 AM' }, { name: 'CHEM342', startTime: '12:00 PM', endTime: '1:00 PM' }],
+    '2023-04-25': [{ name: 'CPSC270', startTime: '10:50 AM', endTime: '11:50 AM' }, { name: 'CHEM342', startTime: '12:00 PM', endTime: '1:00 PM' }],
+    '2023-04-28': [{ name: 'CPSC270 Final', startTime: '10:00 AM', endTime: '11:30 AM' }, { name: 'Lunch with Cathy', startTime: '12:00 PM', endTime: '1:00 PM' }],
 }
 
 const Stack = createStackNavigator();
 
 export function CalendarStack() {
-
-  return (
-    <Stack.Navigator initialRouteName="EventCalendar" screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="EventCalendar" component={CalendarPage} />
-      <Stack.Screen name="AddEvent" component={AddEventPage} />
-    </Stack.Navigator>
-  );
+    const [calendarData, setCalendarData] = useState(initialCalendarData);
+    return (
+        <Stack.Navigator initialRouteName="EventCalendar" screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="EventCalendar"  >
+                {(props) => <CalendarPage {...props} calendarData={calendarData} setCalendarData={setCalendarData} key={calendarData} />}
+            </Stack.Screen>
+            <Stack.Screen name="AddEvent" >
+            {(props) => <AddEventPage {...props} calendarData={calendarData} setCalendarData={setCalendarData} key={calendarData} />}
+           </Stack.Screen>
+        </Stack.Navigator>
+    );
 }
 
-
-
-export function CalendarPage({route, navigation}) {
-const [calendarData, setCalendarData] = useState(initialCalendarData);
-onAddEvent = (newData) => {setCalendarData(newData)};
-    return (
-        <View style={styles.calendar}>
-            <CalendarProvider style={styles.container}>
-                <Agenda
-                    theme={{
-                        dotColor: '#8B1D3D',
-                        selectedDayBackgroundColor: '#8B1D3D',
-                    }}
-                    renderEmptyData={() => {
-                        return <View />
-                    }}
-                    items={calendarData}
-                    renderItem={(item) => (
-                        <Pressable style={styles.item}>
-                            <Text style={styles.itemText}>{item.name}</Text>
-                            <Text style={styles.itemText}>{item.time}</Text>
-                        </Pressable>
-                    )}
-                />
-            </CalendarProvider>
-            <Pressable style={styles.addButton} onPress={()=>navigation.navigate('AddEvent', {calendarData, onAddEvent} )}>
-                <Text style={styles.addButtonText}>+</Text>
-            </Pressable>
-        </View>
-    );
+export function CalendarPage({ route, navigation, calendarData, setCalendarData }) {
+        return (
+            <View style={styles.calendar}>
+                <CalendarProvider style={styles.container}>
+                    <Agenda
+                        theme={{
+                            dotColor: '#8B1D3D',
+                            selectedDayBackgroundColor: '#8B1D3D',
+                        }}
+                        renderEmptyData={() => {
+                            return <View />
+                        }}
+                        extraData={calendarData}
+                        items={calendarData}
+                        renderItem={(item) => (
+                            <View key={item.name}>
+                                <Pressable style={styles.item}>
+                                    <Text style={styles.itemText}>{item.name}</Text>
+                                    <Text style={styles.itemText}>{item.startTime} - {item.endTime}</Text>
+                                </Pressable>
+                            </View>
+                        )}
+                    />
+                </CalendarProvider>
+                <Pressable style={styles.addButton} onPress={() => navigation.navigate('AddEvent')}>
+                    <Text style={styles.addButtonText}>+</Text>
+                </Pressable>
+            </View>
+        );
 };
 
 

@@ -1,6 +1,6 @@
 import {Image} from "react-native";
 
-const ProfileData = {
+export const ProfileData = {
     firstName: "John",
     middleName: "Jacob",
     lastName: "Doe",

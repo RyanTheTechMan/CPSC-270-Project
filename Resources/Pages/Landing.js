@@ -2,19 +2,17 @@ import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import DirectoryList from '../DirectoryList';
 
-function LandingPage({navigation}){
-  
-  const data = [
-    { id: 0, title: 'Dining Options' , iconName: 'food', pageName: 'Dining'},
-    { id: 1, title: 'Mail Services' , iconName: 'email', pageName: 'Mail'},
-    { id: 2, title: 'Academic Information' , iconName: 'school', pageName: 'Academics'},
+ export const data = [
+    { id: 0, title: 'Dining Options', iconName: 'food', pageName: 'Dining' },
+    { id: 1, title: 'Mail Services', iconName: 'email', pageName: 'Mail' },
+    { id: 2, title: 'Academic Information', iconName: 'school', pageName: 'Academics' },
     { id: 3, title: 'Financial Information', iconName: 'bank', pageName: 'Financial' },
-    { id: 4, title: '. . .', iconName: 'file-question', pageName: undefined},
   ];
 
-  function handlePress(id){
+export function LandingPage({ navigation }) {
+
+  function handlePress(id) {
     if (data[id].pageName !== undefined) {
-      console.log('Navigating to ' + data[id].pageName)
       navigation.navigate(data[id].pageName);
     } else
       console.log('No page for "' + data[id].title + '"');

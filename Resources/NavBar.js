@@ -14,10 +14,10 @@ import FinancialInformationPage from './Pages/FinancialInformation';
 import Map from './Pages/Map';
 import DemoPage from './Pages/DemoPage';
 import SafetyList from "./Pages/SafetyInfo";
-import MailPage from "./Pages/Mail";
+import { MailPage } from "./Pages/Mail";
 import LandingPage from './Pages/Landing';
 import { DiningPage } from "./Menus";
-import { CalendarPage, CalendarStack} from "./Calendar";
+import { CalendarPage, CalendarStack } from "./Calendar";
 import MapMarker from "./Pages/MapMarker";
 import ProfileData from "./Profile/ProfileData";
 import NotificationsPage from "./Pages/NotificationsPage";
@@ -25,7 +25,7 @@ import SettingsPage from "./Pages/SettingsPage";
 
 const EmptyComponent = () => <View />;
 
-const Stack = createStackNavigator();
+export const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 function HomeButton({ navigation }) {
@@ -39,7 +39,7 @@ function HomeButton({ navigation }) {
     />
   );
 }
-function NavBar() {
+export function NavBar() {
   return (
     <Stack.Navigator
       screenOptions={{

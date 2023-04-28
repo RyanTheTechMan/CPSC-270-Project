@@ -17,4 +17,6 @@ export default function App() {
       <NavBar />
     </NavigationContainer>
   );
-}
+};
+
+export default App;
