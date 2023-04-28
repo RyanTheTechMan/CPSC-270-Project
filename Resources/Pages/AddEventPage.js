@@ -43,7 +43,7 @@ export function AddEventPage({ route, navigation, calendarData, setCalendarData 
 
   //console.log(format(date, 'yyyy-MM-dd'));
   const dateInKeyFormat = format(date, 'yyyy-MM-dd');
-  let startingTime = format(time, 'h:mm a');
+  let startingTime = format(startTime, 'h:mm a');
   let endingTime = format(endTime, 'h:mm a');
   
   return (
