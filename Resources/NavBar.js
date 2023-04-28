@@ -20,6 +20,8 @@ import { DiningPage } from "./Menus";
 import { CalendarPage, CalendarStack} from "./Calendar";
 import MapMarker from "./Pages/MapMarker";
 import ProfileData from "./Profile/ProfileData";
+import NotificationsPage from "./Pages/NotificationsPage";
+import SettingsPage from "./Pages/SettingsPage";
 
 const EmptyComponent = () => <View />;
 
@@ -135,6 +137,8 @@ function NavBar() {
       <Stack.Screen name="Academics" component={AcademicInformationPage} />
       <Stack.Screen name="Calendar" component={CalendarStack} />
       <Stack.Screen name="Financial" component={FinancialInformationPage} />
+      <Stack.Screen name="Notifications" component={NotificationsPage} />
+      <Stack.Screen name="Settings" component={SettingsPage} />
     </Stack.Navigator>
   );
 }
