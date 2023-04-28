@@ -8,9 +8,9 @@ export function AddEventPage({ route, navigation, calendarData, setCalendarData 
   let tempCalendarData = calendarData;
   const [datePicker, setDatePicker] = useState(false);
   const [date, setDate] = useState(new Date());
-  const [timePicker, setTimePicker] = useState(false);
+  const [startTimePicker, setTimePicker] = useState(false);
   const [endTimePicker, setEndTimePicker] = useState(false);
-  const [time, setTime] = useState(new Date(Date.now()));
+  const [startTime, setStartTime] = useState(new Date(Date.now()));
   const [endTime, setEndTime] = useState(new Date(Date.now()));
   const [eventText, setEventText] = useState('');
 
@@ -32,7 +32,7 @@ export function AddEventPage({ route, navigation, calendarData, setCalendarData 
   };
 
   function onStartTimeSelected(event, value) {
-    setTime(value);
+    setStartTime(value);
     setTimePicker(false);
   };
 
@@ -74,9 +74,9 @@ export function AddEventPage({ route, navigation, calendarData, setCalendarData 
           />
         )}
 
-        {timePicker && (
+        {startTimePicker && (
           <DateTimePicker
-            value={time}
+            value={startTime}
             mode={'time'}
             display={Platform.OS === 'ios' ? 'spinner' : 'default'}
             is24Hour={false}
@@ -87,7 +87,7 @@ export function AddEventPage({ route, navigation, calendarData, setCalendarData 
 
         {endTimePicker && (
           <DateTimePicker
-            value={time}
+            value={endTime}
             mode={'time'}
             display={Platform.OS === 'ios' ? 'spinner' : 'default'}
             is24Hour={false}
@@ -104,7 +104,7 @@ export function AddEventPage({ route, navigation, calendarData, setCalendarData 
           </View>
         )}
 
-        {!timePicker && (
+        {!startTimePicker && (
           <View style={{ margin: 10 }}>
             <Pressable style={styleSheet.pickerToggle} onPress={showTimePicker}>
               <Text style={styleSheet.pickerText}>Event Start Time</Text>
