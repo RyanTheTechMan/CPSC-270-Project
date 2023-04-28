@@ -6,7 +6,7 @@ import styles from "./Resources/Shared/styles";
 import NavBar from "./Resources/NavBar";
 // import {Appearance} from 'react-native'; // Use once we use react-native.
 
-export default function App() {
+function App() {
   // Appearance.addChangeListener(({colorScheme}) => {
   //   console.log(colorScheme);
   // });
@@ -17,6 +17,6 @@ export default function App() {
       <NavBar />
     </NavigationContainer>
   );
-};
+}
 
 export default App;
