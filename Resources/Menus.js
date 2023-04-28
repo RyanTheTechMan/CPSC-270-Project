@@ -85,7 +85,7 @@ export function RenderDiningLocationButton(props) {
 
 export function DiningPage() {
 
-  const [selectedLocation, setSelectedLocation] = useState('Cavern');
+  const [selectedLocation, setSelectedLocation] = useState('Commons');
 
   function handleLocationPress(diningLocation) {
     setSelectedLocation(diningLocation)

@@ -3,10 +3,9 @@ import { Button, SafeAreaView, StyleSheet, Text, View, Pressable, TextInput } fr
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { format } from 'date-fns'
 
-export function AddEventPage({ route, navigation }) {
-  //const onAddEvent = route.params.onAddEvent;
-  console.log(route.params.calendarData);
-  let tempCalendarData = route.params.calendarData;
+export function AddEventPage({ route, navigation, calendarData, setCalendarData }) {
+  //console.log(route.params.calendarData);
+  let tempCalendarData = calendarData;
   const [datePicker, setDatePicker] = useState(false);
   const [date, setDate] = useState(new Date());
   const [startTimePicker, setTimePicker] = useState(false);
@@ -42,18 +41,20 @@ export function AddEventPage({ route, navigation }) {
     setEndTimePicker(false);
   };
 
-  console.log(format(date, 'yyyy-MM-dd'));
+  //console.log(format(date, 'yyyy-MM-dd'));
   const dateInKeyFormat = format(date, 'yyyy-MM-dd');
-  //const startTime = time.toLocaleTimeString('en-US');
+  let startingTime = format(startTime, 'h:mm a');
+  let endingTime = format(endTime, 'h:mm a');
+  
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styleSheet.MainContainer}>
 
         <Text style={styleSheet.text}>Date = {date.toDateString()}</Text>
 
-        <Text style={styleSheet.text}>Start Time = {startTime.toLocaleTimeString('en-US')}</Text>
+        <Text style={styleSheet.text}>Start Time = {startingTime}</Text>
 
-        <Text style={styleSheet.text}>End Time = {endTime.toLocaleTimeString('en-US')}</Text>
+        <Text style={styleSheet.text}>End Time = {endingTime}</Text>
 
         <TextInput
           style={styleSheet.eventText}
@@ -120,17 +121,42 @@ export function AddEventPage({ route, navigation }) {
         )}
         <Pressable style={styleSheet.pickerToggle}
           onPress={() => {
-            tempCalendarData[dateInKeyFormat] = [{ name: eventText, time: startTime }];
-            //onAddEvent(tempCalendarData);
+            const eventData = {
+              date: dateInKeyFormat,
+              name: eventText,
+              time: startingTime,
+              endTime: endingTime,
+            };
+            const updatedCalendarData = updateCalendarData(eventData, tempCalendarData);
+            setCalendarData(updatedCalendarData);
+            navigation.navigate('EventCalendar');
           }}
         >
           <Text style={styleSheet.pickerText}>Add This Event to Calendar</Text>
         </Pressable>
-
       </View>
     </SafeAreaView>
   );
 }
+
+function updateCalendarData(eventData, tempCalendarData) {
+  if (!tempCalendarData[eventData.date]) {
+    tempCalendarData[eventData.date] = [{ name: eventData.name, startTime: eventData.time, endTime: eventData.endTime }];
+  }
+  else {
+    tempCalendarData[eventData.date].push({ name: eventData.name, startTime: eventData.time, endTime: eventData.endTime });
+    tempCalendarData[eventData.date].sort((eventA, eventB) => {
+      if ((eventA.startTime < eventB.startTime) || (eventA.startTime.slice(-2) < eventB.startTime.slice(-2))) {
+        return -1;
+      }
+      if (eventA.startTime > eventB.startTime) {
+        return 1;
+      }
+      return 0;
+    });
+  }
+  return tempCalendarData;
+};
 
 const styleSheet = StyleSheet.create({
 
@@ -143,7 +169,7 @@ const styleSheet = StyleSheet.create({
 
   text: {
     fontSize: 25,
-    color: 'red',
+    color: '#8B1D3D',
     padding: 3,
     marginBottom: 10,
     textAlign: 'center'
