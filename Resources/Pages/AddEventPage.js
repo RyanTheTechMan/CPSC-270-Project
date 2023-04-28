@@ -129,6 +129,7 @@ export function AddEventPage({ route, navigation, calendarData, setCalendarData 
             };
             const updatedCalendarData = updateCalendarData(eventData, tempCalendarData);
             setCalendarData(updatedCalendarData);
+            navigation.navigate('EventCalendar');
           }}
         >
           <Text style={styleSheet.pickerText}>Add This Event to Calendar</Text>
