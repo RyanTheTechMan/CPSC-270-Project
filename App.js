@@ -6,7 +6,7 @@ import styles from "./Resources/Shared/styles";
 import NavBar from "./Resources/NavBar";
 // import {Appearance} from 'react-native'; // Use once we use react-native.
 
-function App() {
+export function App() {
   // Appearance.addChangeListener(({colorScheme}) => {
   //   console.log(colorScheme);
   // });

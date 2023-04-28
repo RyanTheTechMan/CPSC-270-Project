@@ -9,6 +9,7 @@ import { Agenda, CalendarProvider } from 'react-native-calendars';
 import { createStackNavigator } from '@react-navigation/stack';
 import { AddEventPage } from './Pages/AddEventPage';
 
+// WARNING: For sort to work correctly, edit the module: https://github.com/wix/react-native-calendars/pull/1890/commits/f9cbc87ed1412838d7a58b1cc841132b6ed80aed
 
 const initialCalendarData = {
     '2023-04-24': [{ name: 'CPSC270', startTime: '10:50 AM', endTime: '11:50 AM' }, { name: 'CHEM342', startTime: '12:00 PM', endTime: '1:00 PM' }],
