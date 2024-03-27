@@ -39,7 +39,7 @@ Our app utilizes various libraries and frameworks to deliver a seamless and visu
 ## Credits
 - Ryan: Shared UI, Map page, and Profile Overlay
 - Jordan: Rounded Rect, Safety page, and Home/Landing page
-- Johann: Calendar, Dining, and Mailing page
+- Johann: Calendar, Dining pages, Mailing page, and automated testing with Jest
 - Sean: Academic Info and Financial Information pages
 
 ## License
